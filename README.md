@@ -25,14 +25,14 @@ Generates the whole array of SEO settings:
 ## Installation
 Include the package with composer:
 ```sh
-composer require ...
+composer require cnj/seotamic
 ```
 
 The package requires Laravel 7+ and PHP 7.3+. It will auto register.
 
 Copy the fieldset seotamic.yaml into your projects fieldset folder:
 ```sh
-cp vendor/cnj.../fieldsets/seotamic.yaml resources/fieldsets/
+cp vendor/cnj/seotamic/fieldsets/seotamic.yaml resources/fieldsets/
 ```
 
 Include this fieldset to all collections where you want to control SEO (those with public pages):
@@ -43,7 +43,7 @@ Include this fieldset to all collections where you want to control SEO (those wi
 
 You can override the default options by publishing the configuration:
 ```
-php artisan vendor:publish --provider"..." --tag=config
+php artisan vendor:publish --provider"cnj/seotamic" --tag=config
 ```
 
 This will copy the default config file to `config/seotamic.php'.
