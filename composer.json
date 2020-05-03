@@ -1,0 +1,30 @@
+{
+    "name": "cnj/seomatic",
+    "description": "Simple SEO addon for Statamic v3",
+    "type": "statamic-addon",
+    "license": "MIT",
+    "require": {
+        "php": "7.3.*",
+        "statamic/cms": "3.*@beta"
+    },
+    "autoload": {
+        "psr-4": {
+            "Cnj\\Seomatic\\": "src"
+        }
+    },
+    "authors": [{
+        "name": "Martin Koterle",
+        "email": "martin@cnj.si"
+    }],
+    "extra": {
+        "statamic": {
+            "name": "Seomatic",
+            "description": "Simple SEO addon for Statamic v3"
+        },
+        "laravel": {
+            "providers": [
+                "Cnj\\Seomatic\\ServiceProvider"
+            ]
+        }
+    }
+}
