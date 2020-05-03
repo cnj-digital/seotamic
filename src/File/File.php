@@ -1,6 +1,6 @@
 <?php
 
-namespace Cnj\Seomatic\File;
+namespace Cnj\Seotamic\File;
 
 use Statamic\Yaml\Yaml;
 use Statamic\Sites\Sites;
@@ -46,8 +46,8 @@ class File
     public function __construct(Config $config, Manager $manager, Yaml $yaml, Sites $sites) {
         $this->manager = $manager;
         $this->yaml = $yaml;
-        $this->configFile = $config->get('seomatic.file');
-        $this->disk = $config->get('seomatic.disk');
+        $this->configFile = $config->get('seotamic.file');
+        $this->disk = $config->get('seotamic.disk');
 
         // Set default locale value
         $this->locale = $sites->current()->locale();
@@ -109,6 +109,6 @@ class File
      * @return string
      */
     private function cacheKey() {
-        return "seomatic_{$this->locale}";
+        return "seotamic_{$this->locale}";
     }
 }

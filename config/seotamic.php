@@ -5,7 +5,7 @@ return [
     'disk' => 'local',
 
     // filename to store the settings, each locale is stored in a separate file
-    'file' => 'seomatic',
+    'file' => 'seotamic',
 
     // Social images asset container
     'container' => 'assets'

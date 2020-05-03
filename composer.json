@@ -1,5 +1,5 @@
 {
-    "name": "cnj/seomatic",
+    "name": "cnj/seotamic",
     "description": "Simple SEO addon for Statamic v3",
     "type": "statamic-addon",
     "license": "MIT",
@@ -9,7 +9,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Cnj\\Seomatic\\": "src"
+            "Cnj\\Seotamic\\": "src"
         }
     },
     "authors": [{
@@ -18,12 +18,12 @@
     }],
     "extra": {
         "statamic": {
-            "name": "Seomatic",
+            "name": "Seotamic",
             "description": "Simple SEO addon for Statamic v3"
         },
         "laravel": {
             "providers": [
-                "Cnj\\Seomatic\\ServiceProvider"
+                "Cnj\\Seotamic\\ServiceProvider"
             ]
         }
     }

@@ -1,8 +1,8 @@
 <?php
 
-namespace Cnj\Seomatic\Tags;
+namespace Cnj\Seotamic\Tags;
 
-use Cnj\Seomatic\File\File;
+use Cnj\Seotamic\File\File;
 use Statamic\Yaml\ParseException;
 use Statamic\Tags\Tags as StatamicTags;
 use Illuminate\Config\Repository as Config;

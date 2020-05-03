@@ -1,6 +1,6 @@
 <?php
 
 Route::middleware('web')->group(function() {
-    Route::get('/cnj/seomatic/', 'SettingsController@index')->name('cnj.seomatic.index');
-    Route::post('/cnj/seomatic/', 'SettingsController@update')->name('cnj.seomatic.update');
+    Route::get('/cnj/seotamic/', 'SettingsController@index')->name('cnj.seotamic.index');
+    Route::post('/cnj/seotamic/', 'SettingsController@update')->name('cnj.seotamic.update');
 });

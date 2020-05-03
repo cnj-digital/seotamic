@@ -1,15 +1,15 @@
 <?php
 
-namespace Cnj\Seomatic\Tags;
+namespace Cnj\Seotamic\Tags;
 
 use Statamic\Facades\Image;
 
-class SeomaticTags extends Tags
+class SeotamicTags extends Tags
 {
     /**
      * @var string
      */
-    protected static $handle = 'seomatic';
+    protected static $handle = 'seotamic';
 
     /**
      * Returns the whole set of tags
@@ -39,20 +39,24 @@ class SeomaticTags extends Tags
     {
         $title = $this->context->get('title');
 
-        if (! $this->context->get('seomatic_title')) {
+        if (! $this->context->get('seotamic_title')) {
             return $title;
         }
 
-        if ($this->context->get('seomatic_title')->value() === 'custom') {
-            $title = $this->context->get('seomatic_custom_title');
+        if ($this->context->get('seotamic_title')->value() === 'custom') {
+            $title = $this->context->get('seotamic_custom_title');
         }
 
-        if ($this->context->get('seomatic_title_append') && $this->values['title_append']) {
-            $title .= " {$this->values['title_append']}";
+        if (array_key_exists('title_append', $this->values)) {
+            if ($this->context->get('seotamic_title_append') && $this->values['title_append']) {
+                $title .= " {$this->values['title_append']}";
+            }
         }
 
-        if ($this->context->get('seomatic_title_prepend') && $this->values['title_prepend']) {
-            $title = "{$this->values['title_prepend']} {$title}";
+        if (array_key_exists('title_prepend', $this->values)) {
+            if ($this->context->get('seotamic_title_prepend') && $this->values['title_prepend']) {
+                $title = "{$this->values['title_prepend']} {$title}";
+            }
         }
 
         return $title;
@@ -67,20 +71,20 @@ class SeomaticTags extends Tags
      * @return string
      */
     public function description() {
-        if (! $this->context->get('seomatic_meta_description')) {
+        if (! $this->context->get('seotamic_meta_description')) {
             return '';
         }
 
-        if ($this->context->get('seomatic_meta_description')->value() === 'empty') {
+        if ($this->context->get('seotamic_meta_description')->value() === 'empty') {
             return '';
         }
 
-        if ($this->context->get('seomatic_meta_description')->value() === 'general') {
+        if ($this->context->get('seotamic_meta_description')->value() === 'general') {
             return $this->values['meta_description'];
         }
 
-        if ($this->context->get('seomatic_meta_description')->value() === 'custom') {
-            return $this->context->get('seomatic_custom_meta_description');
+        if ($this->context->get('seotamic_meta_description')->value() === 'custom') {
+            return $this->context->get('seotamic_custom_meta_description');
         }
 
         return '';
@@ -100,8 +104,8 @@ class SeomaticTags extends Tags
         // TODO: use the env url? Check how permalink is generated
 
         // First child option can return 404 if there is no first child
-        if ($this->context->get('seomatic_canonical') !== null && $this->context->get('seomatic_canonical') !== 404) {
-            $url = $this->context->get('seomatic_canonical');
+        if ($this->context->get('seotamic_canonical') !== null && $this->context->get('seotamic_canonical') !== 404) {
+            $url = $this->context->get('seotamic_canonical');
 
             // We have to make sure the given url is formatted correctly
             // If it's a relative path it must have a / prepended
@@ -134,6 +138,9 @@ class SeomaticTags extends Tags
      * @return string
      */
     public function og($image = null) {
+        if (! array_key_exists('open_graph_display', $this->values)) {
+            return '';
+        }
 
         if (! $this->values['open_graph_display']) {
             return '';
@@ -159,6 +166,10 @@ class SeomaticTags extends Tags
 
     // TODO: Add check if title/desc same as OG
     public function twitter($image = null) {
+        if (! array_key_exists('twitter_display', $this->values)) {
+            return '';
+        }
+
         if (! $this->values['twitter_display']) {
             return '';
         }
@@ -177,11 +188,11 @@ class SeomaticTags extends Tags
     private function social_field($name, $default) {
         $field = $default;
 
-        if ($this->context->get("seomatic_${name}")) {
-            if (($this->context->get("seomatic_${name}")->value() === 'general') && array_key_exists($name, $this->values)) {
+        if ($this->context->get("seotamic_${name}")) {
+            if (($this->context->get("seotamic_${name}")->value() === 'general') && array_key_exists($name, $this->values)) {
                 $field = $this->values[$name];
-            } else if (($this->context->get("seomatic_${name}")->value() === 'custom')) {
-                $field = $this->context->get("seomatic_custom_${name}");
+            } else if (($this->context->get("seotamic_${name}")->value() === 'custom')) {
+                $field = $this->context->get("seotamic_custom_${name}");
             }
         }
 
@@ -190,7 +201,7 @@ class SeomaticTags extends Tags
 
     private function social_image($image = null) {
         $image = '';
-        $assets = $this->config->get('seomatic.container');
+        $assets = $this->config->get('seotamic.container');
 
         if (substr($assets, -1) !== '/') {
             $assets = $assets . '/';
@@ -199,9 +210,9 @@ class SeomaticTags extends Tags
         if ($image !== null) {
             $image = url(Image::manipulate('assets/' . $image, ['w' => 1200, 'q' => '70']));
         } else {
-            if ($this->context->get('seomatic_image') && $this->context->get('seomatic_image') !== null) {
+            if ($this->context->get('seotamic_image') && $this->context->get('seotamic_image') !== null) {
                 // TODO: check if image exists
-                $image = url(Image::manipulate('assets/' . $this->context->get('seomatic_image'), ['w' => 1200, 'q' => '70']));
+                $image = url(Image::manipulate('assets/' . $this->context->get('seotamic_image'), ['w' => 1200, 'q' => '70']));
             } else {
                 if (array_key_exists('social_image', $this->values)) {
                     $image = url(Image::manipulate('assets/' . $this->values['social_image'], ['w' => 1200, 'q' => '70']));

@@ -1,10 +1,10 @@
 <?php
 
-namespace Cnj\Seomatic\Http\Controllers;
+namespace Cnj\Seotamic\Http\Controllers;
 
 use Statamic\Facades\Config;
 use Statamic\Support\Arr;
-use Cnj\Seomatic\File\File;
+use Cnj\Seotamic\File\File;
 use Statamic\Facades\Site;
 use Illuminate\Http\Request;
 use Statamic\Facades\Blueprint;
@@ -38,7 +38,7 @@ class SettingsController extends CpController
 
         $fields = $fields->preProcess();
 
-        return view('seomatic::settings', [
+        return view('seotamic::settings', [
             'blueprint' => $blueprint->toPublishArray(),
             'values'    => $fields->values(),
             'meta'      => $fields->meta(),
@@ -78,35 +78,35 @@ class SettingsController extends CpController
     {
         return Blueprint::makeFromSections([
             'name' => [
-                'display' => __('seomatic::general.meta_section'),
+                'display' => __('seotamic::general.meta_section'),
                 'fields' => [
                     'section_title' => [
                         'type' => 'section',
-                        'display' => __('seomatic::general.title'),
-                        'instructions' => __('seomatic::general.title_instructions')
+                        'display' => __('seotamic::general.title'),
+                        'instructions' => __('seotamic::general.title_instructions')
                     ],
                     'title_prepend' => [
                         'type' => 'text',
                         'character_limit' => '25',
-                        'display' => __('seomatic::general.title_prepend'),
-                        'instructions' => __('seomatic::general.title_prepend_instructions'),
+                        'display' => __('seotamic::general.title_prepend'),
+                        'instructions' => __('seotamic::general.title_prepend_instructions'),
                     ],
                     'title_append' => [
                         'type' => 'text',
                         'character_limit' => '25',
-                        'display' => __('seomatic::general.title_append'),
-                        'instructions' => __('seomatic::general.title_append_instructions'),
+                        'display' => __('seotamic::general.title_append'),
+                        'instructions' => __('seotamic::general.title_append_instructions'),
                     ],
                     'section_description' => [
                         'type' => 'section',
-                        'display' => __('seomatic::general.description_section'),
-                        'instructions' => __('seomatic::general.description_section_instructions'),
+                        'display' => __('seotamic::general.description_section'),
+                        'instructions' => __('seotamic::general.description_section_instructions'),
                     ],
                     'meta_description' => [
                         'type' => 'textarea',
                         'character_limit' => '200',
-                        'display' => __('seomatic::general.meta_description'),
-                        'instructions' => __('seomatic::general.meta_description_instructions'),
+                        'display' => __('seotamic::general.meta_description'),
+                        'instructions' => __('seotamic::general.meta_description_instructions'),
                     ],
                 ],
             ],

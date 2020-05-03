@@ -1,9 +1,9 @@
-# Seomatic - Statamic SEO Addon
+# Seotamic - Statamic SEO Addon
 
-Statmic v3 only. Due to "missing" Statamic features to make this completely automatic, there's some manual work to be done in order to use this.
+Statmic v3 only. Due to "missing" Statamic features to make this completely automatic, there's some manual work to be done in order to use this. Works with multistes and the latest Statamic v3 Beta
 
 ```php
-{{ seomatic }}
+{{ seotamic }}
 ```
 
 Generates the whole array of SEO settings:
@@ -30,14 +30,14 @@ composer require ...
 
 The package requires Laravel 7+ and PHP 7.3+. It will auto register.
 
-Copy the fieldset seomatic.yaml into your projects fieldset folder:
+Copy the fieldset seotamic.yaml into your projects fieldset folder:
 ```sh
-cp vendor/cnj.../fieldsets/seomatic.yaml resources/fieldsets/
+cp vendor/cnj.../fieldsets/seotamic.yaml resources/fieldsets/
 ```
 
 Include this fieldset to all collections where you want to control SEO (those with public pages):
 
-![How to add SEOmatic fieldset to entry](https://media.giphy.com/media/SAUAWHkR34qX105xnS/giphy.gif)
+![How to add Seotamic fieldset to entry](https://media.giphy.com/media/SAUAWHkR34qX105xnS/giphy.gif)
 
 ## Configuration (optional)
 
@@ -46,11 +46,11 @@ You can override the default options by publishing the configuration:
 php artisan vendor:publish --provider"..." --tag=config
 ```
 
-This will copy the default config file to `config/seomatic.php'.
+This will copy the default config file to `config/seotamic.php'.
 
 ## Usage
 
-Usage is fairly simple and straight forward. You can visit the global Settings by following the SEOmatic link on the navigation in the CP. Make sure to follow the instructions on each field.
+Usage is fairly simple and straight forward. You can visit the global Settings by following the Seotamic link on the navigation in the CP. Make sure to follow the instructions on each field.
 
 After this you can fine tune the output of each collection entry by editing the SEO settings under the entry's SEO tab.
 
@@ -58,26 +58,26 @@ After this you can fine tune the output of each collection entry by editing the 
 
 There are several antler tags available, the easiest is to just include the do everything base tag in the head of your layout:
 ```
-{{ seomatic }}
+{{ seotamic }}
 ```
 
 If you need more control you can manually get each part of the output by using:
 
 ```
-{{ seomatic:title }}
-{{ seomatic:description }}
-{{ seomatic:canonical }}
+{{ seotamic:title }}
+{{ seotamic:description }}
+{{ seotamic:canonical }}
 ```
 This will return strings, so you need to wrap them in the appropriate tags, ie:
 ```html
-<title>{{ seomatic:title }}</title>
+<title>{{ seotamic:title }}</title>
 ```
 
 Social ones will still return everything with tags
 
 ```
-{{ seomatic:og }}
-{{ seomatic:twitter }}
+{{ seotamic:og }}
+{{ seotamic:twitter }}
 ```
 
 ## Credits

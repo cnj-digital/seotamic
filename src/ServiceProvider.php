@@ -1,11 +1,11 @@
 <?php
 
-namespace Cnj\Seomatic;
+namespace Cnj\Seotamic;
 
 use Illuminate\Support\Facades\Session;
 use Statamic\Facades\CP\Nav;
-use Cnj\Seomatic\Tags\OpenGraph;
-use Cnj\Seomatic\Tags\SeomaticTags;
+use Cnj\Seotamic\Tags\OpenGraph;
+use Cnj\Seotamic\Tags\SeotamicTags;
 use Statamic\Providers\AddonServiceProvider;
 
 class ServiceProvider extends AddonServiceProvider
@@ -15,7 +15,7 @@ class ServiceProvider extends AddonServiceProvider
     ];
 
     protected $tags = [
-        SeomaticTags::class,
+        SeotamicTags::class,
     ];
 
     public function boot()
@@ -24,18 +24,18 @@ class ServiceProvider extends AddonServiceProvider
 
         // dd(Session::all());
 
-        $this->loadViewsFrom(__DIR__ . '/../resources/views/', 'seomatic');
-        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'seomatic');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views/', 'seotamic');
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'seotamic');
 
         Nav::extend(function ($nav) {
-            $nav->content('SEOmatic')
+            $nav->content('SEOtamic')
                 ->section('Tools')
-                ->route('cnj.seomatic.index')
+                ->route('cnj.seotamic.index')
                 ->icon('seo-search-graph');
         });
     }
 
     public function register() {
-        $this->mergeConfigFrom(__DIR__.'/../config/seomatic.php', 'seomatic');
+        $this->mergeConfigFrom(__DIR__.'/../config/seotamic.php', 'seotamic');
     }
 }
