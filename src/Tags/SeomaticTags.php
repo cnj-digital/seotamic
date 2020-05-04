@@ -207,15 +207,17 @@ class SeotamicTags extends Tags
             $assets = $assets . '/';
         }
 
-        if ($image !== null) {
+        if (! empty($image)) {
             $image = url(Image::manipulate('assets/' . $image, ['w' => 1200, 'q' => '70']));
         } else {
-            if ($this->context->get('seotamic_image') && $this->context->get('seotamic_image') !== null) {
-                // TODO: check if image exists
+            if (! empty($this->context->get('seotamic_image'))) {
                 $image = url(Image::manipulate('assets/' . $this->context->get('seotamic_image'), ['w' => 1200, 'q' => '70']));
             } else {
                 if (array_key_exists('social_image', $this->values)) {
-                    $image = url(Image::manipulate('assets/' . $this->values['social_image'], ['w' => 1200, 'q' => '70']));
+
+                    if (! empty($this->values['social_image'])) {
+                        $image = url(Image::manipulate('assets/' . $this->values['social_image'], ['w' => 1200, 'q' => '70']));
+                    }
                 }
             }
         }
