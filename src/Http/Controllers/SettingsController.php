@@ -70,8 +70,9 @@ class SettingsController extends CpController
      */
     private function setLocale() {
         $this->file->setLocale(
-            Site::get(session('statamic.cp.selected-site'))->locale() ??
-            Site::current()->handle());
+            session('statamic.cp.selected-site') ?
+                Site::get(session('statamic.cp.selected-site'))->locale() :
+                Site::current()->handle());
     }
 
     protected function formBlueprint()
