@@ -22,8 +22,6 @@ class ServiceProvider extends AddonServiceProvider
     {
         parent::boot();
 
-        // dd(Session::all());
-
         $this->loadViewsFrom(__DIR__ . '/../resources/views/', 'seotamic');
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'seotamic');
 
@@ -33,6 +31,10 @@ class ServiceProvider extends AddonServiceProvider
                 ->route('cnj.seotamic.index')
                 ->icon('seo-search-graph');
         });
+
+        $this->publishes([
+            __DIR__.'/../config/seotamic.php' => config_path('seotamic.php')
+        ], 'config');
     }
 
     public function register() {
