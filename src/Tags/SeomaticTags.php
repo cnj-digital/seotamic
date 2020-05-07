@@ -3,6 +3,7 @@
 namespace Cnj\Seotamic\Tags;
 
 use Statamic\Facades\Image;
+use Statamic\Facades\Asset;
 
 class SeotamicTags extends Tags
 {
@@ -203,25 +204,39 @@ class SeotamicTags extends Tags
         $image = '';
         $assets = $this->config->get('seotamic.container');
 
-        if (substr($assets, -1) !== '/') {
-            $assets = $assets . '/';
+        if (substr($assets, -1) === '/') {
+            $assets = substr($assets, 0, -1);
         }
 
         if (! empty($image)) {
-            $image = url(Image::manipulate('assets/' . $image, ['w' => 1200, 'q' => '70']));
+            $image = $this->image_manipulation($assets, $image);
         } else {
             if (! empty($this->context->get('seotamic_image'))) {
-                $image = url(Image::manipulate('assets/' . $this->context->get('seotamic_image'), ['w' => 1200, 'q' => '70']));
+                $image = $this->image_manipulation($assets, $this->context->get('seotamic_image'));
             } else {
                 if (array_key_exists('social_image', $this->values)) {
 
                     if (! empty($this->values['social_image'])) {
-                        $image = url(Image::manipulate('assets/' . $this->values['social_image'], ['w' => 1200, 'q' => '70']));
+                        $image = $this->image_manipulation($assets, $this->values['social_image']);
                     }
                 }
             }
         }
 
         return $image;
+    }
+
+    private function image_manipulation($assets, $image) {
+        $asset = Asset::find($assets. '::'.$image);
+
+        if (! $asset) {
+            return null;
+        }
+
+        if (! $asset->isImage()) {
+            return null;
+        }
+
+        return url($asset->manipulate(['w' => 1200, 'q' => '70']));
     }
 }
