@@ -116,7 +116,7 @@ class SettingsController extends CpController
                 'fields' => [
                     'social_image' => [
                         'type' => 'assets',
-                        'container' => 'assets',
+                        'container' => config('seotamic.container'),
                         'max_files' => 1,
                         'display' => 'Image',
                         'instructions' => 'Use your logo or any other branded image for the rest of your pages. Use images with a 1.91:1 ratio and minimum recommended dimensions of 1200x630 for optimal clarity across all devices. The image will be resized to 1200 width.',
