@@ -51,6 +51,8 @@ php artisan vendor:publish --provider="cnj/seotamic" --tag=config
 
 This will copy the default config file to `config/seotamic.php'.
 
+If you need to change the default assets container, make sure to apply the change in the copied fieldset as well.
+
 ## Usage
 
 Usage is fairly simple and straight forward. You can visit the global Settings by following the Seotamic link on the navigation in the CP. Make sure to follow the instructions on each field.
