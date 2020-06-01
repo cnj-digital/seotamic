@@ -46,7 +46,7 @@ Include this fieldset to all collections where you want to control SEO (those wi
 You can override the default options by publishing the configuration:
 
 ```
-php artisan vendor:publish --provider="cnj/seotamic" --tag=config
+php artisan vendor:publish --provider="Cnj\Seotamic\ServiceProvider" --tag=config
 ```
 
 This will copy the default config file to `config/seotamic.php'.
