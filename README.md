@@ -1,6 +1,6 @@
 # Seotamic - Statamic SEO Addon
 
-Statmic v3 only. Due to "missing" Statamic features to make this completely automatic, there's some manual work to be done in order to use this. Works with multistes and the latest Statamic v3 Beta
+Statmic v3 only. Due to "missing" Statamic features to make this completely automatic, there's some manual work to be done in order to use this. Works with multisites and the latest Statamic v3 Beta
 
 ```php
 {{ seotamic }}
