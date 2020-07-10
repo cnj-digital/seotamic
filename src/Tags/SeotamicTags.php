@@ -242,10 +242,4 @@ class SeotamicTags extends Tags
 
         return url($asset->manipulate(['w' => 1200, 'q' => '70']));
     }
-
-    public function string()
-	{
-		// The same
-		return 'forty-four'; // { { numbers:string }}
-	}
 }
