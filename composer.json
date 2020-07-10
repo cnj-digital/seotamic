@@ -1,32 +1,39 @@
 {
-  "name": "cnj/seotamic",
-  "description": "Simple SEO addon for Statamic v3",
-  "type": "statamic-addon",
-  "license": "MIT",
-  "require": {
-    "php": "^7.3.4",
-    "statamic/cms": "3.*@beta"
-  },
-  "autoload": {
-    "psr-4": {
-      "Cnj\\Seotamic\\": "src"
-    }
-  },
-  "authors": [
-    {
-      "name": "Martin Koterle",
-      "email": "martin@cnj.si"
-    }
-  ],
-  "extra": {
-    "statamic": {
-      "name": "Seotamic",
-      "description": "Simple SEO addon for Statamic v3"
+    "name": "cnj/seotamic",
+    "description": "Simple SEO addon for Statamic v3",
+    "type": "statamic-addon",
+    "license": "MIT",
+    "require": {
+        "php": "^7.3.4",
+        "statamic/cms": "3.*@beta"
     },
-    "laravel": {
-      "providers": [
-        "Cnj\\Seotamic\\ServiceProvider"
-      ]
+    "require-dev": {
+        "orchestra/testbench": "^4.0",
+        "phpunit/phpunit": "^8.5"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Cnj\\Seotamic\\Tests\\": "tests"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Cnj\\Seotamic\\": "src"
+        }
+    },
+    "authors": [{
+        "name": "Martin Koterle",
+        "email": "martin@cnj.si"
+    }],
+    "extra": {
+        "statamic": {
+            "name": "Seotamic",
+            "description": "Simple SEO addon for Statamic v3"
+        },
+        "laravel": {
+            "providers": [
+                "Cnj\\Seotamic\\ServiceProvider"
+            ]
+        }
     }
-  }
 }

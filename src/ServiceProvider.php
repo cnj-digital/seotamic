@@ -4,8 +4,6 @@ namespace Cnj\Seotamic;
 
 use Illuminate\Support\Facades\Session;
 use Statamic\Facades\CP\Nav;
-use Cnj\Seotamic\Tags\OpenGraph;
-use Cnj\Seotamic\Tags\SeotamicTags;
 use Statamic\Providers\AddonServiceProvider;
 
 class ServiceProvider extends AddonServiceProvider
@@ -15,7 +13,7 @@ class ServiceProvider extends AddonServiceProvider
     ];
 
     protected $tags = [
-        SeotamicTags::class,
+        \Cnj\Seotamic\Tags\SeotamicTags::class,
     ];
 
     public function boot()
