@@ -2,8 +2,9 @@
 
 namespace Cnj\Seotamic;
 
-use Illuminate\Support\Facades\Session;
 use Statamic\Facades\CP\Nav;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Session;
 use Statamic\Providers\AddonServiceProvider;
 
 class ServiceProvider extends AddonServiceProvider
@@ -33,6 +34,8 @@ class ServiceProvider extends AddonServiceProvider
         $this->publishes([
             __DIR__.'/../config/seotamic.php' => config_path('seotamic.php')
         ], 'config');
+
+        Event::subscribe(Subscriber::class);
     }
 
     public function register() {

@@ -32,7 +32,7 @@ class SettingsController extends CpController
         $blueprint = $this->formBlueprint();
         $fields = $blueprint->fields();
 
-        $values = $this->file->read();
+        $values = $this->file->read(false);
 
         $fields = $fields->addValues($values);
 

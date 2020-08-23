@@ -39,16 +39,16 @@ class SeotamicTags extends Tags
     public function title()
     {
         // Set the page title as the default value
-        $title = $this->context->raw('title');
+        $title = $this->context->value('title');
 
         // If Seotamic is not set for this public page, just return the title
-        if (! $this->context->raw('seotamic_title')) {
+        if (! $this->context->value('seotamic_title')) {
             return $title;
         }
 
         // If set to custom, use the custom title
         if ($this->context->raw('seotamic_title') === 'custom') {
-            $title = $this->context->raw('seotamic_custom_title');
+            $title = $this->context->value('seotamic_custom_title');
         }
 
         if (array_key_exists('title_append', $this->values)) {
@@ -109,7 +109,7 @@ class SeotamicTags extends Tags
 
         // First child option can return 404 if there is no first child
         if ($this->context->raw('seotamic_canonical') !== null && $this->context->raw('seotamic_canonical') !== 404) {
-            $url = $this->context->raw('seotamic_canonical');
+            $url = $this->context->value('seotamic_canonical');
 
             // We have to make sure the given url is formatted correctly
             // If it's a relative path it must have a / prepended

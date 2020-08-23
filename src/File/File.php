@@ -12,11 +12,6 @@ use Illuminate\Config\Repository as Config;
 class File
 {
     /**
-     * @var string
-     */
-    protected $disk;
-
-    /**
      * @var Manager
      */
     protected $manager;
@@ -47,7 +42,6 @@ class File
         $this->manager = $manager;
         $this->yaml = $yaml;
         $this->configFile = $config->get('seotamic.file');
-        $this->disk = $config->get('seotamic.disk');
 
         // Set default locale value
         $this->locale = $sites->current()->locale();
@@ -56,17 +50,19 @@ class File
     /**
      * Reads the YAML settings file and returns an array of settings
      *
-     * Read is always done from the cache, if the appropriate key exists.
+     * Read is done from the cache, if the appropriate key exists and $fromCache
+     * is set to true (default).
      *
-     * @return array
-     * @throws ParseException
+     * @param   bool fromCache
+     * @return  array
+     * @throws  ParseException
      */
-    public function read() {
-        if (Cache::has($this->cacheKey())) {
+    public function read($fromCache = true) {
+        if ($fromCache && Cache::has($this->cacheKey())) {
             return Cache::get($this->cacheKey());
         }
 
-        $values = $this->yaml->parse($this->manager->disk($this->disk)->get($this->file()));
+        $values = $this->yaml->parse($this->manager->disk()->get($this->file()));
         Cache::forever($this->cacheKey(), $values);
 
         return $values;
@@ -81,7 +77,7 @@ class File
     public function write($values) {
         Cache::forget($this->cachekey());
 
-        $this->manager->disk($this->disk)->put($this->file(), $this->yaml->dump($values));
+        $this->manager->disk()->put($this->file(), $this->yaml->dump($values));
     }
 
     /**
@@ -100,7 +96,7 @@ class File
      * @return string
      */
     private function file() {
-        return $this->file = "{$this->configFile}_{$this->locale}.yaml";
+        return base_path("content/{$this->configFile}_{$this->locale}.yaml");
     }
 
     /**

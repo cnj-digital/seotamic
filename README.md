@@ -1,6 +1,6 @@
 # Seotamic - Statamic SEO Addon
 
-Statmic v3 only. Due to "missing" Statamic features to make this completely automatic, there's some manual work to be done in order to use this. Works with multisites and the latest Statamic v3 Beta
+Statmic v3 only. Automatically adds a SEO tab to all your collection entries where you can fine tune SEO for every entry.
 
 ```php
 {{ seotamic }}
@@ -21,6 +21,10 @@ Generates the whole array of SEO settings:
 ...
 ```
 
+## Version 2 changes
+
+Version 2 has breaking changes. If you update from version 1, your global settings will not be transfered, you need to manually copy the old files to the content directory.
+
 ## Installation
 
 Include the package with composer:
@@ -31,15 +35,8 @@ composer require cnj/seotamic
 
 The package requires Laravel 7+ and PHP 7.3+. It will auto register.
 
-Copy the fieldset seotamic.yaml into your projects fieldset folder:
 
-```sh
-cp vendor/cnj/seotamic/fieldsets/seotamic.yaml resources/fieldsets/
-```
-
-Include this fieldset to all collections where you want to control SEO (those with public pages):
-
-![How to add Seotamic fieldset to entry](https://media.giphy.com/media/SAUAWHkR34qX105xnS/giphy.gif)
+The SEO section tab will appear on all collection entries automatically.
 
 ## Configuration (optional)
 
@@ -51,7 +48,7 @@ php artisan vendor:publish --provider="Cnj\Seotamic\ServiceProvider" --tag=confi
 
 This will copy the default config file to `config/seotamic.php'.
 
-If you need to change the default assets container, make sure to apply the change in the copied fieldset as well.
+If you need to change the default assets container, make sure to apply the change in the Blueprints as well.
 
 ## Usage
 
