@@ -12,12 +12,12 @@ Generates the whole array of SEO settings:
 <title>My Page Title</title>
 <meta name="description" content="SEO friendly description" />
 <link rel="canonical" href="https://mysite.com/page" />
-<meta name="og:url" content="https://mysite.com/page" />
-<meta name="og:site_name" content="Site name" />
-<meta name="og:title" content="My Page Title" />
-<meta name="og:description" content="SEO friendly description" />
-<meta name="og:locale" content="en_US" />
-<meta name="og:image" content="https://mysite.com/img/og.jpg" />
+<meta property="og:url" content="https://mysite.com/page" />
+<meta property="og:site_name" content="Site name" />
+<meta property="og:title" content="My Page Title" />
+<meta property="og:description" content="SEO friendly description" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:image" content="https://mysite.com/img/og.jpg" />
 ...
 ```
 
