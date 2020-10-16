@@ -318,7 +318,7 @@ class Subscriber
             [
                 'handle' => 'seotamic_image',
                 'field' =>  [
-                    'container' => 'assets',
+                    'container' => config('seotamic.container'),
                     'mode' => 'grid',
                     'restrict' => false,
                     'allow_uploads' => true,
