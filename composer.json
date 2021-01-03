@@ -4,12 +4,12 @@
     "type": "statamic-addon",
     "license": "MIT",
     "require": {
-        "php": "^7.3.4",
+        "php": "^7.3.4||^8.0",
         "statamic/cms": "^3.0.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^4.0",
-        "phpunit/phpunit": "^8.5"
+        "orchestra/testbench": "^4.0||^5.0",
+        "phpunit/phpunit": "^8.5||^9.0"
     },
     "autoload-dev": {
         "psr-4": {
