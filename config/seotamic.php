@@ -5,5 +5,8 @@ return [
     'file' => 'seotamic',
 
     // Social images asset container
-    'container' => 'assets'
+    'container' => 'assets',
+
+    // blueprints we dont add fields to
+    'ignore_blueprints' => [],
 ];
