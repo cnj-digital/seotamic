@@ -38,6 +38,10 @@ class Subscriber
     {
         $this->blueprint = $event->blueprint;
 
+        $ignoreBlueprints = config('seotamic.ignore_blueprints', []);
+        if (in_array($this->blueprint->handle(), $ignoreBlueprints))
+            return;
+
         $fields = $this->getFields();
 
         collect($fields)->each(function($field) {
