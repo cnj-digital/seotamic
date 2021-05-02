@@ -85,6 +85,41 @@ Social ones will still return everything with tags
 {{ seotamic:twitter }}
 ```
 
+## Dynamic OG Image
+In projects where you want the OG Image to be dynamic, for now you can use this ViewModel and inject it to your collection in order to dynamically assign the OG Image.
+
+```php
+<?php
+
+namespace App\ViewModels;
+
+use Statamic\View\ViewModel;
+
+class OgImage extends ViewModel
+{
+    public function data(): array
+    {
+        $image = $this->cascade->get('image');
+
+        if ($image) {
+            return [
+                'seotamic_image' => $image
+            ];
+        }
+
+        return [];
+    }
+}
+
+```
+In the example above we are assuming in your collection you have an `image` field which you can change to suit your usecase. Then in your collections you just have to inject the ViewModel.
+
+```yaml
+title: Posts
+inject:
+  view_model: App\ViewModels\OgImage
+```
+
 ## Credits
 
 This package was built by [CNJ Digital](https://www.cnj.si/).
