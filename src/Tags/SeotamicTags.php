@@ -160,7 +160,7 @@ class SeotamicTags extends Tags
         $output .= "<meta property=\"og:description\" content=\"{$this->social_field('open_graph_description', $this->description())}\">";
 
         // TODO: Check on multisite, here we have locale_full and site_locale
-        $output .= "<meta property=\"og:locale\" content=\"{$this->context->raw('locale_full')}\">";
+        $output .= "<meta property=\"og:locale\" content=\"{$this->context->value('site')->locale()}\">";
 
         // image
         $output .= "<meta property=\"og:image\" content=\"{$this->social_image($image)}\">";
