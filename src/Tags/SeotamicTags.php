@@ -84,11 +84,11 @@ class SeotamicTags extends Tags
         }
 
         if ($this->context->raw('seotamic_meta_description') === 'general') {
-            return $this->values['meta_description'];
+            return trim(htmlentities(strip_tags($this->values['meta_description'])));
         }
 
         if ($this->context->raw('seotamic_meta_description') === 'custom') {
-            return $this->context->raw('seotamic_custom_meta_description');
+            return trim(htmlentities(strip_tags($this->context->raw('seotamic_custom_meta_description'))));
         }
 
         return '';
@@ -200,7 +200,7 @@ class SeotamicTags extends Tags
             }
         }
 
-        return $field;
+        return trim(htmlentities(strip_tags($field)));
     }
 
     private function social_image($image = null) {
