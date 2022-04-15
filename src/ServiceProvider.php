@@ -3,6 +3,7 @@
 namespace Cnj\Seotamic;
 
 use Statamic\Facades\CP\Nav;
+use Statamic\Facades\Permission;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Session;
 use Statamic\Providers\AddonServiceProvider;
@@ -28,12 +29,16 @@ class ServiceProvider extends AddonServiceProvider
             $nav->content('SEOtamic')
                 ->section('Tools')
                 ->route('cnj.seotamic.index')
+                ->can('view seotamic tool')
                 ->icon('seo-search-graph');
         });
 
         $this->publishes([
             __DIR__.'/../config/seotamic.php' => config_path('seotamic.php')
         ], 'config');
+
+        Permission::register('view seotamic tool')
+                  ->label('View global SEOtamic settings');
 
         Event::subscribe(Subscriber::class);
     }
