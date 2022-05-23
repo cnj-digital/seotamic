@@ -9,7 +9,6 @@ use Statamic\Facades\Site;
 use Illuminate\Http\Request;
 use Statamic\Facades\Blueprint;
 use Illuminate\Support\Facades\Session;
-
 use Statamic\Http\Controllers\CP\CpController;
 
 class SettingsController extends CpController
@@ -26,7 +25,8 @@ class SettingsController extends CpController
         parent::__construct($request);
     }
 
-    public function index(Request $request) {
+    public function index(Request $request)
+    {
         $this->setLocale();
 
         $blueprint = $this->formBlueprint();
@@ -45,7 +45,8 @@ class SettingsController extends CpController
         ]);
     }
 
-    public function update(Request $request) {
+    public function update(Request $request)
+    {
         $this->setLocale();
 
         $blueprint = $this->formBlueprint();
@@ -68,11 +69,13 @@ class SettingsController extends CpController
      *
      * @return void
      */
-    private function setLocale() {
+    private function setLocale()
+    {
         $this->file->setLocale(
             session('statamic.cp.selected-site') ?
                 Site::get(session('statamic.cp.selected-site'))->locale() :
-                Site::current()->locale());
+            Site::current()->locale()
+        );
     }
 
     protected function formBlueprint()

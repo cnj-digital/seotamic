@@ -17,7 +17,8 @@ class SeotamicTags extends Tags
      *
      * @return string
      */
-    public function index() {
+    public function index()
+    {
         $output = "<title>{$this->title()}</title>";
         $output .= "<meta name=\"description\" content=\"{$this->description()}\">";
         $output .= "<link rel=\"canonical\" href=\"{$this->canonical()}\" />";
@@ -74,7 +75,8 @@ class SeotamicTags extends Tags
      *
      * @return string
      */
-    public function description() {
+    public function description()
+    {
         if (! $this->context->raw('seotamic_meta_description')) {
             return '';
         }
@@ -102,7 +104,8 @@ class SeotamicTags extends Tags
      *
      * @return string
      */
-    public function canonical() {
+    public function canonical()
+    {
         $url = $this->context->raw('permalink');
 
         // TODO: use the env url? Check how permalink is generated
@@ -141,7 +144,8 @@ class SeotamicTags extends Tags
      * @param $image string Image name
      * @return string
      */
-    public function og($image = null) {
+    public function og($image = null)
+    {
         if (! array_key_exists('open_graph_display', $this->values)) {
             return '';
         }
@@ -156,20 +160,21 @@ class SeotamicTags extends Tags
             $output .= "<meta property=\"og:site_name\" content=\"{$this->values['open_graph_site_name']}\">";
         }
 
-        $output .= "<meta property=\"og:title\" content=\"{$this->social_field('open_graph_title', $this->context->raw('title'))}\">";
-        $output .= "<meta property=\"og:description\" content=\"{$this->social_field('open_graph_description', $this->description())}\">";
+        $output .= "<meta property=\"og:title\" content=\"{$this->socialField('open_graph_title', $this->context->raw('title'))}\">";
+        $output .= "<meta property=\"og:description\" content=\"{$this->socialField('open_graph_description', $this->description())}\">";
 
         // TODO: Check on multisite, here we have locale_full and site_locale
         $output .= "<meta property=\"og:locale\" content=\"{$this->context->value('site')->locale()}\">";
 
         // image
-        $output .= "<meta property=\"og:image\" content=\"{$this->social_image($image)}\">";
+        $output .= "<meta property=\"og:image\" content=\"{$this->socialImage($image)}\">";
 
         return $output;
     }
 
     // TODO: Add check if title/desc same as OG
-    public function twitter($image = null) {
+    public function twitter($image = null)
+    {
         if (! array_key_exists('twitter_display', $this->values)) {
             return '';
         }
@@ -180,16 +185,17 @@ class SeotamicTags extends Tags
 
         $output = "<meta name=\"twitter:card\" content=\"summary_large_image\">";
         $output .= "<meta name=\"twitter:url\" content=\"{$this->canonical()}\">";
-        $output .= "<meta name=\"twitter:title\" content=\"{$this->social_field('twitter_title', $this->context->raw('title'))}\">";
-        $output .= "<meta name=\"twitter:description\" content=\"{$this->social_field('twitter_description', $this->description())}\">";
+        $output .= "<meta name=\"twitter:title\" content=\"{$this->socialField('twitter_title', $this->context->raw('title'))}\">";
+        $output .= "<meta name=\"twitter:description\" content=\"{$this->socialField('twitter_description', $this->description())}\">";
 
         // image
-        $output .= "<meta name=\"og:twitter\" content=\"{$this->social_image($image)}\">";
+        $output .= "<meta name=\"og:twitter\" content=\"{$this->socialImage($image)}\">";
 
         return $output;
     }
 
-    private function social_field($name, $default) {
+    private function socialField($name, $default)
+    {
         $field = $default;
 
         if ($this->context->raw("seotamic_${name}")) {
@@ -203,7 +209,8 @@ class SeotamicTags extends Tags
         return trim(htmlentities(strip_tags($field)));
     }
 
-    private function social_image($image = null) {
+    private function socialImage($image = null)
+    {
         $image = '';
         $assets = $this->config->get('seotamic.container');
 
@@ -212,15 +219,14 @@ class SeotamicTags extends Tags
         }
 
         if (! empty($image)) {
-            $image = $this->image_manipulation($assets, $image);
+            $image = $this->imageManipulation($assets, $image);
         } else {
             if (! empty($this->context->raw('seotamic_image'))) {
-                $image = $this->image_manipulation($assets, $this->context->raw('seotamic_image'));
+                $image = $this->imageManipulation($assets, $this->context->raw('seotamic_image'));
             } else {
                 if (array_key_exists('social_image', $this->values)) {
-
                     if (! empty($this->values['social_image'])) {
-                        $image = $this->image_manipulation($assets, $this->values['social_image']);
+                        $image = $this->imageManipulation($assets, $this->values['social_image']);
                     }
                 }
             }
@@ -229,8 +235,9 @@ class SeotamicTags extends Tags
         return $image;
     }
 
-    private function image_manipulation($assets, $image) {
-        $asset = Asset::find($assets. '::'.$image);
+    private function imageManipulation($assets, $image)
+    {
+        $asset = Asset::find($assets . '::' . $image);
 
         if (! $asset) {
             return null;

@@ -38,7 +38,8 @@ class File
      * @param Manager $manager
      * @param Yaml $yaml
      */
-    public function __construct(Config $config, Manager $manager, Yaml $yaml, Sites $sites) {
+    public function __construct(Config $config, Manager $manager, Yaml $yaml, Sites $sites)
+    {
         $this->manager = $manager;
         $this->yaml = $yaml;
         $this->configFile = $config->get('seotamic.file');
@@ -57,7 +58,8 @@ class File
      * @return  array
      * @throws  ParseException
      */
-    public function read($fromCache = true) {
+    public function read($fromCache = true)
+    {
         if ($fromCache && Cache::has($this->cacheKey())) {
             return Cache::get($this->cacheKey());
         }
@@ -74,7 +76,8 @@ class File
      * @param array $values
      * @return void
      */
-    public function write($values) {
+    public function write($values)
+    {
         Cache::forget($this->cachekey());
 
         $this->manager->disk()->put($this->file(), $this->yaml->dump($values));
@@ -86,7 +89,8 @@ class File
      * @param string $value
      * @return void
      */
-    public function setLocale($value) {
+    public function setLocale($value)
+    {
         $this->locale = $value;
     }
 
@@ -95,7 +99,8 @@ class File
      *
      * @return string
      */
-    private function file() {
+    private function file()
+    {
         return base_path("content/{$this->configFile}_{$this->locale}.yaml");
     }
 
@@ -104,7 +109,8 @@ class File
      *
      * @return string
      */
-    private function cacheKey() {
+    private function cacheKey()
+    {
         return "seotamic_{$this->locale}";
     }
 }

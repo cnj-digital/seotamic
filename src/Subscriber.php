@@ -25,7 +25,7 @@ class Subscriber
     public function subscribe($events)
     {
         foreach ($this->events as $event => $method) {
-            $events->listen($event, self::class.'@'.$method);
+            $events->listen($event, self::class . '@' . $method);
         }
     }
 
@@ -39,13 +39,15 @@ class Subscriber
         $this->blueprint = $event->blueprint;
 
         $ignoreBlueprints = config('seotamic.ignore_blueprints', []);
-        if (in_array($this->blueprint->handle(), $ignoreBlueprints))
+
+        if (in_array($this->blueprint->handle(), $ignoreBlueprints)) {
             return;
+        }
 
         $fields = $this->getFields();
 
-        collect($fields)->each(function($field) {
-            $this->blueprint->ensureFieldInSection($field['handle'], $field['field'] , 'SEO');
+        collect($fields)->each(function ($field) {
+            $this->blueprint->ensureFieldInSection($field['handle'], $field['field'], 'SEO');
         });
     }
 
@@ -62,7 +64,7 @@ class Subscriber
                     'display' => 'Meta',
                     'listable' => 'hidden',
                     'type' => 'section',
-                    'localizable'=> false
+                    'localizable' => false
                 ],
             ],
             [
@@ -96,7 +98,7 @@ class Subscriber
                     'listable' => 'hidden',
                     'display' => 'Custom Meta Title',
                     'if' => [
-                        'seotamic_title'=> 'equals custom'
+                        'seotamic_title' => 'equals custom'
                     ]
                 ]
             ],

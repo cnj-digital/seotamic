@@ -1,12 +1,17 @@
 <?php
 
 return [
-    // filename to store the settings, each locale is stored in a separate file
+    // The filename where the settings will be stored. On a multilingual site,
+    // each locale will be stored in a seprate file. If this configuration
+    // is changed after the first save, the old settings will have to be
+    // manually imported into the new file.
     'file' => 'seotamic',
 
-    // Social images asset container
+    // Social images asset container. It must exist in Statamic.
+    // A sensible default is set.
     'container' => 'assets',
 
-    // blueprints we dont add fields to
+    // A list of blueprints where the SEO fields will not be injected.
+    // By default this list is empty.
     'ignore_blueprints' => [],
 ];

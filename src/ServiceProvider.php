@@ -23,7 +23,7 @@ class ServiceProvider extends AddonServiceProvider
         parent::boot();
 
         $this->loadViewsFrom(__DIR__ . '/../resources/views/', 'seotamic');
-        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'seotamic');
+        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'seotamic');
 
         Nav::extend(function ($nav) {
             $nav->content('SEOtamic')
@@ -34,7 +34,7 @@ class ServiceProvider extends AddonServiceProvider
         });
 
         $this->publishes([
-            __DIR__.'/../config/seotamic.php' => config_path('seotamic.php')
+            __DIR__ . '/../config/seotamic.php' => config_path('seotamic.php')
         ], 'config');
 
         Permission::register('view seotamic tool')
@@ -43,7 +43,8 @@ class ServiceProvider extends AddonServiceProvider
         Event::subscribe(Subscriber::class);
     }
 
-    public function register() {
-        $this->mergeConfigFrom(__DIR__.'/../config/seotamic.php', 'seotamic');
+    public function register()
+    {
+        $this->mergeConfigFrom(__DIR__ . '/../config/seotamic.php', 'seotamic');
     }
 }
