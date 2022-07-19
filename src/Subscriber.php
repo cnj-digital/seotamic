@@ -64,7 +64,7 @@ class Subscriber
                     'display' => 'Meta',
                     'listable' => 'hidden',
                     'type' => 'section',
-                    'localizable' => false
+                    'localizable' => true
                 ],
             ],
             [
@@ -81,7 +81,7 @@ class Subscriber
                     'push_tags' => false,
                     'cast_booleans' => false,
                     'type' => 'select',
-                    'localizable' => false,
+                    'localizable' => true,
                     'listable' => 'hidden',
                     'default' => 'title',
                     'display' => 'Title',
@@ -94,7 +94,7 @@ class Subscriber
                     'input_type' => 'text',
                     'character_limit' => 100,
                     'type' => 'text',
-                    'localizable' => false,
+                    'localizable' => true,
                     'listable' => 'hidden',
                     'display' => 'Custom Meta Title',
                     'if' => [
@@ -107,7 +107,7 @@ class Subscriber
                 'field' =>  [
                     'type' => 'toggle',
                     'instructions' => 'Prepends to title the text set in General SEO settings',
-                    'localizable' => false,
+                    'localizable' => true,
                     'default' => true,
                     'width' => 50,
                     'listable' => 'hidden',
@@ -118,7 +118,7 @@ class Subscriber
                 'handle' => 'seotamic_title_append',
                 'field' =>  [
                     'type' => 'toggle',
-                    'localizable' => false,
+                    'localizable' => true,
                     'instructions' => 'Appends to title the text set in General SEO settings',
                     'width' => 50,
                     'listable' => 'hidden',
@@ -143,7 +143,7 @@ class Subscriber
                     'cast_booleans' => false,
                     'type' => 'select',
                     'instructions' => 'It can be used to determine the text used under the title on search engine results pages. If empty, search engines will automatically generate this text.',
-                    'localizable' => false,
+                    'localizable' => true,
                     'listable' => 'hidden',
                     'display' => 'Meta description',
                 ]
@@ -154,7 +154,7 @@ class Subscriber
                     'input_type' => 'text',
                     'character_limit' => 200,
                     'type' => 'textarea',
-                    'localizable' => false,
+                    'localizable' => true,
                     'listable' => 'hidden',
                     'display' => 'Custom Meta description',
                     'if' => [
@@ -167,7 +167,7 @@ class Subscriber
                 'field' =>  [
                     'type' => 'link',
                     'instructions' => 'By default it will be set to the page url',
-                    'localizable' => false,
+                    'localizable' => true,
                     'listable' => 'hidden',
                     'display' => 'Canonical',
                 ]
@@ -176,7 +176,7 @@ class Subscriber
                 'handle' => 'seotamic_social',
                 'field' =>  [
                     'type' => 'section',
-                    'localizable' => false,
+                    'localizable' => true,
                     'listable' => 'hidden',
                     'display' => 'Social',
                 ]
@@ -197,7 +197,7 @@ class Subscriber
                     'push_tags' => false,
                     'cast_booleans' => false,
                     'type' => 'select',
-                    'localizable' => false,
+                    'localizable' => true,
                     'listable' => 'hidden',
                     'display' => 'Open Graph title',
                 ]
@@ -208,7 +208,7 @@ class Subscriber
                     'input_type' => 'text',
                     'character_limit' => 100,
                     'type' => 'text',
-                    'localizable' => false,
+                    'localizable' => true,
                     'listable' => 'hidden',
                     'display' => 'Custom Open Graph title',
                     'if' => [
@@ -232,7 +232,7 @@ class Subscriber
                     'push_tags' => false,
                     'cast_booleans' => false,
                     'type' => 'select',
-                    'localizable' => false,
+                    'localizable' => true,
                     'listable' => 'hidden',
                     'display' => 'Open Graph description',
                 ]
@@ -243,7 +243,7 @@ class Subscriber
                     'input_type' => 'text',
                     'character_limit' => 200,
                     'type' => 'textarea',
-                    'localizable' => false,
+                    'localizable' => true,
                     'listable' => 'hidden',
                     'display' => 'Custom Open Graph description',
                     'if' => [
@@ -267,7 +267,7 @@ class Subscriber
                     'push_tags' => false,
                     'cast_booleans' => false,
                     'type' => 'select',
-                    'localizable' => false,
+                    'localizable' => true,
                     'listable' => 'hidden',
                     'display' => 'Twitter title',
                 ]
@@ -278,7 +278,7 @@ class Subscriber
                     'input_type' => 'text',
                     'character_limit' => 100,
                     'type' => 'text',
-                    'localizable' => false,
+                    'localizable' => true,
                     'listable' => 'hidden',
                     'display' => 'Custom Twitter title',
                     'if' => [
@@ -302,7 +302,7 @@ class Subscriber
                     'push_tags' => false,
                     'cast_booleans' => false,
                     'type' => 'select',
-                    'localizable' => false,
+                    'localizable' => true,
                     'listable' => 'hidden',
                     'display' => 'Twitter description',
                 ]
@@ -313,7 +313,7 @@ class Subscriber
                     'input_type' => 'text',
                     'character_limit' => 200,
                     'type' => 'textarea',
-                    'localizable' => false,
+                    'localizable' => true,
                     'listable' => 'hidden',
                     'display' => 'Custom Twitter description',
                     'if' => [
@@ -331,7 +331,7 @@ class Subscriber
                     'max_files' => 1,
                     'type' => 'assets',
                     'instructions' => 'If not set, the general image will be used. It\'s best to use an image with a 1.91:1 aspect ratio that is at least 1200px wide for universal support. The image will be resized to 1200 width.',
-                    'localizable' => false,
+                    'localizable' => true,
                     'listable' => 'hidden',
                     'display' => 'Image',
                 ]
