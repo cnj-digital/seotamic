@@ -1,11 +1,8 @@
 <template>
   <div>
     <div>
-      <Heading title="Social Title">
-        Social (Open Graph, Twitter, …) is used to display information while
-        sharing the website link. OpenGraph is the most common sharing protocol
-        (used by Facebook, Slack…). The title should be between 50 and 60
-        characters and not have any brandhing.
+      <Heading :title="meta.t.title_title">
+        {{ meta.t.title_instructions }}
       </Heading>
 
       <ButtonGroup :options="titleOptions" v-model="valueData.title.type" />
@@ -25,10 +22,8 @@
     </div>
 
     <div class="seotamic-mt-8">
-      <Heading title="Social Description">
-        Shown below the title. It is used to describe the content of the page.
-        If Meta description is not empty, it can be reused here. Usually Meta
-        description is longer.
+      <Heading :title="meta.t.description_title">
+        {{ meta.t.description_instructions }}
       </Heading>
 
       <ButtonGroup
@@ -52,6 +47,8 @@
 
     <SocialPreview
       class="seotamic-mt-8"
+      :preview-title="meta.t.preview_title"
+      :name="meta.config.preview_domain"
       :title="valueData.title.value"
       :image="socialPreviewImage"
       :description="valueData.description.value"
@@ -73,23 +70,21 @@ export default {
     Heading,
     SocialPreview,
   },
+
   mixins: [Fieldtype],
+
   data() {
     return {
-      // Move to translations…
-      description:
-        "This description will be prefilled by the search engine depending on your content. You can change it manually by selecting custom and typing in your own.",
-
       titleOptions: [
-        { label: "Title", value: "title" },
-        { label: "General", value: "general" },
-        { label: "Custom", value: "custom" },
+        { label: this.meta.t.label_title, value: "title" },
+        { label: this.meta.t.label_general, value: "general" },
+        { label: this.meta.t.label_custom, value: "custom" },
       ],
 
       descriptionOptions: [
-        { label: "General", value: "general" },
-        { label: "Meta", value: "meta" },
-        { label: "Custom", value: "custom" },
+        { label: this.meta.t.label_general, value: "general" },
+        { label: this.meta.t.label_meta, value: "meta" },
+        { label: this.meta.t.label_custom, value: "custom" },
       ],
 
       // Default values…
@@ -109,8 +104,6 @@ export default {
   },
 
   mounted() {
-    // TODO Translations
-
     if (!this.value) {
       this.value = this.valueData;
     }
@@ -131,7 +124,6 @@ export default {
     }
   },
 
-  // computed socialpreviewimage
   computed: {
     socialPreviewImage() {
       if (this.meta.social_image) {

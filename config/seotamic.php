@@ -15,12 +15,14 @@ return [
     // By default this list is empty.
     'ignore_blueprints' => [],
 
-    // Default recommended field lengths
+    // Default recommended field lengths.
+    // They are just guidelines and can be ignored on the frontend
     'meta_title_length' => 60,
     'meta_description_length' => 160,
     'social_title_length' => 60,
     'social_description_length' => 60,
 
-    // For preview purposes, no practical purpose
-    'preview_url' => 'https://www.google.com'
+    // For preview, no practical purpose.
+    'preview_url' => 'https://www.google.com',
+    'preview_domain' => 'google.com'
 ];

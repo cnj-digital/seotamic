@@ -2,31 +2,28 @@
 
 namespace Cnj\Seotamic\FieldTypes;
 
-use Cnj\Seotamic\File\File;
-use Statamic\Fields\Fieldtype;
-use Statamic\Support\Str;
-
-class SeotamicMeta extends Fieldtype
+class SeotamicMeta extends SeotamicType
 {
-    protected $categories = [];
-    protected $selectableInForms = false;
-
-    public function __construct(File $file)
-    {
-        $this->file = $file;
-    }
-
-    protected function configFieldItems(): array
-    {
-        return [];
-    }
-
     public function preload()
     {
         return [
             'title' => $this->getTitle(),
             'seotamic' => $this->getSeotamicGlobals(),
-            'config' => config('seotamic')
+            'config' => config('seotamic'),
+            't' => [
+                'title_title' => __('seotamic::general.meta_field_title_title'),
+                'title_instructions' => __('seotamic::general.meta_field_title_instructions'),
+                'prepend_label' => __('seotamic::general.meta_field_prepend_label'),
+                'append_label' => __('seotamic::general.meta_field_append_label'),
+                'description_title' => __('seotamic::general.meta_field_description_title'),
+                'description_instructions' => __('seotamic::general.meta_field_description_instructions'),
+                'default_description' => __('seotamic::general.meta_field_default_description'),
+                'label_title' => __('seotamic::general.meta_field_label_title'),
+                'label_custom' => __('seotamic::general.meta_field_label_custom'),
+                'label_empty' => __('seotamic::general.meta_field_label_empty'),
+                'preview_title' => __('seotamic::general.meta_field_preview_title'),
+
+            ]
         ];
     }
 
@@ -53,15 +50,5 @@ class SeotamicMeta extends Fieldtype
         }
 
         return $output;
-    }
-
-    protected function getTitle(): string
-    {
-        return $this->field->parent()->data()->get('title');
-    }
-
-    protected function getSeotamicGlobals()
-    {
-        return $this->file->read(false);
     }
 }

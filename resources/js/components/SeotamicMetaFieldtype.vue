@@ -1,10 +1,8 @@
 <template>
   <div>
     <div>
-      <Heading title="Title">
-        It can be used to determine the title used on search engine results
-        pages. Defaults to `title` which sets the page title as the Entry title.
-        For custom entries, select `Custom` and enter your own value.
+      <Heading :title="meta.t.title_title">
+        {{ meta.t.title_instructions }}
       </Heading>
 
       <ButtonGroup :options="titleOptions" v-model="valueData.title.type" />
@@ -30,7 +28,7 @@
             :read-only="!prependExists"
           />
           <label class="inline-label">
-            Prepend to the title the text set in General SEO settings
+            {{ meta.t.prepend_label }}
           </label>
         </div>
       </div>
@@ -43,17 +41,15 @@
             :read-only="!appendExists"
           />
           <label class="inline-label">
-            Append to the title the text set in General SEO settings
+            {{ meta.t.append_label }}
           </label>
         </div>
       </div>
     </div>
 
     <div class="seotamic-mt-8">
-      <Heading title="Description">
-        It can be used to determine the text used under the title on search
-        engine results pages. If empty, search engines will automatically
-        generate this text.
+      <Heading :title="meta.t.description_title">
+        {{ meta.t.description_instructions }}
       </Heading>
 
       <ButtonGroup
@@ -77,6 +73,7 @@
 
     <SearchPreview
       class="seotamic-mt-8"
+      :preview-title="meta.t.preview_title"
       :url="meta.config.preview_url"
       :title="previewTitle"
       :description="previewDescription"
@@ -101,18 +98,16 @@ export default {
   mixins: [Fieldtype],
   data() {
     return {
-      // Move to translations…
-      description:
-        "This description will be prefilled by the search engine depending on your content. You can change it manually by selecting custom and typing in your own.",
+      description: this.meta.t.default_description,
 
       titleOptions: [
-        { label: "Title", value: "title" },
-        { label: "Custom", value: "custom" },
+        { label: this.meta.t.label_title, value: "title" },
+        { label: this.meta.t.label_custom, value: "custom" },
       ],
 
       descriptionOptions: [
-        { label: "Empty", value: "empty" },
-        { label: "Custom", value: "custom" },
+        { label: this.meta.t.label_empty, value: "empty" },
+        { label: this.meta.t.label_title, value: "custom" },
       ],
 
       // Default values…
@@ -134,8 +129,6 @@ export default {
   },
 
   mounted() {
-    // TODO Translations
-
     if (!this.value) {
       this.value = this.valueData;
     }

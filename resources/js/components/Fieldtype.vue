@@ -25,12 +25,6 @@ export default {
         return {};
       },
     },
-    readOnly: {
-      type: Boolean,
-      default: false,
-    },
-    namePrefix: String,
-    fieldPathPrefix: String,
   },
 
   methods: {
@@ -56,17 +50,8 @@ export default {
       return this.handle;
     },
 
-    isReadOnly() {
-      return (
-        this.readOnly ||
-        this.config.visibility === "read_only" ||
-        this.config.visibility === "computed" ||
-        false
-      );
-    },
-
     replicatorPreview() {
-      return this.value;
+      return "";
     },
 
     fieldId() {

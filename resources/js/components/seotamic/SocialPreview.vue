@@ -3,7 +3,7 @@
     <div
       class="seotamic-text-xs seotamic-uppercase seotamic-font-bold seotamic-tracking-wider"
     >
-      Social preview
+      {{ previewTitle }}
     </div>
     <div
       class="seotamic-mt-2 seotamic-bg-[#f2f3f5] seotamic-border seotamic-border-[#dadde1] seotamic-shadow-sm seotamic-flex seotamic-flex-col seotamic-max-w-[500px] seotamic-rounded-[3px]"
@@ -21,7 +21,7 @@
         <div
           class="seotamic-text-xs seotamic-text-[#606770] seotamic-leading-none seotamic-uppercase"
         >
-          {{ url }}
+          {{ domain }}
         </div>
         <div
           class="seotamic-text-[#1d2129] seotamic-font-semibold seotamic-text-base seotamic-leading-[20px] seotamic-truncate seotamic-mt-[5px]"
@@ -41,7 +41,12 @@
 <script>
 export default {
   props: {
-    url: {
+    previewTitle: {
+      type: String,
+      required: true,
+      default: "Social preview",
+    },
+    domain: {
       type: String,
       required: true,
       default: "google.com",

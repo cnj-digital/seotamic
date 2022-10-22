@@ -2,38 +2,43 @@
 
 namespace Cnj\Seotamic\FieldTypes;
 
-use Statamic\Support\Str;
-use Cnj\Seotamic\File\File;
 use Statamic\Facades\Asset;
-use Statamic\Fields\Fieldtype;
 
-class SeotamicSocial extends Fieldtype
+class SeotamicSocial extends SeotamicType
 {
-    protected $categories = [];
-    protected $selectableInForms = false;
-
-    public function __construct(File $file)
-    {
-        $this->file = $file;
-    }
-
-    protected function configFieldItems(): array
-    {
-        return [];
-    }
-
-    public function preload()
+    /**
+     * Preload the Fieldtype frontend with the given extra data
+     *
+     * @return array
+     */
+    public function preload(): array
     {
         return [
             'title' => $this->getTitle(),
             'meta' => $this->field->parent()->data()->get('seotamic_meta'),
             'seotamic' => $this->getSeotamicGlobals(),
             'social_image' => $this->field->parent()->data()->get('seotamic_image') ?? '',
-            'config' => config('seotamic')
+            'config' => config('seotamic'),
+            't' => [
+                'title_title' => __('seotamic::general.social_field_title_title'),
+                'title_instructions' => __('seotamic::general.social_field_title_instructions'),
+                'description_title' => __('seotamic::general.social_field_description_title'),
+                'description_instructions' => __('seotamic::general.social_field_description_instructions'),
+                'label_title' => __('seotamic::general.social_field_label_title'),
+                'label_custom' => __('seotamic::general.social_field_label_custom'),
+                'label_general' => __('seotamic::general.social_field_preview_title'),
+                'label_meta' => __('seotamic::general.social_field_label_meta'),
+                'preview_title' => __('seotamic::general.social_field_preview_title'),
+            ]
         ];
     }
 
-    public function augment($value)
+    /**
+     * Augment the return value of the field
+     *
+     * @return array
+     */
+    public function augment($value): array
     {
         $title = $this->getTitle();
         $seotamic = $this->getSeotamicGlobals();
@@ -67,35 +72,32 @@ class SeotamicSocial extends Fieldtype
         return $output;
     }
 
-    protected function getImage()
+
+    /**
+     * Get the image absolute url for the social media
+     *
+     * @return string
+     */
+    protected function getImage(): string
     {
-        $seotamic = $this->getSeotamicGlobals();
         $social_image = $this->field->parent()->data()->get('seotamic_image');
 
+        // Use the default seotamic image from globals if entry doesn't have one
         if (!$social_image) {
+            $seotamic = $this->getSeotamicGlobals();
             $social_image = $seotamic['social_image'];
         }
 
         $asset = Asset::find(config('seotamic.container') . '::' . $social_image);
 
         if (!$asset) {
-            return null;
+            return "";
         }
 
         if (! $asset->isImage()) {
-            return null;
+            return "";
         }
 
         return url($asset);
-    }
-
-    protected function getTitle(): string
-    {
-        return $this->field->parent()->data()->get('title');
-    }
-
-    protected function getSeotamicGlobals()
-    {
-        return $this->file->read(false);
     }
 }

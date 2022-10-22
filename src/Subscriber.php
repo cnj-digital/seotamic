@@ -80,10 +80,10 @@ class Subscriber
             [
                 'handle' => 'seotamic_canonical',
                 'field' =>  [
-                    'instructions' => 'By default it can be left empty.',
+                    'instructions' => __('seotamic::general.canonical_instructions'),
                     'localizable' => true,
                     'listable' => 'hidden',
-                    'display' => 'Canonical',
+                    'display' => __('seotamic::general.canonical_display'),
                     'input_type' => 'text',
                     'type' => 'text',
                 ]
@@ -115,10 +115,10 @@ class Subscriber
                     'allow_uploads' => true,
                     'max_files' => 1,
                     'type' => 'assets',
-                    'instructions' => 'If not set, the general image will be used. It\'s best to use an image with a 1.91:1 aspect ratio that is at least 1200px wide for universal support. The image will be resized to 1200 width.',
+                    'instructions' => __('seotamic::general.social_image_instructions'),
                     'localizable' => true,
                     'listable' => 'hidden',
-                    'display' => 'Image',
+                    'display' => __('seotamic::general.social_image_display'),
                 ]
             ]
         ];

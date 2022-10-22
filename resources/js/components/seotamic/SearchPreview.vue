@@ -3,7 +3,7 @@
     <div
       class="seotamic-text-xs seotamic-uppercase seotamic-font-bold seotamic-tracking-wider"
     >
-      Search preview
+      {{ previewTitle }}
     </div>
     <div
       class="seotamic-mt-2 seotamic-bg-white seotamic-border seotamic-shadow-sm seotamic-p-3 seotamic-flex seotamic-flex-col seotamic-max-w-[600px] seotamic-rounded-[3px]"
@@ -26,6 +26,11 @@
 <script>
 export default {
   props: {
+    previewTitle: {
+      type: String,
+      required: true,
+      default: "Search preview",
+    },
     url: {
       type: String,
       required: true,
