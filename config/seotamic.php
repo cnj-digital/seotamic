@@ -14,4 +14,13 @@ return [
     // A list of blueprints where the SEO fields will not be injected.
     // By default this list is empty.
     'ignore_blueprints' => [],
+
+    // Default recommended field lengths
+    'meta_title_length' => 60,
+    'meta_description_length' => 160,
+    'social_title_length' => 60,
+    'social_description_length' => 60,
+
+    // For preview purposes, no practical purpose
+    'preview_url' => 'https://www.google.com'
 ];

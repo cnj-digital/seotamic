@@ -14,8 +14,21 @@ class ServiceProvider extends AddonServiceProvider
         'cp' => __DIR__ . '/routes/cp.php',
     ];
 
+    protected $fieldtypes = [
+        Fieldtypes\SeotamicMeta::class,
+        Fieldtypes\SeotamicSocial::class,
+    ];
+
     protected $tags = [
         \Cnj\Seotamic\Tags\SeotamicTags::class,
+    ];
+
+    protected $scripts = [
+        __DIR__.'/../resources/dist/js/cp.js',
+    ];
+
+    protected $stylesheets = [
+        __DIR__.'/../resources/dist/css/cp.css',
     ];
 
     public function boot()

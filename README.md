@@ -1,3 +1,11 @@
+# Version 3 in development
+
+A new version with better headless support and some other improvements is being developed. Do not use untagged versions since they are not stable.
+
+Backwards compatibility is not guaranteed.
+
+Documentation is not up to date.
+
 # Seotamic - Statamic SEO Addon
 
 Statmic v3 only. Automatically adds a SEO tab to all your collection entries where you can fine tune SEO for every entry.
@@ -34,7 +42,6 @@ composer require cnj/seotamic
 ```
 
 The package requires Laravel 7+ and PHP 7.3+. It will auto register.
-
 
 The SEO section tab will appear on all collection entries automatically.
 
@@ -86,6 +93,7 @@ Social ones will still return everything with tags
 ```
 
 ## Dynamic OG Image
+
 In projects where you want the OG Image to be dynamic, for now you can use this ViewModel and inject it to your collection in order to dynamically assign the OG Image.
 
 ```php
@@ -112,6 +120,7 @@ class OgImage extends ViewModel
 }
 
 ```
+
 In the example above we are assuming in your collection you have an `image` field which you can change to suit your usecase. Then in your collections you just have to inject the ViewModel.
 
 ```yaml
@@ -124,6 +133,10 @@ inject:
 
 This package was built by [CNJ Digital](https://www.cnj.si/).
 
-## License
+## Version 3 License
+
+Version 3 is a commercial addon for Statamic. It is open source but not free to use. You can purchase a license at [Statamic Marketplace](https://statamic.com/marketplace/addons/seotamic).
+
+## Version 2 and 1 License
 
 This project is licensed under the MIT License.

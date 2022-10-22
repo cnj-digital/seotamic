@@ -124,96 +124,35 @@ class SettingsController extends CpController
                         'display' => 'Image',
                         'instructions' => 'Use your logo or any other branded image for the rest of your pages. Use images with a 1.91:1 ratio and minimum recommended dimensions of 1200x630 for optimal clarity across all devices. The image will be resized to 1200 width.',
                     ],
-                    'section_og' => [
-                        'type' => 'section',
-                        'display' => 'Open Graph',
-                        'instructions' => 'Open Graph meta tags are snippets of code that control how URLs are displayed when shared on social media.'
-                    ],
                     'open_graph_display' => [
                         'type' => 'toggle',
-                        'display' => 'Display Open Graph tags',
+                        'display' => 'Output Open Graph tags',
                         'default' => true,
-                    ],
-                    'open_graph_site_name' => [
-                        'type' => 'text',
-                        'character_limit' => '50',
-                        'display' => 'Site name',
-                        'show_when' => [
-                            'open_graph_display' => true
-                        ]
-                    ],
-                    'open_graph_title' => [
-                        'type' => 'text',
-                        'character_limit' => '100',
-                        'display' => 'Title',
-                        'show_when' => [
-                            'open_graph_display' => true
-                        ],
-                        'instructions' => 'Keep it short to prevent overflow. 40 characters for mobile and 60 for desktop is roughly the sweet spot. Use the raw title. Don’t include branding (e.g., your site name).',
-                    ],
-                    'open_graph_description' => [
-                        'type' => 'textarea',
-                        'character_limit' => '200',
-                        'display' => 'Description',
-                        'show_when' => [
-                            'open_graph_display' => true
-                        ],
-                        'instructions' => 'General Description, can be overridden on specific pages. Complement the title to make the snippet as appealing and click-worthy as possible. Copy your meta description here if it makes sense. Keep it short and sweet. Facebook recommends 2–4 sentences, but that often truncates.',
-                    ],
-                    'section_twitter' => [
-                        'type' => 'section',
-                        'display' => 'Twitter',
                     ],
                     'twitter_display' => [
                         'type' => 'toggle',
-                        'display' => 'Display Twitter tags',
-                        'default' => false,
+                        'display' => 'Output Twitter tags',
+                        'default' => true,
                     ],
-                    'twitter_title' => [
+                    'social_site_name' => [
                         'type' => 'text',
-                        'character_limit' => '100',
-                        'display' => 'Title',
-                        'instructions' => '',
-                        'show_when' => [
-                            'twitter_display' => true
-                        ],
+                        'character_limit' => '50',
+                        'display' => 'Site name',
                     ],
-                    'twitter_description' => [
+                    'social_title' => [
+                        'type' => 'text',
+                        'character_limit' => '60',
+                        'display' => 'Title',
+                        'instructions' => 'Keep it short to prevent overflow. 40 characters for mobile and 60 for desktop is roughly the sweet spot. Use the raw title. Don’t include branding (e.g., your site name).',
+                    ],
+                    'social_description' => [
                         'type' => 'textarea',
-                        'character_limit' => '200',
+                        'character_limit' => '60',
                         'display' => 'Description',
-                        'instructions' => '',
-                        'show_when' => [
-                            'twitter_display' => true
-                        ],
+                        'instructions' => 'General Description, can be overridden on specific pages. Complement the title to make the snippet as appealing and click-worthy as possible. Copy your meta description here if it makes sense. Keep it short and sweet. Facebook recommends 2–4 sentences, but that often truncates.',
                     ],
                 ]
             ],
-            // 'settings' => [
-            //     'display' => 'Settings',
-            //     'fields' => [
-            //         'section_social' => [
-            //             'type' => 'section',
-            //             'display' => 'Social',
-            //         ],
-            //         'facebook_app_id' => [
-            //             'type' => 'text',
-            //             'display' => 'Facebook App ID',
-            //             'instructions' => 'Not implemented yet',
-            //         ],
-            //         'facebook_publisher_page' => [
-            //             'type' => 'text',
-            //             'display' => 'Facebook Publisher Page',
-            //             'instructions' => 'Facebook Business page - Not implemented yet',
-            //         ],
-            //         'twitter_profile' => [
-            //             'type' => 'text',
-            //             'display' => 'Twitter Profile',
-            //             'placeholder' => '@your-profile-name',
-            //             'instructions' => 'Link your twitter profile - Not implemented yet',
-            //         ],
-            //     ]
-            // ]
         ]);
     }
 }

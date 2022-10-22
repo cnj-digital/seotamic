@@ -156,12 +156,12 @@ class SeotamicTags extends Tags
 
         $output = "<meta property=\"og:url\" content=\"{$this->canonical()}\">";
 
-        if (array_key_exists('open_graph_site_name', $this->values)) {
-            $output .= "<meta property=\"og:site_name\" content=\"{$this->values['open_graph_site_name']}\">";
+        if (array_key_exists('social_site_name', $this->values)) {
+            $output .= "<meta property=\"og:site_name\" content=\"{$this->values['social_site_name']}\">";
         }
 
-        $output .= "<meta property=\"og:title\" content=\"{$this->socialField('open_graph_title', $this->context->raw('title'))}\">";
-        $output .= "<meta property=\"og:description\" content=\"{$this->socialField('open_graph_description', $this->description())}\">";
+        $output .= "<meta property=\"og:title\" content=\"{$this->socialField('social_title', $this->context->raw('title'))}\">";
+        $output .= "<meta property=\"og:description\" content=\"{$this->socialField('social_description', $this->description())}\">";
 
         // TODO: Check on multisite, here we have locale_full and site_locale
         $output .= "<meta property=\"og:locale\" content=\"{$this->context->value('site')->locale()}\">";
@@ -185,8 +185,8 @@ class SeotamicTags extends Tags
 
         $output = "<meta name=\"twitter:card\" content=\"summary_large_image\">";
         $output .= "<meta name=\"twitter:url\" content=\"{$this->canonical()}\">";
-        $output .= "<meta name=\"twitter:title\" content=\"{$this->socialField('twitter_title', $this->context->raw('title'))}\">";
-        $output .= "<meta name=\"twitter:description\" content=\"{$this->socialField('twitter_description', $this->description())}\">";
+        $output .= "<meta name=\"twitter:title\" content=\"{$this->socialField('social_title', $this->context->raw('title'))}\">";
+        $output .= "<meta name=\"twitter:description\" content=\"{$this->socialField('social_description', $this->description())}\">";
 
         // image
         $output .= "<meta name=\"og:twitter\" content=\"{$this->socialImage($image)}\">";

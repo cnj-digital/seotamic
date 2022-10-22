@@ -58,122 +58,38 @@ class Subscriber
      */
     private function getFields()
     {
-        return [[
-                'handle' => 'seotamic_meta',
-                'field' => [
-                    'display' => 'Meta',
-                    'listable' => 'hidden',
+        return [
+            [
+                'handle' => 'seotamic_meta_section',
+                'field' =>  [
                     'type' => 'section',
-                    'localizable' => true
-                ],
-            ],
-            [
-                'handle' => 'seotamic_title',
-                'field' =>  [
-                    'options' => [
-                        'title' => 'Title',
-                        'custom' => 'Custom'
-                    ],
-                    'clearable' => false,
-                    'multiple' => false,
-                    'searchable' => true,
-                    'taggable' => false,
-                    'push_tags' => false,
-                    'cast_booleans' => false,
-                    'type' => 'select',
                     'localizable' => true,
                     'listable' => 'hidden',
-                    'default' => 'title',
-                    'display' => 'Title',
-                    'instructions' => 'It can be used to determine the title used on search engine results pages.'
+                    'display' => 'Meta',
                 ]
             ],
             [
-                'handle' => 'seotamic_custom_title',
+                'handle' => 'seotamic_meta',
                 'field' =>  [
-                    'input_type' => 'text',
-                    'character_limit' => 100,
-                    'type' => 'text',
+                    'type' => 'seotamic_meta',
                     'localizable' => true,
                     'listable' => 'hidden',
-                    'display' => 'Custom Meta Title',
-                    'if' => [
-                        'seotamic_title' => 'equals custom'
-                    ]
-                ]
-            ],
-            [
-                'handle' => 'seotamic_title_prepend',
-                'field' =>  [
-                    'type' => 'toggle',
-                    'instructions' => 'Prepends to title the text set in General SEO settings',
-                    'localizable' => true,
-                    'default' => true,
-                    'width' => 50,
-                    'listable' => 'hidden',
-                    'display' => 'Title prepend',
-                ]
-            ],
-            [
-                'handle' => 'seotamic_title_append',
-                'field' =>  [
-                    'type' => 'toggle',
-                    'localizable' => true,
-                    'instructions' => 'Appends to title the text set in General SEO settings',
-                    'width' => 50,
-                    'listable' => 'hidden',
-                    'default' => true,
-                    'display' => 'Title append',
-                ]
-            ],
-            [
-                'handle' => 'seotamic_meta_description',
-                'field' =>  [
-                    'options' => [
-                        'empty' => 'Empty',
-                        'general' => 'General',
-                        'custom' => 'Custom',
-                    ],
-                    'clearable' => false,
-                    'default' => 'empty',
-                    'multiple' => false,
-                    'searchable' => true,
-                    'taggable' => false,
-                    'push_tags' => false,
-                    'cast_booleans' => false,
-                    'type' => 'select',
-                    'instructions' => 'It can be used to determine the text used under the title on search engine results pages. If empty, search engines will automatically generate this text.',
-                    'localizable' => true,
-                    'listable' => 'hidden',
-                    'display' => 'Meta description',
-                ]
-            ],
-            [
-                'handle' => 'seotamic_custom_meta_description',
-                'field' =>  [
-                    'input_type' => 'text',
-                    'character_limit' => 200,
-                    'type' => 'textarea',
-                    'localizable' => true,
-                    'listable' => 'hidden',
-                    'display' => 'Custom Meta description',
-                    'if' => [
-                        'seotamic_meta_description' => 'equals custom'
-                    ]
+                    'display' => 'SEOtamic Meta',
                 ]
             ],
             [
                 'handle' => 'seotamic_canonical',
                 'field' =>  [
-                    'type' => 'link',
-                    'instructions' => 'By default it will be set to the page url',
+                    'instructions' => 'By default it can be left empty.',
                     'localizable' => true,
                     'listable' => 'hidden',
                     'display' => 'Canonical',
+                    'input_type' => 'text',
+                    'type' => 'text',
                 ]
             ],
             [
-                'handle' => 'seotamic_social',
+                'handle' => 'seotamic_social_section',
                 'field' =>  [
                     'type' => 'section',
                     'localizable' => true,
@@ -182,143 +98,12 @@ class Subscriber
                 ]
             ],
             [
-                'handle' => 'seotamic_open_graph_title',
+                'handle' => 'seotamic_social',
                 'field' =>  [
-                    'options' => [
-                        'title' => 'Title',
-                        'general' => 'General',
-                        'custom' => 'Custom',
-                    ],
-                    'clearable' => false,
-                    'default' => 'title',
-                    'multiple' => false,
-                    'searchable' => true,
-                    'taggable' => false,
-                    'push_tags' => false,
-                    'cast_booleans' => false,
-                    'type' => 'select',
+                    'type' => 'seotamic_social',
                     'localizable' => true,
                     'listable' => 'hidden',
-                    'display' => 'Open Graph title',
-                ]
-            ],
-            [
-                'handle' => 'seotamic_custom_open_graph_title',
-                'field' =>  [
-                    'input_type' => 'text',
-                    'character_limit' => 100,
-                    'type' => 'text',
-                    'localizable' => true,
-                    'listable' => 'hidden',
-                    'display' => 'Custom Open Graph title',
-                    'if' => [
-                        'seotamic_open_graph_title' => 'equals custom'
-                    ]
-                ]
-            ],
-            [
-                'handle' => 'seotamic_open_graph_description',
-                'field' =>  [
-                    'options' => [
-                        'meta' => 'Meta description',
-                        'general' => 'General description',
-                        'custom' => 'Custom',
-                    ],
-                    'clearable' => false,
-                    'default' => 'general',
-                    'multiple' => false,
-                    'searchable' => true,
-                    'taggable' => false,
-                    'push_tags' => false,
-                    'cast_booleans' => false,
-                    'type' => 'select',
-                    'localizable' => true,
-                    'listable' => 'hidden',
-                    'display' => 'Open Graph description',
-                ]
-            ],
-            [
-                'handle' => 'seotamic_custom_open_graph_description',
-                'field' =>  [
-                    'input_type' => 'text',
-                    'character_limit' => 200,
-                    'type' => 'textarea',
-                    'localizable' => true,
-                    'listable' => 'hidden',
-                    'display' => 'Custom Open Graph description',
-                    'if' => [
-                        'seotamic_open_graph_description' => 'equals custom'
-                    ]
-                ]
-            ],
-            [
-                'handle' => 'seotamic_twitter_title',
-                'field' =>  [
-                    'options' => [
-                        'title' => 'Title',
-                        'general' => 'General',
-                        'custom' => 'Custom',
-                    ],
-                    'clearable' => false,
-                    'default' => 'title',
-                    'multiple' => false,
-                    'searchable' => true,
-                    'taggable' => false,
-                    'push_tags' => false,
-                    'cast_booleans' => false,
-                    'type' => 'select',
-                    'localizable' => true,
-                    'listable' => 'hidden',
-                    'display' => 'Twitter title',
-                ]
-            ],
-            [
-                'handle' => 'seotamic_custom_twitter_title',
-                'field' =>  [
-                    'input_type' => 'text',
-                    'character_limit' => 100,
-                    'type' => 'text',
-                    'localizable' => true,
-                    'listable' => 'hidden',
-                    'display' => 'Custom Twitter title',
-                    'if' => [
-                        'seotamic_twitter_title' => 'equals custom'
-                    ]
-                ]
-            ],
-            [
-                'handle' => 'seotamic_twitter_description',
-                'field' =>  [
-                    'options' => [
-                        'meta' => 'Meta description',
-                        'general' => 'General description',
-                        'custom' => 'Custom',
-                    ],
-                    'clearable' => false,
-                    'default' => 'general',
-                    'multiple' => false,
-                    'searchable' => true,
-                    'taggable' => false,
-                    'push_tags' => false,
-                    'cast_booleans' => false,
-                    'type' => 'select',
-                    'localizable' => true,
-                    'listable' => 'hidden',
-                    'display' => 'Twitter description',
-                ]
-            ],
-            [
-                'handle' => 'seotamic_custom_twitter_description',
-                'field' =>  [
-                    'input_type' => 'text',
-                    'character_limit' => 200,
-                    'type' => 'textarea',
-                    'localizable' => true,
-                    'listable' => 'hidden',
-                    'display' => 'Custom Twitter description',
-                    'if' => [
-                        'seotamic_twitter_description' => 'equals custom'
-                    ]
+                    'display' => 'SEOtamic Social',
                 ]
             ],
             [
