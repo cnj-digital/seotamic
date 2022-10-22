@@ -26,7 +26,7 @@ class SeotamicSocial extends SeotamicType
                 'description_instructions' => __('seotamic::general.social_field_description_instructions'),
                 'label_title' => __('seotamic::general.social_field_label_title'),
                 'label_custom' => __('seotamic::general.social_field_label_custom'),
-                'label_general' => __('seotamic::general.social_field_preview_title'),
+                'label_general' => __('seotamic::general.social_field_label_general'),
                 'label_meta' => __('seotamic::general.social_field_label_meta'),
                 'preview_title' => __('seotamic::general.social_field_preview_title'),
             ]

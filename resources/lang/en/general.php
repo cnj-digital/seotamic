@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'intro' => 'Control your SEO general settings here. Make sure to read the instructions on each input. This settings can be overidden on specific entries/pages.',
     'meta_section' => 'Meta',
     'title' => 'Title',
     'title_instructions' => 'While the title tag doesn’t start with "meta," it is in the header and contains information that\'s very important to SEO. You should always have a unique title tag on every page that describes the page.',

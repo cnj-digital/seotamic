@@ -24,11 +24,13 @@
           {{ domain }}
         </div>
         <div
-          class="seotamic-text-[#1d2129] seotamic-font-semibold seotamic-text-base seotamic-leading-[20px] seotamic-truncate seotamic-mt-[5px]"
+          ref="title"
+          class="seotamic-text-[#1d2129] seotamic-font-semibold seotamic-text-base seotamic-leading-[20px] seotamic-line-clamp-2 seotamic-mt-[5px]"
         >
           {{ title }}
         </div>
         <div
+          v-show="showDescription"
           class="seotamic-text-sm seotamic-leading-[18px] seotamic-text-[#606770] seotamic-truncate seotamic-mt-[3px]"
         >
           {{ description }}
@@ -65,6 +67,26 @@ export default {
       type: String,
       required: true,
       default: "",
+    },
+  },
+
+  data() {
+    return {
+      showDescription: true,
+    };
+  },
+
+  // watch title changes
+  watch: {
+    title() {
+      this.$nextTick(() => {
+        // if $refs.title is in 2 lines, hide the descritpion
+        if (this.$refs.title.clientHeight >= 40) {
+          this.showDescription = false;
+        } else {
+          this.showDescription = true;
+        }
+      });
     },
   },
 };
