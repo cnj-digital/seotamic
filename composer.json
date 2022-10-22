@@ -2,7 +2,7 @@
   "name": "cnj/seotamic",
   "description": "Simple SEO addon for Statamic v3",
   "type": "statamic-addon",
-  "license": "MIT",
+  "license": "proprietary",
   "require": {
     "php": "^8.0",
     "statamic/cms": "^3.3.0"
