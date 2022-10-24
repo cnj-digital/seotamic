@@ -20,12 +20,12 @@ class SeotamicSocialType extends GraphQLType
         return [
                 'open_graph' => [
                     'type' => GraphQL::boolean(),
-                    'description' => 'Should the Open Graph output be enabled',
+                    'description' => 'Output Open Graph tags',
                     'resolve' => $this->resolver()
                 ],
                 'twitter' => [
                     'type' => GraphQL::boolean(),
-                    'description' => 'Should the Twitter output be enabled',
+                    'description' => 'Output Twitter tags',
                     'resolve' => $this->resolver()
                 ],
                 'site_name' => [
