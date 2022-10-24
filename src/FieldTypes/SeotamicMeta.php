@@ -37,16 +37,18 @@ class SeotamicMeta extends SeotamicType
             'description' => $value['description']['value'] ?? '',
         ];
 
-        if ($value['title']['type'] === 'custom') {
-            $output['title'] = $value['title']['value'];
-        }
+        if (isset($value['title']) && isset($value['title']['value'])) {
+            if ($value['title']['type'] === 'custom') {
+                $output['title'] = $value['title']['value'];
+            }
 
-        if ($value['title']['prepend'] && $seotamic['title_prepend'] ) {
-            $output['title'] = $seotamic['title_prepend'] . ' ' . $output['title'];
-        }
+            if ($value['title']['prepend'] && $seotamic['title_prepend'] ) {
+                $output['title'] = $seotamic['title_prepend'] . ' ' . $output['title'];
+            }
 
-        if ($value['title']['append'] && $seotamic['title_append'] ) {
-            $output['title'] .= ' ' . $seotamic['title_append'];
+            if ($value['title']['append'] && $seotamic['title_append'] ) {
+                $output['title'] .= ' ' . $seotamic['title_append'];
+            }
         }
 
         return $output;

@@ -22,8 +22,8 @@ class ServiceProvider extends AddonServiceProvider
     ];
 
     protected $fieldtypes = [
-        Fieldtypes\SeotamicMeta::class,
-        Fieldtypes\SeotamicSocial::class,
+        FieldTypes\SeotamicMeta::class,
+        FieldTypes\SeotamicSocial::class,
     ];
 
     protected $tags = [

@@ -54,20 +54,24 @@ class SeotamicSocial extends SeotamicType
             'image' =>  $social_image
         ];
 
-        if ($value['title']['type'] === 'custom') {
-            $output['title'] = $value['title']['value'];
+        if (isset($value['title']) && isset($value['title']['value'])) {
+            if ($value['title']['type'] === 'custom') {
+                $output['title'] = $value['title']['value'];
+            }
+
+            if ($value['title']['type'] === 'general') {
+                $output['title'] = $seotamic['social_title'];
+            }
         }
 
-        if ($value['title']['type'] === 'general') {
-            $output['title'] = $seotamic['social_title'];
-        }
+        if (isset($value['description']) && isset($value['description']['value'])) {
+            if ($value['description']['type'] === 'meta') {
+                $output['description'] = $meta['description']['value'];
+            }
 
-        if ($value['description']['type'] === 'meta') {
-            $output['description'] = $meta['description']['value'];
-        }
-
-        if ($value['description']['type'] === 'custom') {
-            $output['description'] = $value['description']['value'];
+            if ($value['description']['type'] === 'custom') {
+                $output['description'] = $value['description']['value'];
+            }
         }
 
         return $output;
