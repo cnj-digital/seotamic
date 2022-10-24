@@ -48,6 +48,7 @@ class SeotamicSocial extends SeotamicType
         $output = [
             'open_graph' => $seotamic['open_graph_display'],
             'twitter' => $seotamic['twitter_display'],
+            'site_name' => $seotamic['social_site_name'],
             'title' => $title,
             'description' => $seotamic['social_description'],
             'image' =>  $social_image

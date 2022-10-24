@@ -27,7 +27,7 @@ class SeotamicMeta extends SeotamicType
         ];
     }
 
-    public function augment($value)
+    public function augment($value): array
     {
         $title = $this->getTitle();
         $seotamic = $this->getSeotamicGlobals();
