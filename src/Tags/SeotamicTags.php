@@ -80,8 +80,6 @@ class SeotamicTags extends Tags
     {
         $url = $this->context->raw('permalink');
 
-        // TODO: use the env url? Check how permalink is generated
-
         // First child option can return 404 if there is no first child
         if ($this->context->raw('seotamic_canonical') !== null) {
             $url = $this->context->value('seotamic_canonical');
