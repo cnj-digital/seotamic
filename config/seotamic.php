@@ -21,8 +21,4 @@ return [
     'meta_description_length' => 160,
     'social_title_length' => 60,
     'social_description_length' => 60,
-
-    // For preview, no practical purpose.
-    'preview_url' => 'https://www.google.com',
-    'preview_domain' => 'google.com'
 ];

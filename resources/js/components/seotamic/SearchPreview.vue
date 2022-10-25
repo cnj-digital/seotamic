@@ -34,7 +34,7 @@ export default {
     url: {
       type: String,
       required: true,
-      default: "https://www.google.com",
+      default: "",
     },
     title: {
       type: String,

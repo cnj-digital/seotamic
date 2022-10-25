@@ -48,7 +48,7 @@
     <SocialPreview
       class="seotamic-mt-8"
       :preview-title="meta.t.preview_title"
-      :name="meta.config.preview_domain"
+      :domain="meta.seotamic.preview_domain"
       :title="valueData.title.value"
       :image="socialPreviewImage"
       :description="valueData.description.value"

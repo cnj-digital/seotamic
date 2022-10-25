@@ -44,19 +44,24 @@ class Subscriber
             return;
         }
 
-        $fields = $this->getFields();
+        $metaFields = $this->getMetaFields();
+        $socialFields = $this->getSocialFields();
 
-        collect($fields)->each(function ($field) {
+        collect($metaFields)->each(function ($field) {
             $this->blueprint->ensureFieldInSection($field['handle'], $field['field'], 'SEO');
+        });
+
+        collect($socialFields)->each(function ($field) {
+            $this->blueprint->ensureFieldInSection($field['handle'], $field['field'], 'Social');
         });
     }
 
     /**
-     * Array of SEOtamic fields
+     * Array of SEOtamic Meta fields
      *
      * @return array
      */
-    private function getFields()
+    private function getMetaFields()
     {
         return [
             [
@@ -87,7 +92,18 @@ class Subscriber
                     'input_type' => 'text',
                     'type' => 'text',
                 ]
-            ],
+            ]
+        ];
+    }
+
+    /**
+     * Array of SEOtamic Meta fields
+     *
+     * @return array
+     */
+    private function getSocialFields()
+    {
+        return [
             [
                 'handle' => 'seotamic_social_section',
                 'field' =>  [

@@ -74,7 +74,7 @@
     <SearchPreview
       class="seotamic-mt-8"
       :preview-title="meta.t.preview_title"
-      :url="meta.config.preview_url"
+      :url="meta.seotamic.preview_url"
       :title="previewTitle"
       :description="previewDescription"
     />

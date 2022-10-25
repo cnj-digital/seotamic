@@ -12,12 +12,6 @@ return [
     'title_append' => 'Append on Title',
     'title_append_instructions' => 'This will be APPENDED to all of the titles.',
 
-    'description_section' => 'Description',
-    'description_section_instructions' => 'It is used for one major purpose: to describe the page to searchers as they read through the SERPs. This tag doesn\'t influence ranking, but it\'s very important regardless. It\'s the ad copy that will determine if users click on your result. Keep it within 160 characters, and write it to catch the user\'s attention. Sell the page — get them to click on the result.',
-
-    'meta_description' => 'Meta Description',
-    'meta_description_instructions' => 'Can be overriden on pages, if left blank, search engines will generate their own content for this field.',
-
     'social_section' => 'Social',
     'social_image' => 'Social Image',
     'social_image_instructions' => 'Use your logo or any other branded image for the rest of your pages. Use images with a 1.91:1 ratio and minimum recommended dimensions of 1200x630 for optimal clarity across all devices.',
@@ -32,6 +26,12 @@ return [
 
     'social_twitter' => 'Output Twitter tags',
     'social_twitter_instructions' => 'Twitter cards are a way to attach rich photos, videos and media experience to Tweets that drive traffic to your website. You can use Twitter cards to help you drive traffic to your website, increase the visibility of your content, and get more engagement with your Tweets.',
+
+    'settings_section' => 'Settings',
+    'settings_preview_url' => 'Preview URL',
+    'settings_preview_url_instructions' => 'This is the URL that will be used to preview the meta data on the SEO tab on each page.',
+    'settings_preview_domain' => 'Preview Domain',
+    'settings_preview_domain_instructions' => 'This is the domain that will be used to preview the Social data on the Social tab on each page.',
 
     'meta_field_title_title' => 'Title',
     'meta_field_title_instructions' => 'It can be used to determine the title used on search engine results pages. Defaults to `title` which sets the page title as the Entry title. For custom entries, select `Custom` and enter your own value.',

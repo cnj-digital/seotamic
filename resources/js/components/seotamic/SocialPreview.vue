@@ -51,7 +51,7 @@ export default {
     domain: {
       type: String,
       required: true,
-      default: "google.com",
+      default: "",
     },
     image: {
       type: String,

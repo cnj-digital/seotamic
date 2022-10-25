@@ -101,17 +101,6 @@ class SettingsController extends CpController
                         'display' => __('seotamic::general.title_append'),
                         'instructions' => __('seotamic::general.title_append_instructions'),
                     ],
-                    'section_description' => [
-                        'type' => 'section',
-                        'display' => __('seotamic::general.description_section'),
-                        'instructions' => __('seotamic::general.description_section_instructions'),
-                    ],
-                    'meta_description' => [
-                        'type' => 'textarea',
-                        'character_limit' => '200',
-                        'display' => __('seotamic::general.meta_description'),
-                        'instructions' => __('seotamic::general.meta_description_instructions'),
-                    ],
                 ],
             ],
             'social' => [
@@ -154,6 +143,23 @@ class SettingsController extends CpController
                         'display' => __('seotamic::general.social_description'),
                         'instructions' => __('seotamic::general.social_description_instructions'),
                     ],
+                ]
+            ],
+            'Settings' => [
+                'display' => __('seotamic::general.settings_section'),
+                'fields' => [
+                    'preview_url' => [
+                        'type' => 'text',
+                        'character_limit' => '50',
+                        'display' => __('seotamic::general.settings_preview_url'),
+                        'instructions' => __('seotamic::general.settings_preview_url_instructions'),
+                    ],
+                    'preview_domain' => [
+                        'type' => 'text',
+                        'character_limit' => '60',
+                        'display' => __('seotamic::general.settings_preview_domain'),
+                        'instructions' => __('seotamic::general.settings_preview_domain_instructions'),
+                    ]
                 ]
             ],
         ]);
