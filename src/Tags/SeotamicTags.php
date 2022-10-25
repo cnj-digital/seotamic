@@ -21,7 +21,12 @@ class SeotamicTags extends Tags
     {
         $output = "<title>{$this->title()}</title>";
         $output .= "<meta name=\"description\" content=\"{$this->description()}\">";
-        $output .= "<link rel=\"canonical\" href=\"{$this->canonical()}\" />";
+
+        // Output canonical if it's set
+        if ($this->context->value('seotamic_canonical')) {
+            $output .= "<link rel=\"canonical\" href=\"{$this->canonical()}\">";
+        }
+
         $output .= $this->og();
         $output .= $this->twitter();
 
@@ -39,32 +44,11 @@ class SeotamicTags extends Tags
      */
     public function title()
     {
-        // Set the page title as the default value
-        $title = $this->context->value('title');
-
-        // If Seotamic is not set for this public page, just return the title
-        if (! $this->context->value('seotamic_title')) {
-            return $title;
+        if (! $this->context->value('seotamic_meta')) {
+            return '';
         }
 
-        // If set to custom, use the custom title
-        if ($this->context->raw('seotamic_title') === 'custom') {
-            $title = $this->context->value('seotamic_custom_title');
-        }
-
-        if (array_key_exists('title_append', $this->values)) {
-            if ($this->context->raw('seotamic_title_append') && $this->values['title_append']) {
-                $title .= " {$this->values['title_append']}";
-            }
-        }
-
-        if (array_key_exists('title_prepend', $this->values)) {
-            if ($this->context->raw('seotamic_title_prepend') && $this->values['title_prepend']) {
-                $title = "{$this->values['title_prepend']} {$title}";
-            }
-        }
-
-        return $title;
+        return $this->context->value('seotamic_meta')['title'];
     }
 
     /**
@@ -77,23 +61,11 @@ class SeotamicTags extends Tags
      */
     public function description()
     {
-        if (! $this->context->raw('seotamic_meta_description')) {
+        if (! $this->context->value('seotamic_meta')) {
             return '';
         }
 
-        if ($this->context->raw('seotamic_meta_description') === 'empty') {
-            return '';
-        }
-
-        if ($this->context->raw('seotamic_meta_description') === 'general') {
-            return trim(htmlentities(strip_tags($this->values['meta_description'])));
-        }
-
-        if ($this->context->raw('seotamic_meta_description') === 'custom') {
-            return trim(htmlentities(strip_tags($this->context->raw('seotamic_custom_meta_description'))));
-        }
-
-        return '';
+        return $this->context->value('seotamic_meta')['description'];
     }
 
     /**
@@ -111,7 +83,7 @@ class SeotamicTags extends Tags
         // TODO: use the env url? Check how permalink is generated
 
         // First child option can return 404 if there is no first child
-        if ($this->context->raw('seotamic_canonical') !== null && $this->context->raw('seotamic_canonical') !== 404) {
+        if ($this->context->raw('seotamic_canonical') !== null) {
             $url = $this->context->value('seotamic_canonical');
 
             // We have to make sure the given url is formatted correctly
@@ -146,107 +118,56 @@ class SeotamicTags extends Tags
      */
     public function og($image = null)
     {
-        if (! array_key_exists('open_graph_display', $this->values)) {
+        if (! $this->context->value('seotamic_social')) {
             return '';
         }
 
-        if (! $this->values['open_graph_display']) {
+        // Open graph output disabled
+        if (!$this->context->value('seotamic_social')['open_graph']) {
             return '';
         }
 
         $output = "<meta property=\"og:url\" content=\"{$this->canonical()}\">";
 
-        if (array_key_exists('social_site_name', $this->values)) {
-            $output .= "<meta property=\"og:site_name\" content=\"{$this->values['social_site_name']}\">";
+        if (array_key_exists('site_name', $this->context->value('seotamic_social'))) {
+            $output .= "<meta property=\"og:site_name\" content=\"{$this->context->value('seotamic_social')['site_name']}\">";
         }
 
-        $output .= "<meta property=\"og:title\" content=\"{$this->socialField('social_title', $this->context->raw('title'))}\">";
-        $output .= "<meta property=\"og:description\" content=\"{$this->socialField('social_description', $this->description())}\">";
+        $output .= "<meta property=\"og:title\" content=\"{$this->context->value('seotamic_social')['title']}\">";
+        $output .= "<meta property=\"og:description\" content=\"{$this->context->value('seotamic_social')['description']}\">";
 
         // TODO: Check on multisite, here we have locale_full and site_locale
         $output .= "<meta property=\"og:locale\" content=\"{$this->context->value('site')->locale()}\">";
 
         // image
-        $output .= "<meta property=\"og:image\" content=\"{$this->socialImage($image)}\">";
+        if (array_key_exists('image', $this->context->value('seotamic_social'))) {
+            $output .= "<meta property=\"og:image\" content=\"{$this->context->value('seotamic_social')['image']}\">";
+        }
 
         return $output;
     }
 
-    // TODO: Add check if title/desc same as OG
     public function twitter($image = null)
     {
-        if (! array_key_exists('twitter_display', $this->values)) {
+       if (! $this->context->value('seotamic_social')) {
             return '';
         }
 
-        if (! $this->values['twitter_display']) {
+        // Open graph output disabled
+        if (!$this->context->value('seotamic_social')['twitter']) {
             return '';
         }
 
         $output = "<meta name=\"twitter:card\" content=\"summary_large_image\">";
         $output .= "<meta name=\"twitter:url\" content=\"{$this->canonical()}\">";
-        $output .= "<meta name=\"twitter:title\" content=\"{$this->socialField('social_title', $this->context->raw('title'))}\">";
-        $output .= "<meta name=\"twitter:description\" content=\"{$this->socialField('social_description', $this->description())}\">";
+        $output .= "<meta name=\"twitter:title\" content=\"{$this->context->value('seotamic_social')['title']}\">";
+        $output .= "<meta name=\"twitter:description\" content=\"{$this->context->value('seotamic_social')['description']}\">";
 
         // image
-        $output .= "<meta name=\"og:twitter\" content=\"{$this->socialImage($image)}\">";
+        if (array_key_exists('image', $this->context->value('seotamic_social'))) {
+            $output .= "<meta name=\"og:twitter\" content=\"{$this->context->value('seotamic_social')['image']}\">";
+        }
 
         return $output;
-    }
-
-    private function socialField($name, $default)
-    {
-        $field = $default;
-
-        if ($this->context->raw("seotamic_${name}")) {
-            if (($this->context->raw("seotamic_${name}") === 'general') && array_key_exists($name, $this->values)) {
-                $field = $this->values[$name];
-            } else if (($this->context->raw("seotamic_${name}") === 'custom')) {
-                $field = $this->context->raw("seotamic_custom_${name}");
-            }
-        }
-
-        return trim(htmlentities(strip_tags($field)));
-    }
-
-    private function socialImage($image = null)
-    {
-        $image = '';
-        $assets = $this->config->get('seotamic.container');
-
-        if (substr($assets, -1) === '/') {
-            $assets = substr($assets, 0, -1);
-        }
-
-        if (! empty($image)) {
-            $image = $this->imageManipulation($assets, $image);
-        } else {
-            if (! empty($this->context->raw('seotamic_image'))) {
-                $image = $this->imageManipulation($assets, $this->context->raw('seotamic_image'));
-            } else {
-                if (array_key_exists('social_image', $this->values)) {
-                    if (! empty($this->values['social_image'])) {
-                        $image = $this->imageManipulation($assets, $this->values['social_image']);
-                    }
-                }
-            }
-        }
-
-        return $image;
-    }
-
-    private function imageManipulation($assets, $image)
-    {
-        $asset = Asset::find($assets . '::' . $image);
-
-        if (! $asset) {
-            return null;
-        }
-
-        if (! $asset->isImage()) {
-            return null;
-        }
-
-        return url($asset->manipulate(['w' => 1200, 'q' => '70']));
     }
 }

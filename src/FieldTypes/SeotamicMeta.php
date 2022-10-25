@@ -4,6 +4,30 @@ namespace Cnj\Seotamic\FieldTypes;
 
 class SeotamicMeta extends SeotamicType
 {
+    public function preProcess(mixed $data): array
+    {
+        // TODO: Advanced checks if the data is valid
+
+        if ($data === null) {
+            return [
+                    "title" => [
+                        "append" => true,
+                        "prepend" => true,
+                        "type" => "title",
+                        "value" => "",
+                        "custom_value" => ""
+                    ],
+                    "description" => [
+                        "value" => "",
+                        "custom_value" => "",
+                        "type" => "general"
+                    ]
+            ];
+        }
+
+        return $data;
+    }
+
     public function preload()
     {
         return [

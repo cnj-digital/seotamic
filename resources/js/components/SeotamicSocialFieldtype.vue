@@ -105,14 +105,17 @@ export default {
 
   mounted() {
     if (!this.value) {
+      console.log("this value does not exists, copying");
       this.value = this.valueData;
     }
 
     if (!this.value.title) {
+      console.log("this value.title does not exists, copying");
       this.value.title = this.valueData.title;
     }
 
     if (!this.value.description) {
+      console.log("this value.description does not exists, copying");
       this.value.description = this.valueData.description;
     }
 
@@ -121,6 +124,14 @@ export default {
     // Re set values on mounted from the latest data
     if (this.valueData.title.type === "title") {
       this.valueData.title.value = this.meta.title;
+    }
+
+    if (this.valueData.title.type === "general") {
+      this.valueData.title.value = this.meta.seotamic.social_title;
+    }
+
+    if (this.valueData.description.type === "general") {
+      this.valueData.description.value = this.meta.seotamic.social_description;
     }
   },
 
@@ -165,19 +176,23 @@ export default {
           this.valueData.description.custom_value;
       }
     },
-
-    valueData: function (newVal) {
-      this.update(newVal);
-    },
   },
 
   methods: {
     updateTitleDebounced: _.debounce(function (value) {
       this.valueData.title.value = value;
+
+      if (this.valueData.title.type === "custom") {
+        this.valueData.title.custom_value = value;
+      }
     }, 50),
 
     updateDescriptionDebounced: _.debounce(function (value) {
       this.valueData.description.value = value;
+
+      if (this.valueData.description.type === "custom") {
+        this.valueData.description.custom_value = value;
+      }
     }, 50),
   },
 };

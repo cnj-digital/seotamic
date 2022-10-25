@@ -6,6 +6,28 @@ use Statamic\Facades\Asset;
 
 class SeotamicSocial extends SeotamicType
 {
+        public function preProcess(mixed $data): array
+    {
+        // TODO: Advanced checks if the data is valid
+
+        if ($data === null) {
+            return [
+                    "title" => [
+                        "type" => "title",
+                        "value" => "",
+                        "custom_value" => ""
+                    ],
+                    "description" => [
+                        "value" => "",
+                        "custom_value" => "",
+                        "type" => "general"
+                    ]
+            ];
+        }
+
+        return $data;
+    }
+
     /**
      * Preload the Fieldtype frontend with the given extra data
      *

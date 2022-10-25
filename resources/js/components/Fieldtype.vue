@@ -36,6 +36,22 @@ export default {
       this.update(value);
     }, 50),
 
+    updateTitleDebounced: _.debounce(function (value) {
+      this.valueData.title.value = value;
+
+      if (this.valueData.title.type === "custom") {
+        this.valueData.title.custom_value = value;
+      }
+    }, 50),
+
+    updateDescriptionDebounced: _.debounce(function (value) {
+      this.valueData.description.value = value;
+
+      if (this.valueData.description.type === "custom") {
+        this.valueData.description.custom_value = value;
+      }
+    }, 50),
+
     updateMeta(value) {
       this.$emit("meta-updated", value);
     },
@@ -65,6 +81,10 @@ export default {
       handler(text) {
         this.$emit("replicator-preview-updated", text);
       },
+    },
+
+    valueData: function (newVal) {
+      this.update(newVal);
     },
   },
 };

@@ -107,7 +107,7 @@ export default {
 
       descriptionOptions: [
         { label: this.meta.t.label_empty, value: "empty" },
-        { label: this.meta.t.label_title, value: "custom" },
+        { label: this.meta.t.label_custom, value: "custom" },
       ],
 
       // Default values…
@@ -202,21 +202,9 @@ export default {
         this.valueData.description.value = "";
       }
     },
-
-    valueData: function (newVal) {
-      this.update(newVal);
-    },
   },
 
   methods: {
-    updateTitleDebounced: _.debounce((value) => {
-      this.valueData.title.value = value;
-    }, 50),
-
-    updateDescriptionDebounced: _.debounce((value) => {
-      this.valueData.description.value = value;
-    }, 50),
-
     updatePrepend(value) {
       this.valueData.title.prepend = value;
     },
