@@ -129,24 +129,11 @@ export default {
   },
 
   mounted() {
-    if (!this.value) {
-      this.value = this.valueData;
-    }
-
-    if (!this.value.title) {
-      this.value.title = this.valueData.title;
-    }
-
-    if (!this.value.description) {
-      this.value.description = this.valueData.description;
-    }
-
     this.valueData = this.value;
+  },
 
-    // Re set values on mounted from the latest data
-    if (this.valueData.title.type === "title") {
-      this.valueData.title.value = this.meta.title;
-    }
+  updated() {
+    this.valueData = this.value;
   },
 
   computed: {

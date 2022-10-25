@@ -3,10 +3,11 @@
 namespace Cnj\Seotamic\FieldTypes;
 
 use Statamic\Facades\Asset;
+use Illuminate\Support\Facades\Log;
 
 class SeotamicSocial extends SeotamicType
 {
-        public function preProcess(mixed $data): array
+    public function preProcess(mixed $data): array
     {
         // TODO: Advanced checks if the data is valid
 
@@ -25,6 +26,20 @@ class SeotamicSocial extends SeotamicType
             ];
         }
 
+        if ($data['title']['type'] === "title") {
+            $data['title']['value'] = $this->getTitle();
+        }
+
+        if ($data['title']['type'] === "general") {
+            $globals = $this->getSeotamicGlobals();
+            $data['title']['value'] = $globals['social_title'];
+        }
+
+        if ($data['description']['type'] === "general") {
+            $globals = $this->getSeotamicGlobals();
+            $data['description']['value'] = $globals['social_description'];
+        }
+
         return $data;
     }
 
@@ -35,11 +50,33 @@ class SeotamicSocial extends SeotamicType
      */
     public function preload(): array
     {
+        if (get_class($this->field->parent()) === "Statamic\Entries\Entry") {
+            $meta = $this->field->parent()->value('seotamic_meta');
+            $social_image = $this->field->parent()->value('seotamic_image');
+        }
+
+        // If the parent is a collection, we use defaults/empty values
+        if (get_class($this->field->parent()) === "Statamic\Entries\Collection") {
+            $meta = [
+                "title" => [
+                    "type" => "title",
+                    "value" => "",
+                    "custom_value" => ""
+                ],
+                "description" => [
+                    "value" => "",
+                    "custom_value" => "",
+                    "type" => "general"
+                ]
+            ];
+            $social_image = '';
+        }
+
         return [
             'title' => $this->getTitle(),
-            'meta' => $this->field->parent()->data()->get('seotamic_meta'),
+            'meta' => $meta,
             'seotamic' => $this->getSeotamicGlobals(),
-            'social_image' => $this->field->parent()->data()->get('seotamic_image') ?? '',
+            'social_image' => $social_image,
             'config' => config('seotamic'),
             't' => [
                 'title_title' => __('seotamic::general.social_field_title_title'),
@@ -68,11 +105,11 @@ class SeotamicSocial extends SeotamicType
         $social_image = $this->getImage();
 
         $output = [
-            'open_graph' => $seotamic['open_graph_display'],
-            'twitter' => $seotamic['twitter_display'],
-            'site_name' => $seotamic['social_site_name'],
+            'open_graph' => array_key_exists('open_graph_display', $seotamic) ? $seotamic['open_graph_display'] : "",
+            'twitter' => array_key_exists('twitter_display', $seotamic) ? $seotamic['twitter_display'] : "",
+            'site_name' => array_key_exists('social_site_name', $seotamic) ? $seotamic['social_site_name'] : "",
             'title' => $title,
-            'description' => $seotamic['social_description'],
+            'description' => array_key_exists('social_description', $seotamic) ? $seotamic['social_description'] : "",
             'image' =>  $social_image
         ];
 
@@ -112,7 +149,7 @@ class SeotamicSocial extends SeotamicType
         // Use the default seotamic image from globals if entry doesn't have one
         if (!$social_image) {
             $seotamic = $this->getSeotamicGlobals();
-            $social_image = $seotamic['social_image'];
+            $social_image = array_key_exists('social_image', $seotamic) ? $seotamic['social_image'] : '';
         }
 
         $asset = Asset::find(config('seotamic.container') . '::' . $social_image);

@@ -7,7 +7,6 @@ class SeotamicMeta extends SeotamicType
     public function preProcess(mixed $data): array
     {
         // TODO: Advanced checks if the data is valid
-
         if ($data === null) {
             return [
                     "title" => [
@@ -20,9 +19,14 @@ class SeotamicMeta extends SeotamicType
                     "description" => [
                         "value" => "",
                         "custom_value" => "",
-                        "type" => "general"
+                        "type" => "empty"
                     ]
             ];
+        }
+
+        // if title type is title, set it as the parent title
+        if ($data['title']['type'] === "title") {
+            $data['title']['value'] = $this->getTitle();
         }
 
         return $data;
@@ -66,11 +70,11 @@ class SeotamicMeta extends SeotamicType
                 $output['title'] = $value['title']['value'];
             }
 
-            if ($value['title']['prepend'] && $seotamic['title_prepend'] ) {
+            if ($value['title']['prepend'] && array_key_exists('title_prepend', $seotamic) && $seotamic['title_prepend'] ) {
                 $output['title'] = $seotamic['title_prepend'] . ' ' . $output['title'];
             }
 
-            if ($value['title']['append'] && $seotamic['title_append'] ) {
+            if ($value['title']['append'] && array_key_exists('title_append', $seotamic) && $seotamic['title_append'] ) {
                 $output['title'] .= ' ' . $seotamic['title_append'];
             }
         }

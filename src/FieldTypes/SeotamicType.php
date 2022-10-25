@@ -32,7 +32,11 @@ abstract class SeotamicType extends Fieldtype
      */
     protected function getTitle(): string
     {
-        return $this->field->parent()->data()->get('title');
+        if (get_class($this->field->parent()) === "Statamic\Entries\Collection") {
+            return "";
+        }
+
+        return $this->field->parent()->value('title');
     }
 
     /**
