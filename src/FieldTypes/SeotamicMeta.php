@@ -9,18 +9,18 @@ class SeotamicMeta extends SeotamicType
         // TODO: Advanced checks if the data is valid
         if ($data === null) {
             return [
-                    "title" => [
-                        "append" => true,
-                        "prepend" => true,
-                        "type" => "title",
-                        "value" => "",
-                        "custom_value" => ""
-                    ],
-                    "description" => [
-                        "value" => "",
-                        "custom_value" => "",
-                        "type" => "empty"
-                    ]
+                "title" => [
+                    "append" => true,
+                    "prepend" => true,
+                    "type" => "title",
+                    "value" => "",
+                    "custom_value" => ""
+                ],
+                "description" => [
+                    "value" => "",
+                    "custom_value" => "",
+                    "type" => "empty"
+                ]
             ];
         }
 
@@ -39,17 +39,17 @@ class SeotamicMeta extends SeotamicType
             'seotamic' => $this->getSeotamicGlobals(),
             'config' => config('seotamic'),
             't' => [
-                'title_title' => __('seotamic::general.meta_field_title_title'),
-                'title_instructions' => __('seotamic::general.meta_field_title_instructions'),
-                'prepend_label' => __('seotamic::general.meta_field_prepend_label'),
-                'append_label' => __('seotamic::general.meta_field_append_label'),
-                'description_title' => __('seotamic::general.meta_field_description_title'),
-                'description_instructions' => __('seotamic::general.meta_field_description_instructions'),
-                'default_description' => __('seotamic::general.meta_field_default_description'),
-                'label_title' => __('seotamic::general.meta_field_label_title'),
-                'label_custom' => __('seotamic::general.meta_field_label_custom'),
-                'label_empty' => __('seotamic::general.meta_field_label_empty'),
-                'preview_title' => __('seotamic::general.meta_field_preview_title'),
+                'title_title' => __('seotamic::seo.meta_title_title'),
+                'title_instructions' => __('seotamic::seo.meta_title_instructions'),
+                'prepend_label' => __('seotamic::seo.meta_prepend_label'),
+                'append_label' => __('seotamic::seo.meta_append_label'),
+                'description_title' => __('seotamic::seo.meta_description_title'),
+                'description_instructions' => __('seotamic::seo.meta_description_instructions'),
+                'default_description' => __('seotamic::seo.meta_default_description'),
+                'label_title' => __('seotamic::seo.meta_label_title'),
+                'label_custom' => __('seotamic::seo.meta_label_custom'),
+                'label_empty' => __('seotamic::seo.meta_label_empty'),
+                'preview_title' => __('seotamic::seo.meta_preview_title'),
 
             ]
         ];
@@ -70,11 +70,11 @@ class SeotamicMeta extends SeotamicType
                 $output['title'] = $value['title']['value'];
             }
 
-            if ($value['title']['prepend'] && array_key_exists('title_prepend', $seotamic) && $seotamic['title_prepend'] ) {
+            if ($value['title']['prepend'] && array_key_exists('title_prepend', $seotamic) && $seotamic['title_prepend']) {
                 $output['title'] = $seotamic['title_prepend'] . ' ' . $output['title'];
             }
 
-            if ($value['title']['append'] && array_key_exists('title_append', $seotamic) && $seotamic['title_append'] ) {
+            if ($value['title']['append'] && array_key_exists('title_append', $seotamic) && $seotamic['title_append']) {
                 $output['title'] .= ' ' . $seotamic['title_append'];
             }
         }

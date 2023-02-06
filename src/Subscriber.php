@@ -48,11 +48,11 @@ class Subscriber
         $socialFields = $this->getSocialFields();
 
         collect($metaFields)->each(function ($field) {
-            $this->blueprint->ensureFieldInSection($field['handle'], $field['field'], 'SEO');
+            $this->blueprint->ensureFieldInSection($field['handle'], $field['field'], __('seotamic::seo.tab_title'));
         });
 
         collect($socialFields)->each(function ($field) {
-            $this->blueprint->ensureFieldInSection($field['handle'], $field['field'], 'Social');
+            $this->blueprint->ensureFieldInSection($field['handle'], $field['field'], __('seotamic::social.tab_title'));
         });
     }
 
@@ -70,7 +70,8 @@ class Subscriber
                     'type' => 'section',
                     'localizable' => true,
                     'listable' => 'hidden',
-                    'display' => 'Meta',
+                    'display' => __('seotamic::seo.section_meta_title'),
+                    'instructions' => __('seotamic::seo.section_meta_instructions'),
                 ]
             ],
             [
@@ -79,16 +80,16 @@ class Subscriber
                     'type' => 'seotamic_meta',
                     'localizable' => true,
                     'listable' => 'hidden',
-                    'display' => 'SEOtamic Meta',
+                    'display' => __('seotamic::seo.meta_title'),
                 ]
             ],
             [
                 'handle' => 'seotamic_canonical',
                 'field' =>  [
-                    'instructions' => __('seotamic::general.canonical_instructions'),
+                    'display' => __('seotamic::seo.canonical_title'),
+                    'instructions' => __('seotamic::seo.canonical_instructions'),
                     'localizable' => true,
                     'listable' => 'hidden',
-                    'display' => __('seotamic::general.canonical_display'),
                     'input_type' => 'text',
                     'type' => 'text',
                 ]
@@ -110,7 +111,8 @@ class Subscriber
                     'type' => 'section',
                     'localizable' => true,
                     'listable' => 'hidden',
-                    'display' => 'Social',
+                    'display' => __('seotamic::social.section_social_title'),
+                    'instructions' => __('seotamic::social.section_social_instructions'),
                 ]
             ],
             [
@@ -119,7 +121,7 @@ class Subscriber
                     'type' => 'seotamic_social',
                     'localizable' => true,
                     'listable' => 'hidden',
-                    'display' => 'SEOtamic Social',
+                    'display' => __('seotamic::social.social_title'),
                 ]
             ],
             [
@@ -131,10 +133,10 @@ class Subscriber
                     'allow_uploads' => true,
                     'max_files' => 1,
                     'type' => 'assets',
-                    'instructions' => __('seotamic::general.social_image_instructions'),
                     'localizable' => true,
                     'listable' => 'hidden',
-                    'display' => __('seotamic::general.social_image_display'),
+                    'display' => __('seotamic::social.social_image_title'),
+                    'instructions' => __('seotamic::social.social_image_instructions'),
                 ]
             ]
         ];

@@ -1,6 +1,7 @@
 <template>
-  <div class="seotamic-mt-8">
+  <div class="">
     <div
+      v-if="previewTitle"
       class="seotamic-text-xs seotamic-uppercase seotamic-font-bold seotamic-tracking-wider"
     >
       {{ previewTitle }}
@@ -45,8 +46,8 @@ export default {
   props: {
     previewTitle: {
       type: String,
-      required: true,
-      default: "Social preview",
+      required: false,
+      default: "",
     },
     domain: {
       type: String,

@@ -5,7 +5,6 @@ namespace Cnj\Seotamic;
 use Statamic\Facades\CP\Nav;
 use Statamic\Facades\Permission;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Session;
 use Statamic\Providers\AddonServiceProvider;
 
 use Statamic\Facades\GraphQL;
@@ -24,6 +23,8 @@ class ServiceProvider extends AddonServiceProvider
     protected $fieldtypes = [
         FieldTypes\SeotamicMeta::class,
         FieldTypes\SeotamicSocial::class,
+        FieldTypes\SeotamicSearchPreview::class,
+        FieldTypes\SeotamicSocialPreview::class,
     ];
 
     protected $tags = [
@@ -31,11 +32,11 @@ class ServiceProvider extends AddonServiceProvider
     ];
 
     protected $scripts = [
-        __DIR__.'/../resources/dist/js/cp.js',
+        __DIR__ . '/../resources/dist/js/cp.js',
     ];
 
     protected $stylesheets = [
-        __DIR__.'/../resources/dist/css/cp.css',
+        __DIR__ . '/../resources/dist/css/cp.css',
     ];
 
     public function boot()
@@ -58,7 +59,7 @@ class ServiceProvider extends AddonServiceProvider
         ], 'config');
 
         Permission::register('view seotamic tool')
-                  ->label('View global SEOtamic settings');
+            ->label('View global SEOtamic settings');
 
         Event::subscribe(Subscriber::class);
 

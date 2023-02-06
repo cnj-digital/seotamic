@@ -1,63 +1,68 @@
 <?php
 
 return [
-    'intro' => 'Control your SEO general settings here. Make sure to read the instructions on each input. This settings can be overidden on specific entries/pages.',
-    'meta_section' => 'Meta',
-    'title' => 'Title',
-    'title_instructions' => 'While the title tag doesn’t start with "meta," it is in the header and contains information that\'s very important to SEO. You should always have a unique title tag on every page that describes the page.',
+    /**
+     * Global configuration translation
+     */
+    'seotamic' => 'SEOtamic',
+    'intro' => 'Control your SEO general settings here. Make sure to read the instructions on each input. These settings can be overidden on specific entries/pages.',
 
-    'title_prepend' => 'Prepend on Title',
-    'title_prepend_instructions' => 'This will be PREPENDED to all of the titles.',
+    'title' => 'Settings',
 
-    'title_append' => 'Append on Title',
-    'title_append_instructions' => 'This will be APPENDED to all of the titles.',
+    /**
+     * Title Tab
+     */
+    'title_title' => 'Title',
 
-    'social_section' => 'Social',
-    'social_image' => 'Social Image',
-    'social_image_instructions' => 'Use your logo or any other branded image for the rest of your pages. Use images with a 1.91:1 ratio and minimum recommended dimensions of 1200x630 for optimal clarity across all devices.',
-    'social_open_graph' => 'Output Open Graph tags',
-    'social_open_graph_instructions' => 'Open Graph tags are used to control how URLs are displayed when shared on social media. If you don\'t have Open Graph tags on your site, Facebook will try to scrape the content of the page to determine what to display. This can lead to issues with how your content is displayed, and it can also lead to Facebook displaying the wrong content.',
-    'social_site_name' => 'Site Name',
-    'social_site_name_instructions' => 'The name of your site. This will be displayed in the social media preview.',
-    'social_title' => 'Title',
-    'social_title_instructions' => 'Keep it short to prevent overflow. 40 characters for mobile and 60 for desktop is roughly the sweet spot. Use the raw title. Don’t include branding (e.g., your site name).',
-    'social_description' => 'Description',
+    'title_section_title' => 'Title',
+    'title_section_instructions' => 'You should always have a unique title tag on every page that describes the page. By default SEOtamic uses the Entry title as the title, which you can edit in the SEO settings for each page.',
+
+    'title_prepend_title' => 'Prepend on Title',
+    'title_prepend_instructions' => 'This will be PREPENDED to all titles throughout the page. Not commonly used.',
+
+    'title_append_title' => 'Append on Title',
+    'title_append_instructions' => 'This will be APPENDED to all titles throughout the page. Commonly used for your brand/product name.',
+
+    'title_preview_title' => 'Search preview (requires reload on save)',
+    'title_preview_placeholder_title' => 'Demo Page Title',
+    'title_preview_placeholder_description' => 'This description will be prefilled by the search engine depending on your content. You can change it manually by selecting custom and typing in your own.',
+
+    /**
+     * Social Tab
+     */
+    'social_title' => 'Social',
+
+    'social_site_name_title' => 'Site Name',
+    'social_site_name_instructions' => 'The name of your site. This might be displayed while sharing on socials. Usually this is the name of your brand/product. This is different than the website title, which is meant for describing the content of a specififc page. Example: Site name: *Apple* Page title: *iPhone 14 Pro specifications*.',
+
+    'social_info_title' => 'Default Social',
+    'social_info_instructions' => 'The best practice for social shares is to create unique content for each page. Since this not always an option, it is advised to set this for the most shared landing pages. The information below will be used as a fallback for all other pages.',
+
+    'social_title_title' => 'Title',
+    'social_title_instructions' => 'Focus on accuracy, value, and clickability. Keep it short to prevent overflow. 40 characters for mobile and 60 for desktop is roughly the sweet spot. Use the raw title. Don’t include branding (e.g. your site name).',
+
+    'social_description_title' => 'Description',
     'social_description_instructions' => 'General Description, can be overridden on specific pages. Complement the title to make the snippet as appealing and click-worthy as possible. Copy your meta description here if it makes sense. Keep it short and sweet. Facebook recommends 2–4 sentences, but that often truncates.',
 
-    'social_twitter' => 'Output Twitter tags',
+    'social_image_title' => 'Share Image',
+    'social_image_instructions' => 'Use your logo or any other branded image for the default image. Use images with a 1.91:1 ratio and minimum recommended dimensions of 1200x630 for optimal clarity across all devices.',
+
+    'social_preview_title' => 'Social preview (requires reload on save)',
+
+    'social_open_graph_title' => 'Output Open Graph tags',
+    'social_open_graph_instructions' => 'Open Graph tags are used to control how URLs are displayed when shared on social media. If you don\'t have Open Graph tags on your site, Facebook will try to scrape the content of the page to determine what to display. This can lead to issues with how your content is displayed, and it can also lead to Facebook displaying the wrong content.',
+
+    'social_twitter_title' => 'Output Twitter tags',
     'social_twitter_instructions' => 'Twitter cards are a way to attach rich photos, videos and media experience to Tweets that drive traffic to your website. You can use Twitter cards to help you drive traffic to your website, increase the visibility of your content, and get more engagement with your Tweets.',
 
-    'settings_section' => 'Settings',
-    'settings_preview_url' => 'Preview URL',
-    'settings_preview_url_instructions' => 'This is the URL that will be used to preview the meta data on the SEO tab on each page.',
-    'settings_preview_domain' => 'Preview Domain',
-    'settings_preview_domain_instructions' => 'This is the domain that will be used to preview the Social data on the Social tab on each page.',
+    /**
+     * Settings Tab
+     */
+    'settings_title' => 'Settings',
 
-    'meta_field_title_title' => 'Title',
-    'meta_field_title_instructions' => 'It can be used to determine the title used on search engine results pages. Defaults to `title` which sets the page title as the Entry title. For custom entries, select `Custom` and enter your own value.',
-    'meta_field_prepend_label' => 'Prepend to the title the text set in General SEO settings',
-    'meta_field_append_label' => 'Append to the title the text set in General SEO settings',
-    'meta_field_description_title' => 'Description',
-    'meta_field_description_instructions' => 'It can be used to determine the text used under the title on search engine results pages. If empty, search engines will automatically generate this text.',
-    'meta_field_default_description' => 'This description will be prefilled by the search engine depending on your content. You can change it manually by selecting custom and typing in your own.',
-    'meta_field_label_title' => 'Title',
-    'meta_field_label_custom' => 'Custom',
-    'meta_field_label_empty' => 'Empty',
-    'meta_field_preview_title' => 'Search preview',
+    'settings_preview_domain_title' => 'Preview Domain/URL',
+    'settings_preview_domain_instructions' => 'This is the domain that will be used to generate the social and SEO previews.',
 
-    'social_field_title_title' => 'Social title',
-    'social_field_title_instructions' => 'Social (Open Graph, Twitter, …) is used to display information while sharing the website link. OpenGraph is the most common sharing protocol (used by Facebook, Slack…). The title should be between 50 and 60 characters and not have any branding.',
-    'social_field_description_title' => 'Social description',
-    'social_field_description_instructions' => 'Shown below the title. It is used to describe the content of the page. If Meta description is not empty, it can be reused here. Usually the Meta description is longer.',
-    'social_field_label_title' => 'Title',
-    'social_field_label_general' => 'General',
-    'social_field_label_custom' => 'Custom',
-    'social_field_label_meta' => 'Meta',
-    'social_field_preview_title' => 'Social preview',
-
-    'canonical_display' => 'Canonical URL',
-    'canonical_instructions' => 'Canonical URLs are used to tell search engines which URL is the original source of a page. This is useful when you have multiple URLs that point to the same page. For example, if you have a page that can be accessed with or without a trailing slash, you can use a canonical URL to tell search engines which one is the original. This helps search engines avoid duplicate content issues.',
-
-    'social_image_display' => 'Social Image',
-    'social_image_instructions' => 'This image will be used when sharing the page on social networks. If left empty, the default image will be used. It\'s best to use an image with a 1.91:1 aspect ratio that is at least 1200px wide for universal support.',
+    'settings_robots_title' => 'Meta Robots None (noindex, nofollow)',
+    'settings_robots_instructions' => 'This will prevent the page from being indexed by search engines. This is useful for pages that are not ready for public viewing, or for pages that you don\'t want to be indexed by search engines This will be set for all pages.',
 ];

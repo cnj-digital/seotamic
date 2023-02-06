@@ -1,6 +1,7 @@
 <template>
-  <div class="seotamic-mt-8">
+  <div>
     <div
+      v-if="previewTitle"
       class="seotamic-text-xs seotamic-uppercase seotamic-font-bold seotamic-tracking-wider"
     >
       {{ previewTitle }}
@@ -29,9 +30,9 @@ export default {
     previewTitle: {
       type: String,
       required: true,
-      default: "Search preview",
+      default: "",
     },
-    url: {
+    domain: {
       type: String,
       required: true,
       default: "",
@@ -57,6 +58,19 @@ export default {
       }
 
       return str.slice(0, num) + " …";
+    },
+  },
+
+  computed: {
+    url() {
+      if (
+        this.domain.startsWith("https://") ||
+        this.domain.startsWith("http://")
+      ) {
+        return domain;
+      }
+
+      return "https://" + this.domain;
     },
   },
 };
