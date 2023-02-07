@@ -93,6 +93,15 @@ class Subscriber
                     'input_type' => 'text',
                     'type' => 'text',
                 ]
+            ],
+            [
+                'handle' => 'robots_none',
+                'field' =>  [
+                    'type' => 'toggle',
+                    'display' => __('seotamic::seo.robots_title'),
+                    'instructions' => __('seotamic::seo.robots_instructions'),
+                    'default' => false,
+                ]
             ]
         ];
     }

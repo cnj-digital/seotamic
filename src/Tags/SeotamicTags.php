@@ -2,8 +2,8 @@
 
 namespace Cnj\Seotamic\Tags;
 
-use Statamic\Facades\Image;
-use Statamic\Facades\Asset;
+use Illuminate\Support\Arr;
+use Statamic\Facades\Blink;
 
 class SeotamicTags extends Tags
 {
@@ -19,53 +19,36 @@ class SeotamicTags extends Tags
      */
     public function index()
     {
-        $output = "<title>{$this->title()}</title>";
-        $output .= "<meta name=\"description\" content=\"{$this->description()}\">";
-
-        // Output canonical if it's set
-        if ($this->context->value('seotamic_canonical')) {
-            $output .= "<link rel=\"canonical\" href=\"{$this->canonical()}\">";
-        }
-
-        $output .= $this->og();
-        $output .= $this->twitter();
-
-        return $output;
+        return view('seotamic::all', $this->values());
     }
 
     /**
-     * SEO title
+     * Returns only the requested tag as a string.
      *
-     * By default it returns the Entry title. This can be overidden in the SEO menu.
-     * We can also select if we want to append and/or prepend the title values
-     * from the Global SEO settings.
+     * This is useful when you want to use the tag in a template.
+     * If the tag does not exist, it returns null.
      *
-     * @return string
+     * @return string | null
      */
-    public function title()
+    public function wildcard()
     {
-        if (! $this->context->value('seotamic_meta')) {
-            return '';
-        }
-
-        return $this->context->value('seotamic_meta')['title'];
+        return Arr::get($this->values(), str_replace(":", ".", $this->method));
     }
 
     /**
-     * SEO Meta Description
-     *
-     * By default it returns an empty string (so the Search engines generate this
-     * by themselves).
-     *
-     * @return string
+     * Outputs only the Open Graph Tags
      */
-    public function description()
+    public function og()
     {
-        if (! $this->context->value('seotamic_meta')) {
-            return '';
-        }
+        return view('seotamic::partials._og', $this->values());
+    }
 
-        return $this->context->value('seotamic_meta')['description'];
+    /**
+     * Outputs only the Twitter tags
+     */
+    public function twitter()
+    {
+        return view('seotamic::partials._twitter', $this->values());
     }
 
     /**
@@ -76,7 +59,7 @@ class SeotamicTags extends Tags
      *
      * @return string
      */
-    public function canonical()
+    protected function getCanonical(): string
     {
         $url = $this->context->raw('permalink');
 
@@ -105,67 +88,15 @@ class SeotamicTags extends Tags
         return $url;
     }
 
-    /**
-     * Open Graph output
-     *
-     * Outputs the meta fields with the selected social data. The image is a parameter that can be
-     * overriden programatically if wanted.
-     *
-     * @param $image string Image name
-     * @return string
-     */
-    public function og($image = null)
+    protected function values(): array
     {
-        if (! $this->context->value('seotamic_social')) {
-            return '';
-        }
-
-        // Open graph output disabled
-        if (!$this->context->value('seotamic_social')['open_graph']) {
-            return '';
-        }
-
-        $output = "<meta property=\"og:url\" content=\"{$this->canonical()}\">";
-
-        if (array_key_exists('site_name', $this->context->value('seotamic_social'))) {
-            $output .= "<meta property=\"og:site_name\" content=\"{$this->context->value('seotamic_social')['site_name']}\">";
-        }
-
-        $output .= "<meta property=\"og:title\" content=\"{$this->context->value('seotamic_social')['title']}\">";
-        $output .= "<meta property=\"og:description\" content=\"{$this->context->value('seotamic_social')['description']}\">";
-
-        // TODO: Check on multisite, here we have locale_full and site_locale
-        $output .= "<meta property=\"og:locale\" content=\"{$this->context->value('site')->locale()}\">";
-
-        // image
-        if (array_key_exists('image', $this->context->value('seotamic_social'))) {
-            $output .= "<meta property=\"og:image\" content=\"{$this->context->value('seotamic_social')['image']}\">";
-        }
-
-        return $output;
-    }
-
-    public function twitter($image = null)
-    {
-       if (! $this->context->value('seotamic_social')) {
-            return '';
-        }
-
-        // Open graph output disabled
-        if (!$this->context->value('seotamic_social')['twitter']) {
-            return '';
-        }
-
-        $output = "<meta name=\"twitter:card\" content=\"summary_large_image\">";
-        $output .= "<meta name=\"twitter:url\" content=\"{$this->canonical()}\">";
-        $output .= "<meta name=\"twitter:title\" content=\"{$this->context->value('seotamic_social')['title']}\">";
-        $output .= "<meta name=\"twitter:description\" content=\"{$this->context->value('seotamic_social')['description']}\">";
-
-        // image
-        if (array_key_exists('image', $this->context->value('seotamic_social'))) {
-            $output .= "<meta name=\"og:twitter\" content=\"{$this->context->value('seotamic_social')['image']}\">";
-        }
-
-        return $output;
+        return Blink::once('seotamic::values', function () {
+            return [
+                'meta' => $this->context->value('seotamic_meta'),
+                'social' => $this->context->value('seotamic_social'),
+                'canonical' => $this->getCanonical(),
+                'robots' => $this->values['robots_none'] ?? false
+            ];
+        });
     }
 }

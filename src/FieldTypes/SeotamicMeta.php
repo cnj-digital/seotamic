@@ -6,23 +6,12 @@ class SeotamicMeta extends SeotamicType
 {
     public function preProcess(mixed $data): array
     {
-        // TODO: Advanced checks if the data is valid
         if ($data === null) {
-            return [
-                "title" => [
-                    "append" => true,
-                    "prepend" => true,
-                    "type" => "title",
-                    "value" => "",
-                    "custom_value" => ""
-                ],
-                "description" => [
-                    "value" => "",
-                    "custom_value" => "",
-                    "type" => "empty"
-                ]
-            ];
+            $data = [];
         }
+
+        // We make sure all the keys are present in the data
+        $data = array_replace_recursive($this->defaultData(), $data);
 
         // if title type is title, set it as the parent title
         if ($data['title']['type'] === "title") {
@@ -35,6 +24,7 @@ class SeotamicMeta extends SeotamicType
     public function preload()
     {
         return [
+            'permalink' => $this->getPermalink(),
             'title' => $this->getTitle(),
             'seotamic' => $this->getSeotamicGlobals(),
             'config' => config('seotamic'),
@@ -57,6 +47,13 @@ class SeotamicMeta extends SeotamicType
 
     public function augment($value): array
     {
+        if ($value === null) {
+            $value = [];
+        }
+
+        // We make sure all the keys are present in the data
+        $value = array_replace_recursive($this->defaultData(), $value);
+
         $title = $this->getTitle();
         $seotamic = $this->getSeotamicGlobals();
 
@@ -80,5 +77,28 @@ class SeotamicMeta extends SeotamicType
         }
 
         return $output;
+    }
+
+    /**
+     * Default data for the fieldtype
+     *
+     * @return array
+     */
+    protected function defaultData(): array
+    {
+        return [
+            "title" => [
+                "append" => true,
+                "prepend" => true,
+                "type" => "title",
+                "value" => "",
+                "custom_value" => ""
+            ],
+            "description" => [
+                "value" => "",
+                "custom_value" => "",
+                "type" => "empty"
+            ]
+        ];
     }
 }

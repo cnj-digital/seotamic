@@ -2,13 +2,16 @@
 
 namespace Cnj\Seotamic\FieldTypes;
 
+use Statamic\Entries\Entry;
 use Cnj\Seotamic\File\File;
 use Statamic\Fields\Fieldtype;
+use Illuminate\Support\Facades\URL;
 
 abstract class SeotamicType extends Fieldtype
 {
     protected $categories = [];
     protected $selectableInForms = false;
+    protected File $file;
 
     public function __construct(File $file)
     {
@@ -37,6 +40,20 @@ abstract class SeotamicType extends Fieldtype
         }
 
         return $this->field->parent()->value('title');
+    }
+
+    /**
+     * Get the permalink of the Entry
+     *
+     * @return string
+     */
+    protected function getPermalink(): string
+    {
+        if (get_class($this->field->parent()) === "Statamic\Entries\Collection") {
+            return "";
+        }
+
+        return URL::to("/") . Entry::find($this->field->parent()->id)->url();
     }
 
     /**

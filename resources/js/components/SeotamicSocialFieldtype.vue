@@ -1,18 +1,18 @@
 <template>
-  <div>
+  <div v-if="value">
     <div>
       <Heading :title="meta.t.title_title">
         {{ meta.t.title_instructions }}
       </Heading>
 
-      <ButtonGroup :options="titleOptions" v-model="valueData.title.type" />
+      <ButtonGroup :options="titleOptions" v-model="value.title.type" />
 
       <div class="seotamic-mt-2">
         <text-input
           ref="title"
-          :value="valueData.title.value"
+          :value="value.title.value"
           type="text"
-          :isReadOnly="valueData.title.type !== 'custom'"
+          :isReadOnly="value.title.type !== 'custom'"
           :limit="meta.config.social_title_length"
           name="og_title"
           id="og_title"
@@ -28,15 +28,15 @@
 
       <ButtonGroup
         :options="descriptionOptions"
-        v-model="valueData.description.type"
+        v-model="value.description.type"
       />
 
       <div class="seotamic-mt-2">
         <text-input
           ref="description"
-          :value="valueData.description.value"
+          :value="value.description.value"
           type="text"
-          :isReadOnly="valueData.description.type !== 'custom'"
+          :isReadOnly="value.description.type !== 'custom'"
           :limit="meta.config.social_description_length"
           name="description"
           id="description"
@@ -48,10 +48,11 @@
     <SocialPreview
       class="seotamic-mt-8"
       :preview-title="meta.t.preview_title"
+      :permalink="meta.permalink"
       :domain="meta.seotamic.preview_domain"
-      :title="valueData.title.value"
+      :title="value.title.value"
       :image="socialPreviewImage"
-      :description="valueData.description.value"
+      :description="value.description.value"
     />
 
     <div class="seotamic-mt-8 seotamic-h-px seotamic-bg-gray-300"></div>
@@ -88,27 +89,16 @@ export default {
       ],
 
       // Default values…
-      valueData: {
-        title: {
-          value: "",
-          custom_value: "",
-          type: "title", // title, general, custom,
-        },
-        description: {
-          value: "",
-          custom_value: "",
-          type: "general", // general, meta, custom
-        },
-      },
+      value: false,
     };
   },
 
   mounted() {
-    this.valueData = this.value;
+    this.value = this.value;
   },
 
   updated() {
-    this.valueData = this.value;
+    this.value = this.value;
   },
 
   computed: {
@@ -122,52 +112,49 @@ export default {
   },
 
   watch: {
-    "valueData.title.type": function (newVal, oldVal) {
+    "value.title.type": function (newVal, oldVal) {
       if (oldVal === "custom") {
-        this.valueData.title.custom_value = this.valueData.title.value;
+        this.value.title.custom_value = this.value.title.value;
       }
 
       if (newVal === "title") {
-        this.valueData.title.value = this.meta.title;
+        this.value.title.value = this.meta.title;
       } else if (newVal === "general") {
-        this.valueData.title.value = this.meta.seotamic.social_title;
+        this.value.title.value = this.meta.seotamic.social_title;
       } else {
-        this.valueData.title.value = this.valueData.title.custom_value;
+        this.value.title.value = this.value.title.custom_value;
       }
     },
 
-    "valueData.description.type": function (newVal, oldVal) {
+    "value.description.type": function (newVal, oldVal) {
       if (oldVal === "custom") {
-        this.valueData.description.custom_value =
-          this.valueData.description.value;
+        this.value.description.custom_value = this.value.description.value;
       }
 
       if (newVal === "meta") {
-        this.valueData.description.value = this.meta.meta.description.value;
+        this.value.description.value = this.meta.meta.description.value;
       } else if (newVal === "general") {
-        this.valueData.description.value =
-          this.meta.seotamic.social_description;
+        this.value.description.value = this.meta.seotamic.social_description;
       } else {
-        this.valueData.description.value =
-          this.valueData.description.custom_value;
+        this.value.description.value = this.value.description.custom_value;
       }
     },
   },
 
   methods: {
     updateTitleDebounced: _.debounce(function (value) {
-      this.valueData.title.value = value;
+      this.value.title.value = value;
 
-      if (this.valueData.title.type === "custom") {
-        this.valueData.title.custom_value = value;
+      if (this.value.title.type === "custom") {
+        this.value.title.custom_value = value;
       }
     }, 50),
 
     updateDescriptionDebounced: _.debounce(function (value) {
-      this.valueData.description.value = value;
+      this.value.description.value = value;
 
-      if (this.valueData.description.type === "custom") {
-        this.valueData.description.custom_value = value;
+      if (this.value.description.type === "custom") {
+        this.value.description.custom_value = value;
       }
     }, 50),
   },

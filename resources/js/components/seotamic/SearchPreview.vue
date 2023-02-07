@@ -6,6 +6,18 @@
     >
       {{ previewTitle }}
     </div>
+
+    <div v-if="permalink" class="seotamic-mt-2">
+      <a
+        :href="`https://pagespeed.web.dev/report?url=` + permalink"
+        class="text-sm underline text-blue hover:text-blue-dark"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Pagespeed Insights
+      </a>
+    </div>
+
     <div
       class="seotamic-mt-2 seotamic-bg-white seotamic-border seotamic-shadow-sm seotamic-p-3 seotamic-flex seotamic-flex-col seotamic-max-w-[600px] seotamic-rounded-[3px]"
     >
@@ -30,6 +42,11 @@ export default {
     previewTitle: {
       type: String,
       required: true,
+      default: "",
+    },
+    permalink: {
+      type: String,
+      required: false,
       default: "",
     },
     domain: {

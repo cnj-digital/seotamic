@@ -1,0 +1,21 @@
+{{ if social:twitter }}
+
+    <meta name="twitter:card" content="summary_large_image">
+
+    {{ if social:title }}
+        <meta name="twitter:title" content="{{ social:title }}">
+    {{ /if }}
+
+    {{ if social:description }}
+        <meta name="twitter:description" content="{{ social:description }}">
+    {{ /if }}
+
+    {{ if canonical }}
+        <meta name="twitter:url" content="{{ canonical }}">
+    {{ /if }}
+
+    {{ if social:image }}
+        <meta name="twitter:image" content="{{ social:image }}">
+    {{ /if }}
+
+{{ /if }}

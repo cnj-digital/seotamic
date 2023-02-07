@@ -1,0 +1,23 @@
+{{ if social:open_graph }}
+    <meta property="og:type" content="website">
+
+    {{ if canonical }}
+        <meta property="og:url" content="{{ canonical }}">
+    {{ /if }}
+
+    {{ if social:site_name }}
+        <meta property="og:site_name" content="{{ social:site_name }}">
+    {{ /if }}
+
+    {{ if social:title }}
+        <meta property="og:title" content="{{ social:title }}">
+    {{ /if }}
+
+    {{ if social:description }}
+        <meta property="og:description" content="{{ social:description }}">
+    {{ /if }}
+
+    {{ if social:image }}
+        <meta property="og:image" content="{{ social:image }}">
+    {{ /if }}
+{{ /if }}

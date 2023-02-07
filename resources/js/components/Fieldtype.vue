@@ -37,18 +37,18 @@ export default {
     }, 50),
 
     updateTitleDebounced: _.debounce(function (value) {
-      this.valueData.title.value = value;
+      this.value.title.value = value;
 
-      if (this.valueData.title.type === "custom") {
-        this.valueData.title.custom_value = value;
+      if (this.value.title.type === "custom") {
+        this.value.title.custom_value = value;
       }
     }, 50),
 
     updateDescriptionDebounced: _.debounce(function (value) {
-      this.valueData.description.value = value;
+      this.value.description.value = value;
 
-      if (this.valueData.description.type === "custom") {
-        this.valueData.description.custom_value = value;
+      if (this.value.description.type === "custom") {
+        this.value.description.custom_value = value;
       }
     }, 50),
 
@@ -83,7 +83,7 @@ export default {
       },
     },
 
-    valueData: function (newVal) {
+    value: function (newVal) {
       this.update(newVal);
     },
   },

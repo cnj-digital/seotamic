@@ -35,7 +35,7 @@ return [
     'social_site_name_title' => 'Site Name',
     'social_site_name_instructions' => 'The name of your site. This might be displayed while sharing on socials. Usually this is the name of your brand/product. This is different than the website title, which is meant for describing the content of a specififc page. Example: Site name: *Apple* Page title: *iPhone 14 Pro specifications*.',
 
-    'social_info_title' => 'Default Social',
+    'social_info_title' => 'General Social Settings',
     'social_info_instructions' => 'The best practice for social shares is to create unique content for each page. Since this not always an option, it is advised to set this for the most shared landing pages. The information below will be used as a fallback for all other pages.',
 
     'social_title_title' => 'Title',
@@ -46,6 +46,9 @@ return [
 
     'social_image_title' => 'Share Image',
     'social_image_instructions' => 'Use your logo or any other branded image for the default image. Use images with a 1.91:1 ratio and minimum recommended dimensions of 1200x630 for optimal clarity across all devices.',
+
+    'social_image_compress_title' => 'Compress & Resize Share Image',
+    'social_image_compress_instructions' => 'This will compress and resize the image to 1200x630. This will compress all social share images. Do not use this if you are using a custom image resolution.',
 
     'social_preview_title' => 'Social preview (requires reload on save)',
 
@@ -63,6 +66,6 @@ return [
     'settings_preview_domain_title' => 'Preview Domain/URL',
     'settings_preview_domain_instructions' => 'This is the domain that will be used to generate the social and SEO previews.',
 
-    'settings_robots_title' => 'Meta Robots None (noindex, nofollow)',
+    'settings_robots_title' => 'Disable page indexing (noindex, nofollow)',
     'settings_robots_instructions' => 'This will prevent the page from being indexed by search engines. This is useful for pages that are not ready for public viewing, or for pages that you don\'t want to be indexed by search engines This will be set for all pages.',
 ];

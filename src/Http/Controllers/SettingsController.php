@@ -38,7 +38,7 @@ class SettingsController extends CpController
 
         $fields = $fields->preProcess();
 
-        return view('seotamic::settings', [
+        return view('seotamic::cp.settings', [
             'blueprint' => $blueprint->toPublishArray(),
             'values'    => $fields->values(),
             'meta'      => $fields->meta(),
@@ -113,7 +113,7 @@ class SettingsController extends CpController
                     'social_site_name' => [
                         'type' => 'text',
                         'character_limit' => '50',
-                        'display' => __('seotamic::general.social_site_name'),
+                        'display' => __('seotamic::general.social_site_name_title'),
                         'instructions' => __('seotamic::general.social_site_name_instructions'),
                     ],
                     'section_social' => [
@@ -139,6 +139,12 @@ class SettingsController extends CpController
                         'max_files' => 1,
                         'display' => __('seotamic::general.social_image_title'),
                         'instructions' => __('seotamic::general.social_image_instructions'),
+                    ],
+                    'social_image_compress' => [
+                        'type' => 'toggle',
+                        'display' => __('seotamic::general.social_image_compress_title'),
+                        'instructions' => __('seotamic::general.social_image_compress_instructions'),
+                        'default' => true,
                     ],
                     'social_preview' => [
                         'type' => 'seotamic_social_preview',

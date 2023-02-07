@@ -6,6 +6,18 @@
     >
       {{ previewTitle }}
     </div>
+
+    <div v-if="permalink" class="seotamic-mt-2">
+      <a
+        :href="`https://developers.facebook.com/tools/debug/?q=` + permalink"
+        class="text-sm underline text-blue hover:text-blue-dark"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Facebook Debugger
+      </a>
+    </div>
+
     <div
       class="seotamic-mt-2 seotamic-bg-[#f2f3f5] seotamic-border seotamic-border-[#dadde1] seotamic-shadow-sm seotamic-flex seotamic-flex-col seotamic-max-w-[500px] seotamic-rounded-[3px]"
     >
@@ -45,6 +57,11 @@
 export default {
   props: {
     previewTitle: {
+      type: String,
+      required: false,
+      default: "",
+    },
+    permalink: {
       type: String,
       required: false,
       default: "",

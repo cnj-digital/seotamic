@@ -3,40 +3,30 @@
 namespace Cnj\Seotamic\FieldTypes;
 
 use Statamic\Facades\Asset;
-use Illuminate\Support\Facades\Log;
+use Statamic\Facades\Image;
 
 class SeotamicSocial extends SeotamicType
 {
     public function preProcess(mixed $data): array
     {
-        // TODO: Advanced checks if the data is valid
+        $globals = $this->getSeotamicGlobals();
 
         if ($data === null) {
-            return [
-                "title" => [
-                    "type" => "title",
-                    "value" => "",
-                    "custom_value" => ""
-                ],
-                "description" => [
-                    "value" => "",
-                    "custom_value" => "",
-                    "type" => "general"
-                ]
-            ];
+            $data = [];
         }
+
+        // We make sure all the keys are present in the data
+        $data = array_replace_recursive($this->defaultData(), $data);
 
         if ($data['title']['type'] === "title") {
             $data['title']['value'] = $this->getTitle();
         }
 
         if ($data['title']['type'] === "general") {
-            $globals = $this->getSeotamicGlobals();
             $data['title']['value'] = $globals['social_title'];
         }
 
         if ($data['description']['type'] === "general") {
-            $globals = $this->getSeotamicGlobals();
             $data['description']['value'] = $globals['social_description'];
         }
 
@@ -57,22 +47,12 @@ class SeotamicSocial extends SeotamicType
 
         // If the parent is a collection, we use defaults/empty values
         if (get_class($this->field->parent()) === "Statamic\Entries\Collection") {
-            $meta = [
-                "title" => [
-                    "type" => "title",
-                    "value" => "",
-                    "custom_value" => ""
-                ],
-                "description" => [
-                    "value" => "",
-                    "custom_value" => "",
-                    "type" => "general"
-                ]
-            ];
+            $meta = $this->defaultData();
             $social_image = '';
         }
 
         return [
+            'permalink' => $this->getPermalink(),
             'title' => $this->getTitle(),
             'meta' => $meta,
             'seotamic' => $this->getSeotamicGlobals(),
@@ -99,10 +79,18 @@ class SeotamicSocial extends SeotamicType
      */
     public function augment($value): array
     {
+        if ($value === null) {
+            $value = [];
+        }
+
+        // We make sure all the keys are present in the data
+        $value = array_replace_recursive($this->defaultData(), $value);
+
         $title = $this->getTitle();
         $seotamic = $this->getSeotamicGlobals();
         $meta = $this->field->parent()->data()->get('seotamic_meta');
-        $social_image = $this->getImage();
+        $compress  = array_key_exists('social_image_compress', $seotamic) ? $seotamic['social_image_compress'] : true;
+        $social_image = $this->getImage($compress);
 
         $output = [
             'open_graph' => array_key_exists('open_graph_display', $seotamic) ? $seotamic['open_graph_display'] : "",
@@ -142,7 +130,7 @@ class SeotamicSocial extends SeotamicType
      *
      * @return string
      */
-    protected function getImage(): string
+    protected function getImage($compress = false): string
     {
         $social_image = $this->field->parent()->data()->get('seotamic_image');
 
@@ -154,14 +142,35 @@ class SeotamicSocial extends SeotamicType
 
         $asset = Asset::find(config('seotamic.container') . '::' . $social_image);
 
-        if (!$asset) {
+        if (!$asset || !$asset->isImage()) {
             return "";
         }
 
-        if (!$asset->isImage()) {
-            return "";
+        if ($compress) {
+            return url(Image::manipulate($asset, ['w' => 1200, 'h' => 630, 'q' => '70', 'fit' => 'crop']));
         }
 
         return url($asset);
+    }
+
+    /**
+     * Default data for the fieldtype
+     *
+     * @return array
+     */
+    protected function defaultData(): array
+    {
+        return [
+            "title" => [
+                "type" => "title",
+                "value" => "",
+                "custom_value" => ""
+            ],
+            "description" => [
+                "value" => "",
+                "custom_value" => "",
+                "type" => "general"
+            ]
+        ];
     }
 }

@@ -20,12 +20,12 @@ return [
     'social_field_title_instructions' => 'The title should be between 50 and 60 characters and not have any branding.',
     'social_field_description_title' => 'Social description',
     'social_field_description_instructions' => 'Shown below the title. It is used to describe the content of the page. If Meta description is not empty, it can be reused here. Usually the Meta description is longer.',
-    'social_field_label_title' => 'Title',
+    'social_field_label_title' => 'Entry Title',
     'social_field_label_general' => 'General',
     'social_field_label_custom' => 'Custom',
     'social_field_label_meta' => 'Meta',
     'social_field_preview_title' => 'Social preview',
 
     'social_image_title' => 'Social Image',
-    'social_image_instructions' => 'This image will be used when sharing the page on social networks. If left empty, the default image will be used. It\'s best to use an image with a 1.91:1 aspect ratio that is at least 1200px wide for universal support.',
+    'social_image_instructions' => 'This image will be used when sharing the page on social networks. If left empty, the default image will be used. Use images with a 1.91:1 ratio and minimum recommended dimensions of 1200x630 for optimal clarity across all devices.',
 ];
