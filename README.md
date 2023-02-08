@@ -1,6 +1,6 @@
 # Seotamic - Statamic SEO Addon
 
-Statamic v3 only. Automatically adds a SEO tab to all your collection entries where you can fine tune SEO for every entry. Works perfectly with Antlers, Blade and in headless mode with the Statamic REST API or GraphQL integration out of the box.
+Statamic v3.3+ only. Automatically adds a SEO tab to all your collection entries where you can fine tune SEO for every entry. Works perfectly with Antlers, Blade and in headless mode with the Statamic REST API or GraphQL integration out of the box.
 
 ## Quick Antlers usage sample
 
@@ -18,7 +18,6 @@ Generates the whole array of SEO settings:
 <meta property="og:site_name" content="Site name" />
 <meta property="og:title" content="My Page Title" />
 <meta property="og:description" content="SEO friendly description" />
-<meta property="og:locale" content="en_US" />
 <meta property="og:image" content="https://mysite.com/img/og.jpg" />
 ...
 ```
@@ -26,6 +25,8 @@ Generates the whole array of SEO settings:
 # Version 3 changes
 
 Version 3 has breaking changes. If you update from version 1 or 2, your global settings will not be transfered. The data layout is a bit different and so is the data on specific entries.
+
+The string tags were changed to arrays so to access the data you need to use the `:meta` or `:social` prefixes. For example `{{ seotamic:title }}` becomes `{{ seotamic:meta:title }}`.
 
 A migration script is planned, but not yet available.
 
@@ -39,7 +40,7 @@ composer require cnj/seotamic
 
 The package requires Laravel 9+ and PHP 8.0+. It will auto register.
 
-The SEO section tab will appear on all collection entries automatically.
+The SEO & Social section tab will appear on all collection entries automatically.
 
 ## Configuration (optional)
 
@@ -74,23 +75,35 @@ There are several antler tags available, the easiest is to just include the do e
 If you need more control you can manually get each part of the output by using:
 
 ```
-{{ seotamic:title }}
-{{ seotamic:description }}
-{{ seotamic:canonical }}
+{{ seotamic:meta:title }}
+{{ seotamic:meta:description }}
+{{ seotamic:meta:canonical }}
+{{ seotamic:meta:robots }}
 ```
 
 This will return strings, so you need to wrap them in the appropriate tags, ie:
 
 ```html
-<title>{{ seotamic:title }}</title>
+<title>{{ seotamic:meta:title }}</title>
 ```
 
-Social ones will still return everything with tags
+Social ones will still return everything with these tags (the general one returns this as well)
 
 ```
 {{ seotamic:og }}
 {{ seotamic:twitter }}
 ```
+
+If you need more control you can manually get each part of the output by using:
+
+```
+{{ seotamic:social:title }}
+{{ seotamic:social:description }}
+{{ seotamic:social:image }}
+{{ seotamic:social:site_name }}
+```
+
+This will return strings, so you need to wrap them in the appropriate tags.
 
 ## Blade
 
@@ -104,7 +117,7 @@ It works similary to the Antlers tags, so you can use single values as well.
 
 ## Headless
 
-Headless use is straightforward. If using the REST API or GraphQL, the entry will include three Seotamic fields: `seotamic_meta`, `seotamic_social` and `seotamic_canonical` with the prefilled SEO data.
+Headless use is straightforward. If using the REST API or GraphQL, the entry will include three Seotamic fields: `seotamic_meta`, `seotamic_social` with the prefilled SEO data.
 
 ## Dynamic OG Image injection
 
@@ -123,8 +136,15 @@ class OgImage extends ViewModel
 {
     public function data(): array
     {
-        $social = $this->cascade->get('seotamic_social'); if ($social) { return
-[ ...$social, 'image' => 'https://myimageurl.com/image.jpg', ]; } return []; } }
+        $social = $this->cascade->get('seotamic_social');
+
+        if ($social) {
+          return [ ...$social, 'image' => 'https://myimageurl.com/image.jpg', ];
+        }
+
+        return [];
+    }
+}
 ```
 
 In the example above we use a hardcoded image url which you can change to suit your usecase. Then in your collections you just have to inject the ViewModel.
