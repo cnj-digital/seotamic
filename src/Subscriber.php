@@ -3,6 +3,7 @@
 namespace Cnj\Seotamic;
 
 use Statamic\Events;
+use Illuminate\Support\Str;
 
 class Subscriber
 {
@@ -40,20 +41,18 @@ class Subscriber
 
         $ignoreBlueprints = config('seotamic.ignore_blueprints', []);
 
+        // Do not add fields to blueprints that are in the ignore list
         if (in_array($this->blueprint->handle(), $ignoreBlueprints)) {
             return;
         }
 
-        $metaFields = $this->getMetaFields();
-        $socialFields = $this->getSocialFields();
+        // Do not add fields to the blueprint editor (this avoids adding the fields on blueprint changes)
+        if (Str::containsAll(request()->path(), [config('statamic.cp.route', 'cp'), 'blueprints'])) {
+            return;
+        }
 
-        collect($metaFields)->each(function ($field) {
-            $this->blueprint->ensureFieldInSection($field['handle'], $field['field'], __('seotamic::seo.tab_title'));
-        });
-
-        collect($socialFields)->each(function ($field) {
-            $this->blueprint->ensureFieldInSection($field['handle'], $field['field'], __('seotamic::social.tab_title'));
-        });
+        $this->blueprint->ensureFieldsInSection($this->getMetaFields(), __('seotamic::seo.tab_title'));
+        $this->blueprint->ensureFieldsInSection($this->getSocialFields(), __('seotamic::social.tab_title'));
     }
 
     /**
@@ -64,44 +63,32 @@ class Subscriber
     private function getMetaFields()
     {
         return [
-            [
-                'handle' => 'seotamic_meta_section',
-                'field' =>  [
-                    'type' => 'section',
-                    'localizable' => true,
-                    'listable' => 'hidden',
-                    'display' => __('seotamic::seo.section_meta_title'),
-                    'instructions' => __('seotamic::seo.section_meta_instructions'),
-                ]
+            'seotamic_meta_section' =>  [
+                'type' => 'section',
+                'localizable' => true,
+                'listable' => 'hidden',
+                'display' => __('seotamic::seo.section_meta_title'),
+                'instructions' => __('seotamic::seo.section_meta_instructions'),
             ],
-            [
-                'handle' => 'seotamic_meta',
-                'field' =>  [
-                    'type' => 'seotamic_meta',
-                    'localizable' => true,
-                    'listable' => 'hidden',
-                    'display' => __('seotamic::seo.meta_title'),
-                ]
+            'seotamic_meta' =>  [
+                'type' => 'seotamic_meta',
+                'localizable' => true,
+                'listable' => 'hidden',
+                'display' => __('seotamic::seo.meta_title'),
             ],
-            [
-                'handle' => 'seotamic_canonical',
-                'field' =>  [
-                    'display' => __('seotamic::seo.canonical_title'),
-                    'instructions' => __('seotamic::seo.canonical_instructions'),
-                    'localizable' => true,
-                    'listable' => 'hidden',
-                    'input_type' => 'text',
-                    'type' => 'text',
-                ]
+            'seotamic_canonical' =>  [
+                'display' => __('seotamic::seo.canonical_title'),
+                'instructions' => __('seotamic::seo.canonical_instructions'),
+                'localizable' => true,
+                'listable' => 'hidden',
+                'input_type' => 'text',
+                'type' => 'text',
             ],
-            [
-                'handle' => 'seotamic_robots_none',
-                'field' =>  [
-                    'type' => 'toggle',
-                    'display' => __('seotamic::seo.robots_title'),
-                    'instructions' => __('seotamic::seo.robots_instructions'),
-                    'default' => false,
-                ]
+            'seotamic_robots_none' =>  [
+                'type' => 'toggle',
+                'display' => __('seotamic::seo.robots_title'),
+                'instructions' => __('seotamic::seo.robots_instructions'),
+                'default' => false,
             ]
         ];
     }
@@ -114,39 +101,31 @@ class Subscriber
     private function getSocialFields()
     {
         return [
-            [
-                'handle' => 'seotamic_social_section',
-                'field' =>  [
-                    'type' => 'section',
-                    'localizable' => true,
-                    'listable' => 'hidden',
-                    'display' => __('seotamic::social.section_social_title'),
-                    'instructions' => __('seotamic::social.section_social_instructions'),
-                ]
+            'seotamic_social_section' =>  [
+                'type' => 'section',
+                'localizable' => true,
+                'listable' => 'hidden',
+                'display' => __('seotamic::social.section_social_title'),
+                'instructions' => __('seotamic::social.section_social_instructions'),
             ],
-            [
-                'handle' => 'seotamic_social',
-                'field' =>  [
-                    'type' => 'seotamic_social',
-                    'localizable' => true,
-                    'listable' => 'hidden',
-                    'display' => __('seotamic::social.social_title'),
-                ]
+
+            'seotamic_social' =>  [
+                'type' => 'seotamic_social',
+                'localizable' => true,
+                'listable' => 'hidden',
+                'display' => __('seotamic::social.social_title'),
             ],
-            [
-                'handle' => 'seotamic_image',
-                'field' =>  [
-                    'container' => config('seotamic.container'),
-                    'mode' => 'grid',
-                    'restrict' => false,
-                    'allow_uploads' => true,
-                    'max_files' => 1,
-                    'type' => 'assets',
-                    'localizable' => true,
-                    'listable' => 'hidden',
-                    'display' => __('seotamic::social.social_image_title'),
-                    'instructions' => __('seotamic::social.social_image_instructions'),
-                ]
+            'seotamic_image' =>  [
+                'container' => config('seotamic.container'),
+                'mode' => 'grid',
+                'restrict' => false,
+                'allow_uploads' => true,
+                'max_files' => 1,
+                'type' => 'assets',
+                'localizable' => true,
+                'listable' => 'hidden',
+                'display' => __('seotamic::social.social_image_title'),
+                'instructions' => __('seotamic::social.social_image_instructions'),
             ]
         ];
     }
