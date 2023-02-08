@@ -95,7 +95,7 @@ class Subscriber
                 ]
             ],
             [
-                'handle' => 'robots_none',
+                'handle' => 'seotamic_robots_none',
                 'field' =>  [
                     'type' => 'toggle',
                     'display' => __('seotamic::seo.robots_title'),

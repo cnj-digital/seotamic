@@ -18,22 +18,27 @@ class SeotamicMetaType extends GraphQLType
     public function fields(): array
     {
         return [
-                'title' => [
-                    'type' => GraphQL::string(),
-                    'description' => 'Entry meta title',
-                    'resolve' => $this->resolver()
-                ],
-                'description' => [
-                    'type' => GraphQL::string(),
-                    'description' => 'Entry meta description',
-                    'resolve' => $this->resolver()
-                ],
-                'canonical_url' => [
-                    'type' => GraphQL::string(),
-                    'description' => 'Canonical page URL',
-                    'resolve' => $this->resolver()
-                ],
-            ];
+            'title' => [
+                'type' => GraphQL::string(),
+                'description' => 'Entry meta title',
+                'resolve' => $this->resolver()
+            ],
+            'description' => [
+                'type' => GraphQL::string(),
+                'description' => 'Entry meta description',
+                'resolve' => $this->resolver()
+            ],
+            'canonical' => [
+                'type' => GraphQL::string(),
+                'description' => 'Canonical page URL',
+                'resolve' => $this->resolver()
+            ],
+            'robots' => [
+                'type' => GraphQL::string(),
+                'description' => 'Robots meta tag value',
+                'resolve' => $this->resolver()
+            ],
+        ];
     }
 
     private function resolver()

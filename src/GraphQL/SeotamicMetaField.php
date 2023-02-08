@@ -26,9 +26,6 @@ class SeotamicMetaField extends Field
             return null;
         }
 
-        return [
-            ...$entry->seotamic_meta,
-            'canonical_url' => $entry->seotamic_canonical,
-        ];
+        return $entry->seotamic_meta;
     }
 }

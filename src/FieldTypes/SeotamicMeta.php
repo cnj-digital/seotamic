@@ -54,12 +54,14 @@ class SeotamicMeta extends SeotamicType
         // We make sure all the keys are present in the data
         $value = array_replace_recursive($this->defaultData(), $value);
 
-        $title = $this->getTitle();
         $seotamic = $this->getSeotamicGlobals();
+        $robots_none = $seotamic['robots_none'] ? true : ($this->field->parent()->value('seotamic_robots_none') ?? false);
 
         $output = [
-            'title' => $title,
+            'title' => $this->getTitle(),
             'description' => $value['description']['value'] ?? '',
+            'canonical' => $this->getCanonical(),
+            'robots' => $robots_none ? 'nofollow,noindex' : ''
         ];
 
         if (isset($value['title']) && isset($value['title']['value'])) {
@@ -100,5 +102,46 @@ class SeotamicMeta extends SeotamicType
                 "type" => "empty"
             ]
         ];
+    }
+
+    /**
+     * Canonical URL
+     *
+     * By default it returns the current entry permalink. We can overide this
+     * by selecting an entry or writing down the preferred URL in the SEO tab.
+     *
+     * @return string
+     */
+    protected function getCanonical(): string
+    {
+        if (get_class($this->field->parent()) === "Statamic\Entries\Collection") {
+            return "";
+        }
+
+        $url = $this->field->parent()->permalink;
+
+        // First child option can return 404 if there is no first child
+        if ($this->field->parent()->value('seotamic_canonical') !== null) {
+            $url = $this->field->parent()->value('seotamic_canonical');
+
+            // We have to make sure the given url is formatted correctly
+            // If it's a relative path it must have a / prepended
+            // And we expect the .env APP_URL doesn't
+            if (substr($url, 0, 4) !== 'http') {
+                $appUrl = env('APP_URL');
+
+                if (substr($appUrl, -1) === '/') {
+                    $appUrl = substr($appUrl, 0, -1);
+                }
+
+                if (substr($url, 0, 1) !== '/') {
+                    $url = '/' . $url;
+                }
+
+                $url = $appUrl . $url;
+            }
+        }
+
+        return $url ?? "";
     }
 }
