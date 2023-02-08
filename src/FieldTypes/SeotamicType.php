@@ -63,6 +63,32 @@ abstract class SeotamicType extends Fieldtype
      */
     protected function getSeotamicGlobals(): array
     {
-        return $this->file->read(false);
+        $config = $this->file->read(false);
+
+        // We make sure all the keys are present in the data
+        $config = array_replace_recursive($this->defaultData(), $config);
+
+        return $config;
+    }
+
+    /**
+     * Default data for the global config
+     *
+     * @return array
+     */
+    protected function defaultData(): array
+    {
+        return [
+            "title_prepend" => "",
+            "title_append" => "",
+            "social_title" => "",
+            "social_description" => "",
+            "social_image" => "",
+            "social_image_compress" => true,
+            "open_graph_display" => true,
+            "twitter_display" => true,
+            "preview_domain" => "",
+            "robots_none" => false,
+        ];
     }
 }
