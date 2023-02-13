@@ -110,18 +110,7 @@ export default {
         { label: this.meta.t.label_empty, value: "empty" },
         { label: this.meta.t.label_custom, value: "custom" },
       ],
-
-      // Default values…
-      value: false,
     };
-  },
-
-  mounted() {
-    this.value = this.value;
-  },
-
-  updated() {
-    this.value = this.value;
   },
 
   computed: {

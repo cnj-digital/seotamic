@@ -11,7 +11,7 @@ class SeotamicMeta extends SeotamicType
         }
 
         // We make sure all the keys are present in the data
-        $data = array_replace_recursive($this->defaultData(), $data);
+        $data = array_replace_recursive($this->defaultMetaData(), $data);
 
         // if title type is title, set it as the parent title
         if ($data['title']['type'] === "title") {
@@ -52,7 +52,7 @@ class SeotamicMeta extends SeotamicType
         }
 
         // We make sure all the keys are present in the data
-        $value = array_replace_recursive($this->defaultData(), $value);
+        $value = array_replace_recursive($this->defaultMetaData(), $value);
 
         $seotamic = $this->getSeotamicGlobals();
         $robots_none = $seotamic['robots_none'] ? true : ($this->field->parent()->value('seotamic_robots_none') ?? false);
@@ -79,29 +79,6 @@ class SeotamicMeta extends SeotamicType
         }
 
         return $output;
-    }
-
-    /**
-     * Default data for the fieldtype
-     *
-     * @return array
-     */
-    protected function defaultData(): array
-    {
-        return [
-            "title" => [
-                "append" => true,
-                "prepend" => true,
-                "type" => "title",
-                "value" => "",
-                "custom_value" => ""
-            ],
-            "description" => [
-                "value" => "",
-                "custom_value" => "",
-                "type" => "empty"
-            ]
-        ];
     }
 
     /**

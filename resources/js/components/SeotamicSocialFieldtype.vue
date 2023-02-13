@@ -83,22 +83,11 @@ export default {
       ],
 
       descriptionOptions: [
-        { label: this.meta.t.label_general, value: "general" },
         { label: this.meta.t.label_meta, value: "meta" },
+        { label: this.meta.t.label_general, value: "general" },
         { label: this.meta.t.label_custom, value: "custom" },
       ],
-
-      // Default values…
-      value: false,
     };
-  },
-
-  mounted() {
-    this.value = this.value;
-  },
-
-  updated() {
-    this.value = this.value;
   },
 
   computed: {
@@ -117,8 +106,14 @@ export default {
         this.value.title.custom_value = this.value.title.value;
       }
 
+      // Title is "Automatic"
       if (newVal === "title") {
-        this.value.title.value = this.meta.title;
+        // If the meta title is empty, use the entry title
+        if (this.meta.meta.title.type === "custom") {
+          this.value.title.value = this.meta.meta.title.value;
+        } else {
+          this.value.title.value = this.meta.title;
+        }
       } else if (newVal === "general") {
         this.value.title.value = this.meta.seotamic.social_title;
       } else {
@@ -131,8 +126,14 @@ export default {
         this.value.description.custom_value = this.value.description.value;
       }
 
+      // Meta is "Automatic"
       if (newVal === "meta") {
-        this.value.description.value = this.meta.meta.description.value;
+        // If the meta title is empty, use the entry title
+        if (this.meta.meta.description.type === "custom") {
+          this.value.description.value = this.meta.meta.description.value;
+        } else {
+          this.value.description.value = this.meta.seotamic.social_description;
+        }
       } else if (newVal === "general") {
         this.value.description.value = this.meta.seotamic.social_description;
       } else {

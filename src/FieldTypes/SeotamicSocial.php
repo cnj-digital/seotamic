@@ -16,14 +16,36 @@ class SeotamicSocial extends SeotamicType
         }
 
         // We make sure all the keys are present in the data
-        $data = array_replace_recursive($this->defaultData(), $data);
+        $data = array_replace_recursive($this->defaultSocialData(), $data);
+
+        if (get_class($this->field->parent()) === "Statamic\Entries\Entry") {
+            $meta = $this->field->parent()->value('seotamic_meta');
+        }
+
+        // If the parent is a collection, we use defaults/empty values
+        // This happens if it's a new entry
+        if (get_class($this->field->parent()) === "Statamic\Entries\Collection") {
+            $meta = $this->defaultMetaData();
+        }
 
         if ($data['title']['type'] === "title") {
-            $data['title']['value'] = $this->getTitle();
+            if ($meta['title']['type'] === "custom") {
+                $data['title']['value'] = $meta['title']['value'];
+            } else {
+                $data['title']['value'] = $this->getTitle();
+            }
         }
 
         if ($data['title']['type'] === "general") {
             $data['title']['value'] = $globals['social_title'];
+        }
+
+        if ($data['description']['type'] === "meta") {
+            if ($meta['description']['type'] === "custom") {
+                $data['description']['value'] = $meta['description']['value'];
+            } else {
+                $data['description']['value'] = $globals['social_description'];
+            }
         }
 
         if ($data['description']['type'] === "general") {
@@ -46,8 +68,9 @@ class SeotamicSocial extends SeotamicType
         }
 
         // If the parent is a collection, we use defaults/empty values
+        // This happens if it's a new entry
         if (get_class($this->field->parent()) === "Statamic\Entries\Collection") {
-            $meta = $this->defaultData();
+            $meta = $this->defaultMetaData();
             $social_image = '';
         }
 
@@ -84,7 +107,7 @@ class SeotamicSocial extends SeotamicType
         }
 
         // We make sure all the keys are present in the data
-        $value = array_replace_recursive($this->defaultData(), $value);
+        $value = array_replace_recursive($this->defaultSocialData(), $value);
 
         $title = $this->getTitle();
         $seotamic = $this->getSeotamicGlobals();
@@ -102,6 +125,10 @@ class SeotamicSocial extends SeotamicType
         ];
 
         if (isset($value['title']) && isset($value['title']['value'])) {
+            if ($value['title']['type'] === 'title' && isset($meta['title']['value']) && $meta['title']['type'] === 'custom') {
+                $output['title'] = $meta['title']['value'];
+            }
+
             if ($value['title']['type'] === 'custom') {
                 $output['title'] = $value['title']['value'];
             }
@@ -112,7 +139,7 @@ class SeotamicSocial extends SeotamicType
         }
 
         if (isset($value['description']) && isset($value['description']['value'])) {
-            if ($value['description']['type'] === 'meta') {
+            if ($value['description']['type'] === 'meta' && isset($meta['description']['type']) && $meta['description']['type'] === 'custom') {
                 $output['description'] = $meta['description']['value'];
             }
 
@@ -151,26 +178,5 @@ class SeotamicSocial extends SeotamicType
         }
 
         return url($asset);
-    }
-
-    /**
-     * Default data for the fieldtype
-     *
-     * @return array
-     */
-    protected function defaultData(): array
-    {
-        return [
-            "title" => [
-                "type" => "title",
-                "value" => "",
-                "custom_value" => ""
-            ],
-            "description" => [
-                "value" => "",
-                "custom_value" => "",
-                "type" => "general"
-            ]
-        ];
     }
 }

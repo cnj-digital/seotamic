@@ -66,9 +66,53 @@ abstract class SeotamicType extends Fieldtype
         $config = $this->file->read(false);
 
         // We make sure all the keys are present in the data
-        $config = array_replace_recursive($this->defaultData(), $config);
+        $config = array_replace_recursive($this->defaultGlobalData(), $config);
 
         return $config;
+    }
+
+    /**
+     * Default data for the Social fieldtype
+     *
+     * @return array
+     */
+    protected function defaultSocialData(): array
+    {
+        return [
+            "title" => [
+                "type" => "title",
+                "value" => "",
+                "custom_value" => ""
+            ],
+            "description" => [
+                "value" => "",
+                "custom_value" => "",
+                "type" => "meta"
+            ]
+        ];
+    }
+
+    /**
+     * Default data for the Meta fieldtype
+     *
+     * @return array
+     */
+    protected function defaultMetaData(): array
+    {
+        return [
+            "title" => [
+                "append" => true,
+                "prepend" => true,
+                "type" => "title",
+                "value" => "",
+                "custom_value" => ""
+            ],
+            "description" => [
+                "value" => "",
+                "custom_value" => "",
+                "type" => "empty"
+            ]
+        ];
     }
 
     /**
@@ -76,7 +120,7 @@ abstract class SeotamicType extends Fieldtype
      *
      * @return array
      */
-    protected function defaultData(): array
+    protected function defaultGlobalData(): array
     {
         return [
             "title_prepend" => "",
