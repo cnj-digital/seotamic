@@ -26,9 +26,17 @@ Generates the whole array of SEO settings:
 
 Version 3 has breaking changes. If you update from version 1 or 2, your global settings will not be transfered. The data layout is a bit different and so is the data on specific entries.
 
-A migration script is planned, but not yet available.
-
 The string tags were changed to arrays so to access the data you need to use the `:meta` or `:social` prefixes. For example `{{ seotamic:title }}` becomes `{{ seotamic:meta:title }}`.
+
+## Migration from version 2
+
+If you are migrating from version 2, you can use the following command to migrate your data:
+
+```sh
+php artisan seotamic:migrate
+```
+
+This will migrate your global settings and all the entries. It will also remove the old fields from the entries. Make sure to backup your data before running the command.
 
 # Installation
 
