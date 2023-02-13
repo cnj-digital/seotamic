@@ -3,12 +3,13 @@
 namespace Cnj\Seotamic;
 
 use Statamic\Facades\CP\Nav;
+use Statamic\Facades\GraphQL;
 use Statamic\Facades\Permission;
 use Illuminate\Support\Facades\Event;
+use Statamic\GraphQL\Types\EntryInterface;
 use Statamic\Providers\AddonServiceProvider;
 
-use Statamic\Facades\GraphQL;
-use Statamic\GraphQL\Types\EntryInterface;
+use Cnj\Seotamic\Commands\MigrateCommand;
 use Cnj\Seotamic\GraphQL\SeotamicMetaType;
 use Cnj\Seotamic\GraphQL\SeotamicMetaField;
 use Cnj\Seotamic\GraphQL\SeotamicSocialType;
@@ -18,6 +19,7 @@ class ServiceProvider extends AddonServiceProvider
 {
     protected $routes = [
         'cp' => __DIR__ . '/routes/cp.php',
+        'web' => __DIR__ . '/routes/web.php',
     ];
 
     protected $fieldtypes = [
@@ -69,6 +71,12 @@ class ServiceProvider extends AddonServiceProvider
 
             GraphQL::addField(EntryInterface::NAME, 'seotamic_meta', fn () => (new SeotamicMetaField())->toArray());
             GraphQL::addField(EntryInterface::NAME, 'seotamic_social', fn () => (new SeotamicSocialField())->toArray());
+        }
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                MigrateCommand::class,
+            ]);
         }
     }
 

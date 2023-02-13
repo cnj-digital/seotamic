@@ -15,6 +15,9 @@ return [
     // By default this list is empty.
     'ignore_blueprints' => [],
 
+    // Do we want to add a /sitemap.xml to the site?
+    'sitemap' => true,
+
     // Default recommended field lengths.
     // They are just guidelines and can be ignored on the frontend
     'meta_title_length' => 60,

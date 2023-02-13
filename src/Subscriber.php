@@ -51,8 +51,9 @@ class Subscriber
             return;
         }
 
-        $this->blueprint->ensureFieldsInSection($this->getMetaFields(), __('seotamic::seo.tab_title'));
-        $this->blueprint->ensureFieldsInSection($this->getSocialFields(), __('seotamic::social.tab_title'));
+        // This should not be translated, so we can target them
+        $this->blueprint->ensureFieldsInSection($this->getMetaFields(), 'SEO');
+        $this->blueprint->ensureFieldsInSection($this->getSocialFields(), 'Social');
     }
 
     /**
