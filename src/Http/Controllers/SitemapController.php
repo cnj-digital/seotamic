@@ -2,6 +2,7 @@
 
 namespace Cnj\Seotamic\Http\Controllers;
 
+use Statamic\Facades\Addon;
 use Statamic\Facades\Collection;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Cache;
@@ -10,7 +11,8 @@ class SitemapController extends Controller
 {
     public function __invoke()
     {
-        abort_unless(config('seotamic.sitemap'), 404);
+        $addon = Addon::get('cnj/seotamic');
+        abort_unless(config('seotamic.sitemap') && $addon->edition() === 'pro', 404);
 
         $entries = Collection::all()
             ->flatMap(function ($collection) {
