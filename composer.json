@@ -30,7 +30,11 @@
   "extra": {
     "statamic": {
       "name": "Seotamic",
-      "description": "Simple SEO addon for Statamic v3"
+      "description": "Simple SEO addon for Statamic v3",
+      "editions": [
+        "lite",
+        "pro"
+      ]
     },
     "laravel": {
       "providers": [

@@ -2,6 +2,8 @@
 
 namespace Cnj\Seotamic\FieldTypes;
 
+use Statamic\Extend\Addon;
+use Statamic\Facades\Addon as AddonFacade;
 use Statamic\Entries\Entry;
 use Cnj\Seotamic\File\File;
 use Statamic\Fields\Fieldtype;
@@ -12,10 +14,12 @@ abstract class SeotamicType extends Fieldtype
     protected $categories = [];
     protected $selectableInForms = false;
     protected File $file;
+    protected Addon $addon;
 
     public function __construct(File $file)
     {
         $this->file = $file;
+        $this->addon = AddonFacade::get('cnj/seotamic');
     }
 
     /**

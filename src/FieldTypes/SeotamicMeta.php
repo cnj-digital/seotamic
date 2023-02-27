@@ -47,6 +47,11 @@ class SeotamicMeta extends SeotamicType
 
     public function augment($value): array
     {
+        // Non PRO edition, return empty array
+        if (str_starts_with(request()->path(), config('statamic.api.route')) && $this->addon->edition() !== 'pro') {
+            return [];
+        }
+
         if ($value === null) {
             $value = [];
         }

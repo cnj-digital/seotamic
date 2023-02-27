@@ -2,7 +2,6 @@
 
 namespace Cnj\Seotamic\GraphQL;
 
-use Illuminate\Support\Str;
 use Statamic\Facades\GraphQL;
 use GraphQL\Type\Definition\ResolveInfo;
 use Rebing\GraphQL\Support\Type as GraphQLType;

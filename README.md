@@ -1,6 +1,6 @@
 # Seotamic - Statamic SEO Addon
 
-Statamic v3.3+ only. Automatically adds a SEO tab to all your collection entries where you can fine tune SEO for every entry. Works perfectly with Antlers, Blade and in headless mode with the Statamic REST API or GraphQL integration out of the box.
+Statamic v3.3+ only. Automatically adds a SEO tab to all your collection entries where you can fine tune SEO for every entry. Works perfectly with Antlers, Blade and in headless mode (PRO edition) with the Statamic REST API or GraphQL integration out of the box.
 
 ## Quick Antlers usage sample
 
@@ -123,9 +123,11 @@ Similarly to the Antlers usage, you can use the same tags using Blade:
 
 It works similary to the Antlers tags, so you can use single values as well.
 
-## Headless
+## Headless (PRO)
 
 Headless use is straightforward. If using the REST API or GraphQL, the entry will include three Seotamic fields: `seotamic_meta`, `seotamic_social` with the prefilled SEO data.
+
+**Headless usage is not supported only for the PRO version.**
 
 ## Dynamic OG Image injection
 

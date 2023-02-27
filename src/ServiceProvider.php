@@ -2,6 +2,7 @@
 
 namespace Cnj\Seotamic;
 
+use Statamic\Facades\Addon;
 use Statamic\Facades\CP\Nav;
 use Statamic\Facades\GraphQL;
 use Statamic\Facades\Permission;
@@ -65,7 +66,10 @@ class ServiceProvider extends AddonServiceProvider
 
         Event::subscribe(Subscriber::class);
 
-        if (config('statamic.graphql.enabled')) {
+        $addon = Addon::get('cnj/seotamic');
+
+        // GraphQL support for Pro edition
+        if (config('statamic.graphql.enabled') && $addon->edition() === 'pro') {
             GraphQL::addType(SeotamicMetaType::class);
             GraphQL::addType(SeotamicSocialType::class);
 
