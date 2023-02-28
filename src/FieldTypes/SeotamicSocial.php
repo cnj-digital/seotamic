@@ -103,7 +103,8 @@ class SeotamicSocial extends SeotamicType
     public function augment($value): array
     {
         // Non PRO edition, return empty array
-        if (str_starts_with(request()->path(), config('statamic.api.route')) && $this->addon->edition() !== 'pro') {
+        $edition = $this->addon ? $this->addon->edition() : 'lite';
+        if (str_starts_with(request()->path(), config('statamic.api.route')) && $edition !== 'pro') {
             return [];
         }
 

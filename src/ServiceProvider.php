@@ -67,9 +67,10 @@ class ServiceProvider extends AddonServiceProvider
         Event::subscribe(Subscriber::class);
 
         $addon = Addon::get('cnj/seotamic');
+        $edition = $addon ? $addon->edition() : 'lite';
 
         // GraphQL support for Pro edition
-        if (config('statamic.graphql.enabled') && $addon->edition() === 'pro') {
+        if (config('statamic.graphql.enabled') && $edition === 'pro') {
             GraphQL::addType(SeotamicMetaType::class);
             GraphQL::addType(SeotamicSocialType::class);
 
