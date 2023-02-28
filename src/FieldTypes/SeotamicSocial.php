@@ -28,6 +28,10 @@ class SeotamicSocial extends SeotamicType
             $meta = $this->defaultMetaData();
         }
 
+        if ($meta === null) {
+            $meta = $this->defaultMetaData();
+        }
+
         if ($data['title']['type'] === "title") {
             if ($meta['title']['type'] === "custom") {
                 $data['title']['value'] = $meta['title']['value'];
