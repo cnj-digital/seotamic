@@ -1,3 +1,5 @@
+**PRO Version:** If you are having issues with the license, make sure to add `'cnj/seotamic' => 'pro'` in the `config/statamic/editions.php` `addons` array.
+
 # Seotamic - Statamic SEO Addon
 
 Statamic v3.3+ only. Automatically adds a SEO tab to all your collection entries where you can fine tune SEO for every entry. Works perfectly with Antlers, Blade and in headless mode (PRO edition) with the Statamic REST API or GraphQL integration out of the box.
