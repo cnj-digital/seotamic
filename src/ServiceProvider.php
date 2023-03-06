@@ -42,10 +42,8 @@ class ServiceProvider extends AddonServiceProvider
         __DIR__ . '/../resources/dist/css/cp.css',
     ];
 
-    public function boot()
+    public function bootAddon()
     {
-        parent::boot();
-
         $this->loadViewsFrom(__DIR__ . '/../resources/views/', 'seotamic');
         $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'seotamic');
 
