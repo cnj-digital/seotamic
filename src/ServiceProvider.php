@@ -18,6 +18,10 @@ use Cnj\Seotamic\GraphQL\SeotamicSocialField;
 
 class ServiceProvider extends AddonServiceProvider
 {
+    protected $subscribe = [Subscriber::class];
+
+    protected $commands = [MigrateCommand::class];
+
     protected $routes = [
         'cp' => __DIR__ . '/routes/cp.php',
         'web' => __DIR__ . '/routes/web.php',
@@ -62,9 +66,7 @@ class ServiceProvider extends AddonServiceProvider
         Permission::register('view seotamic tool')
             ->label('View global SEOtamic settings');
 
-        Event::subscribe(Subscriber::class);
-
-        $addon = Addon::get('cnj/seotamic');
+        $addon = $this->getAddon();
         $edition = $addon ? $addon->edition() : 'lite';
 
         // GraphQL support for Pro edition
@@ -74,12 +76,6 @@ class ServiceProvider extends AddonServiceProvider
 
             GraphQL::addField(EntryInterface::NAME, 'seotamic_meta', fn () => (new SeotamicMetaField())->toArray());
             GraphQL::addField(EntryInterface::NAME, 'seotamic_social', fn () => (new SeotamicSocialField())->toArray());
-        }
-
-        if ($this->app->runningInConsole()) {
-            $this->commands([
-                MigrateCommand::class,
-            ]);
         }
     }
 
