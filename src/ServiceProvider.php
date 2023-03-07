@@ -2,11 +2,9 @@
 
 namespace Cnj\Seotamic;
 
-use Statamic\Facades\Addon;
 use Statamic\Facades\CP\Nav;
 use Statamic\Facades\GraphQL;
 use Statamic\Facades\Permission;
-use Illuminate\Support\Facades\Event;
 use Statamic\GraphQL\Types\EntryInterface;
 use Statamic\Providers\AddonServiceProvider;
 
