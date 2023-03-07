@@ -2,11 +2,9 @@
 
 namespace Cnj\Seotamic;
 
-use Statamic\Facades\Addon;
 use Statamic\Facades\CP\Nav;
 use Statamic\Facades\GraphQL;
 use Statamic\Facades\Permission;
-use Illuminate\Support\Facades\Event;
 use Statamic\GraphQL\Types\EntryInterface;
 use Statamic\Providers\AddonServiceProvider;
 
@@ -18,6 +16,10 @@ use Cnj\Seotamic\GraphQL\SeotamicSocialField;
 
 class ServiceProvider extends AddonServiceProvider
 {
+    protected $subscribe = [Subscriber::class];
+
+    protected $commands = [MigrateCommand::class];
+
     protected $routes = [
         'cp' => __DIR__ . '/routes/cp.php',
         'web' => __DIR__ . '/routes/web.php',
@@ -42,10 +44,8 @@ class ServiceProvider extends AddonServiceProvider
         __DIR__ . '/../resources/dist/css/cp.css',
     ];
 
-    public function boot()
+    public function bootAddon()
     {
-        parent::boot();
-
         $this->loadViewsFrom(__DIR__ . '/../resources/views/', 'seotamic');
         $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'seotamic');
 
@@ -64,9 +64,7 @@ class ServiceProvider extends AddonServiceProvider
         Permission::register('view seotamic tool')
             ->label('View global SEOtamic settings');
 
-        Event::subscribe(Subscriber::class);
-
-        $addon = Addon::get('cnj/seotamic');
+        $addon = $this->getAddon();
         $edition = $addon ? $addon->edition() : 'lite';
 
         // GraphQL support for Pro edition
@@ -76,12 +74,6 @@ class ServiceProvider extends AddonServiceProvider
 
             GraphQL::addField(EntryInterface::NAME, 'seotamic_meta', fn () => (new SeotamicMetaField())->toArray());
             GraphQL::addField(EntryInterface::NAME, 'seotamic_social', fn () => (new SeotamicSocialField())->toArray());
-        }
-
-        if ($this->app->runningInConsole()) {
-            $this->commands([
-                MigrateCommand::class,
-            ]);
         }
     }
 
