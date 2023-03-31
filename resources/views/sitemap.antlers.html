@@ -4,6 +4,9 @@
     <url>
         <loc>{{ loc }}</loc>
         <lastmod>{{ lastmod }}</lastmod>
+        {{ alternates }}
+        <xhtml:link xmlns:xhtml="http://www.w3.org/1999/xhtml" rel="alternate" hreflang="{{lang}}" href="{{href}}" />
+        {{ /alternates }}
     </url>
 {{ /entries }}
 </urlset>
