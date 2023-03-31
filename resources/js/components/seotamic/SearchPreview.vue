@@ -84,7 +84,7 @@ export default {
         this.domain.startsWith("https://") ||
         this.domain.startsWith("http://")
       ) {
-        return domain;
+        return this.domain;
       }
 
       return "https://" + this.domain;
