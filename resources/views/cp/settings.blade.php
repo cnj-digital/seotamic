@@ -1,4 +1,5 @@
 @extends('statamic::layout')
+@section('title', 'SEOtamic')
 
 @section('content')
     <div class="flex items-center mb-3">
