@@ -24,4 +24,11 @@ return [
     'meta_description_length' => 160,
     'social_title_length' => 60,
     'social_description_length' => 60,
+
+    // Key value store of blueprint names and the field name that contains the
+    // social image. This is used to override the default social image behaviour
+    // WARNING: API not final, subject to change in the future, do not use in production
+    'social_image_override' => [
+        'sample_blueprint' => "sample_field_name"
+    ],
 ];

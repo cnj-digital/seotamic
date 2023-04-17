@@ -68,14 +68,12 @@ class SeotamicSocial extends SeotamicType
     {
         if (get_class($this->field->parent()) === "Statamic\Entries\Entry") {
             $meta = $this->field->parent()->value('seotamic_meta');
-            $social_image = $this->field->parent()->value('seotamic_image');
         }
 
         // If the parent is a collection, we use defaults/empty values
         // This happens if it's a new entry
         if (get_class($this->field->parent()) === "Statamic\Entries\Collection") {
             $meta = $this->defaultMetaData();
-            $social_image = '';
         }
 
         return [
@@ -83,7 +81,7 @@ class SeotamicSocial extends SeotamicType
             'title' => $this->getTitle(),
             'meta' => $meta,
             'seotamic' => $this->getSeotamicGlobals(),
-            'social_image' => $social_image,
+            'social_image' => $this->getImage(),
             'config' => config('seotamic'),
             't' => [
                 'title_title' => __('seotamic::social.social_field_title_title'),
@@ -169,7 +167,18 @@ class SeotamicSocial extends SeotamicType
      */
     protected function getImage($compress = false): string
     {
-        $social_image = $this->field->parent()->data()->get('seotamic_image');
+        $blueprint = $this->field->parent()->blueprint();
+
+        // check if image field is overriden in the config
+        $social_image_override = config('seotamic.social_image_override', []);
+        $image_field = array_key_exists($blueprint->handle, $social_image_override) ? $social_image_override[$blueprint->handle] : false;
+
+        if (get_class($this->field->parent()) === "Statamic\Entries\Entry") {
+            $social_image = $this->field->parent()->value('seotamic_image') ?? $this->field->parent()->data()->get($image_field);
+        } else {
+            // New Entry
+            $social_image = '';
+        }
 
         // Use the default seotamic image from globals if entry doesn't have one
         if (!$social_image) {
@@ -187,6 +196,6 @@ class SeotamicSocial extends SeotamicType
             return url(Image::manipulate($asset, ['w' => 1200, 'h' => 630, 'q' => '70', 'fit' => 'crop']));
         }
 
-        return url($asset);
+        return $asset->url();
     }
 }

@@ -137,6 +137,7 @@ abstract class SeotamicType extends Fieldtype
             "twitter_display" => true,
             "preview_domain" => "",
             "robots_none" => false,
+            "social_image_override" => []
         ];
     }
 }
