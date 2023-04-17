@@ -81,8 +81,9 @@ export default {
   computed: {
     url() {
       if (
-        this.domain.startsWith("https://") ||
-        this.domain.startsWith("http://")
+        this.domain &&
+        (this.domain.startsWith("https://") ||
+          this.domain.startsWith("http://"))
       ) {
         return this.domain;
       }

@@ -2,7 +2,7 @@
   <SocialPreview
     :domain="meta.seotamic.preview_domain"
     :title="meta.seotamic.social_title"
-    :image="socialPreviewImage"
+    :image="meta.image"
     :description="meta.seotamic.social_description"
   />
 </template>
@@ -17,11 +17,5 @@ export default {
   },
 
   mixins: [Fieldtype],
-
-  computed: {
-    socialPreviewImage() {
-      return `/${this.meta.config.container}/${this.meta.seotamic.social_image}`;
-    },
-  },
 };
 </script>

@@ -2,13 +2,10 @@
 
 namespace Cnj\Seotamic\Http\Controllers;
 
-use Statamic\Facades\Config;
-use Statamic\Support\Arr;
 use Cnj\Seotamic\File\File;
 use Statamic\Facades\Site;
 use Illuminate\Http\Request;
 use Statamic\Facades\Blueprint;
-use Illuminate\Support\Facades\Session;
 use Statamic\Http\Controllers\CP\CpController;
 
 class SettingsController extends CpController
