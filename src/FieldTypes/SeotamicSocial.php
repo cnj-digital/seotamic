@@ -167,13 +167,13 @@ class SeotamicSocial extends SeotamicType
      */
     protected function getImage($compress = false): string
     {
-        $blueprint = $this->field->parent()->blueprint();
-
-        // check if image field is overriden in the config
-        $social_image_override = config('seotamic.social_image_override', []);
-        $image_field = array_key_exists($blueprint->handle, $social_image_override) ? $social_image_override[$blueprint->handle] : false;
-
         if (get_class($this->field->parent()) === "Statamic\Entries\Entry") {
+            $blueprint = $this->field->parent()->blueprint();
+
+            // check if image field is overriden in the config
+            $social_image_override = config('seotamic.social_image_override', []);
+            $image_field = array_key_exists($blueprint->handle, $social_image_override) ? $social_image_override[$blueprint->handle] : false;
+
             $social_image = $this->field->parent()->value('seotamic_image') ?? $this->field->parent()->data()->get($image_field);
         } else {
             // New Entry
