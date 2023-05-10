@@ -1,11 +1,11 @@
 {
   "name": "cnj/seotamic",
-  "description": "Simple SEO addon for Statamic v3",
+  "description": "Simple SEO addon for Statamic",
   "type": "statamic-addon",
   "license": "proprietary",
   "require": {
-    "php": "^8.0",
-    "statamic/cms": "^3.3.0"
+    "php": "^8.1",
+    "statamic/cms": "^4.0.0"
   },
   "require-dev": {
     "orchestra/testbench": "^7.0",
@@ -30,7 +30,7 @@
   "extra": {
     "statamic": {
       "name": "Seotamic",
-      "description": "Simple SEO addon for Statamic v3",
+      "description": "Simple SEO addon for Statamic",
       "editions": [
         "lite",
         "pro"

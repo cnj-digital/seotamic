@@ -77,7 +77,7 @@ class SettingsController extends CpController
 
     protected function formBlueprint()
     {
-        return Blueprint::makeFromSections([
+        return Blueprint::makeFromTabs([
             'name' => [
                 'display' => __('seotamic::general.title_title'),
                 'fields' => [

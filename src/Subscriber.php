@@ -52,8 +52,8 @@ class Subscriber
         }
 
         // This should not be translated, so we can target them
-        $this->blueprint->ensureFieldsInSection($this->getMetaFields(), 'SEO');
-        $this->blueprint->ensureFieldsInSection($this->getSocialFields(), 'Social');
+        $this->blueprint->ensureFieldsInTab($this->getMetaFields(), 'SEO');
+        $this->blueprint->ensureFieldsInTab($this->getSocialFields(), 'Social');
     }
 
     /**
