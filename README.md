@@ -2,7 +2,7 @@
 
 # Seotamic - Statamic SEO Addon
 
-Statamic v3.3+ only. Automatically adds a SEO tab to all your collection entries where you can fine tune SEO for every entry. Works perfectly with Antlers, Blade and in headless mode (PRO edition) with the Statamic REST API or GraphQL integration out of the box.
+Statamic v4.0+ only. For Statamic v3 Support use the 3.0.\* releases. Automatically adds a SEO tab to all your collection entries where you can fine tune SEO for every entry. Works perfectly with Antlers, Blade and in headless mode (PRO edition) with the Statamic REST API or GraphQL integration out of the box.
 
 ## Quick Antlers usage sample
 
@@ -23,6 +23,10 @@ Generates the whole array of SEO settings:
 <meta property="og:image" content="https://mysite.com/img/og.jpg" />
 ...
 ```
+
+# Version 4 changes
+
+Statamic v4 compatibility. Some internal functions were changed due to how blueprints work in Statamic v4. This release breaks compatibility with Statamic v3. Upgrade to Statamic v4 before upgrading to this version. Upgrade path from SEOtamic v2 is still the same.
 
 # Version 3 changes
 
@@ -48,7 +52,7 @@ Include the package with composer:
 composer require cnj/seotamic
 ```
 
-The package requires Laravel 9+ and PHP 8.0+. It will auto register.
+The package requires Laravel 9+ and PHP 8.1+. It will auto register.
 
 The SEO & Social section tab will appear on all collection entries automatically.
 
@@ -70,7 +74,7 @@ Usage is fairly simple and straight forward. You can visit the global Settings b
 
 ![Meta preview](./resources/screenshots/meta_preview.png)
 
-After this you can fine tune the output of each collection entry by editing the SEO settings under the entry's SEO tab. In version 3 you can also preview the output of the meta and social settings. The previews should give an accurate representation of the output.
+After this you can fine tune the output of each collection entry by editing the SEO settings under the entry's SEO tab. From version 3 you can also preview the output of the meta and social settings. The previews should give an accurate representation of the output.
 
 ![Social preview](./resources/screenshots/social_preview.png)
 
@@ -177,9 +181,9 @@ inject:
 
 This package was built by [CNJ Digital](https://www.cnj.si/).
 
-# Version 3 License
+# Version 3 and 4 License
 
-Version 3 is a commercial addon for Statamic. It is open source but not free to use. You can purchase a license at [Statamic Marketplace](https://statamic.com/marketplace/addons/seotamic).
+Version 3 and 4 are a commercial addon for Statamic. It is open source but not free to use. You can purchase a license at [Statamic Marketplace](https://statamic.com/marketplace/addons/seotamic).
 
 # Version 2 and 1 License
 
