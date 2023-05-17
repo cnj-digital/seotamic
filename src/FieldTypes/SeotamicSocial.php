@@ -196,6 +196,6 @@ class SeotamicSocial extends SeotamicType
             return url(Image::manipulate($asset, ['w' => 1200, 'h' => 630, 'q' => '70', 'fit' => 'crop']));
         }
 
-        return $asset->url();
+        return $asset->absoluteUrl();
     }
 }
