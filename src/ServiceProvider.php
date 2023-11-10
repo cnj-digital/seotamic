@@ -16,7 +16,7 @@ use Cnj\Seotamic\GraphQL\SeotamicSocialField;
 
 class ServiceProvider extends AddonServiceProvider
 {
-    protected $subscribe = [Subscriber::class];
+    protected $subscribe = [Subscriber::class, SitemapSubscriber::class];
 
     protected $commands = [MigrateCommand::class];
 
