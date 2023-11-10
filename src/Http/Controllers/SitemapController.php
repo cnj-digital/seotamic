@@ -15,35 +15,36 @@ class SitemapController extends Controller
         $addon = Addon::get('cnj/seotamic');
         abort_unless(config('seotamic.sitemap') && $addon->edition() === 'pro', 404);
 
-        $entries = Collection::all()
-            ->flatMap(function ($collection) {
-                return $collection->cascade('seo') !== false && $collection->cascade('social') !== false
-                    ? $collection->queryEntries()->get()
-                    : collect();
-            })
-            ->filter(function (Entry $entry) {
-                return self::shouldBeIndexed($entry);
-            })
-            ->map(function (Entry $entry) {
-                return [
-                    'loc' => $entry->absoluteUrl(),
-                    'lastmod' => $entry->lastModified()->toAtomString(),
-                    'alternates' => $entry->sites()
-                        ->map(fn ($site) => $entry->in($site))
-                        ->filter(function (?Entry $entry) {
-                            return $entry && self::shouldBeIndexed($entry);
-                        })
-                        ->map(function (Entry $entry) {
-                            return array(
-                                'lang' => $entry->locale,
-                                'href' => $entry->absoluteUrl()
-                            );
-                        })
-                ];
-            });
+        $content = Cache::rememberForever('seotamic_sitemap', function () {
+            $entries = Collection::all()
+                ->flatMap(function ($collection) {
+                    return $collection->cascade('seo') !== false && $collection->cascade('social') !== false
+                        ? $collection->queryEntries()->get()
+                        : collect();
+                })
+                ->filter(function (Entry $entry) {
+                    return self::shouldBeIndexed($entry);
+                })
+                ->map(function (Entry $entry) {
+                    return [
+                        'loc' => $entry->absoluteUrl(),
+                        'lastmod' => $entry->lastModified()->toAtomString(),
+                        'alternates' => $entry->sites()
+                            ->map(fn ($site) => $entry->in($site))
+                            ->filter(function (?Entry $entry) {
+                                return $entry && self::shouldBeIndexed($entry);
+                            })
+                            ->map(function (Entry $entry) {
+                                return array(
+                                    'lang' => $entry->locale,
+                                    'href' => $entry->absoluteUrl()
+                                );
+                            })
+                    ];
+                });
 
-        $content = Cache::remember('seotamic_sitemap', 1, function () use ($entries) {
             return view('seotamic::sitemap', [
+                'header' => '<?xml version="1.0" encoding="UTF-8"?>',
                 'entries' => $entries,
             ])->render();
         });
@@ -67,5 +68,4 @@ class SitemapController extends Controller
 
         return true;
     }
-
 }
