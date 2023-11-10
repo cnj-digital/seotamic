@@ -44,6 +44,7 @@ class SitemapController extends Controller
 
         $content = Cache::remember('seotamic_sitemap', 1, function () use ($entries) {
             return view('seotamic::sitemap', [
+                'header' => '<?xml version="1.0" encoding="UTF-8"?>',
                 'entries' => $entries,
             ])->render();
         });
@@ -67,5 +68,4 @@ class SitemapController extends Controller
 
         return true;
     }
-
 }
