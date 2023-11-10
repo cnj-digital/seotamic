@@ -40,7 +40,6 @@ class SeotamicMeta extends SeotamicType
                 'label_custom' => __('seotamic::seo.meta_label_custom'),
                 'label_empty' => __('seotamic::seo.meta_label_empty'),
                 'preview_title' => __('seotamic::seo.meta_preview_title'),
-
             ]
         ];
     }
@@ -101,7 +100,18 @@ class SeotamicMeta extends SeotamicType
             return "";
         }
 
-        $url = $this->field->parent()->permalink;
+        $uri = $this->field->parent()->uri;
+        $config = config('seotamic');
+        $base_url = env('APP_URL');
+
+        if (isset($config['headless_mode']) && $config['headless_mode'] !== false) {
+            $base_url = $config['headless_mode'];
+        }
+
+        // remove trailing slash from base url
+        if (substr($base_url, -1) === '/') {
+            $base_url = substr($base_url, 0, -1);
+        }
 
         // First child option can return 404 if there is no first child
         if ($this->field->parent()->value('seotamic_canonical') !== null) {
@@ -109,20 +119,15 @@ class SeotamicMeta extends SeotamicType
 
             // We have to make sure the given url is formatted correctly
             // If it's a relative path it must have a / prepended
-            // And we expect the .env APP_URL doesn't
             if (substr($url, 0, 4) !== 'http') {
-                $appUrl = env('APP_URL');
-
-                if (substr($appUrl, -1) === '/') {
-                    $appUrl = substr($appUrl, 0, -1);
-                }
-
                 if (substr($url, 0, 1) !== '/') {
                     $url = '/' . $url;
                 }
 
-                $url = $appUrl . $url;
+                $url = $base_url . $url;
             }
+        } else {
+            $url = $base_url . $uri;
         }
 
         return $url ?? "";

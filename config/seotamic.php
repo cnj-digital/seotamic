@@ -18,6 +18,13 @@ return [
     // Do we want to add a /sitemap.xml to the site?
     'sitemap' => true,
 
+    // If set (ie https://test.domain.com) this base url will replace the
+    // app url for canonical and social url tags. Image links will still
+    // be linked to the CMS domain.
+    //
+    // Defautl value: false
+    'headless_mode' => false,
+
     // Default recommended field lengths.
     // They are just guidelines and can be ignored on the frontend
     'meta_title_length' => 60,

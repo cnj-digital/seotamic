@@ -171,13 +171,6 @@ class SettingsController extends CpController
                         'display' => __('seotamic::general.settings_preview_domain_title'),
                         'instructions' => __('seotamic::general.settings_preview_domain_instructions'),
                     ],
-                    'headless_mode' => [
-                        'type' => 'text',
-                        'character_limit' => '50',
-                        'prepend' => 'https://',
-                        'display' => "Headless Mode",
-                        'instructions' => "If set this domain will replace the domain for canonical and social url tags. Image links will still be linked to the CMS domain.",
-                    ],
                     'robots_none' => [
                         'type' => 'toggle',
                         'display' => __('seotamic::general.settings_robots_title'),

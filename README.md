@@ -133,6 +133,8 @@ It works similary to the Antlers tags, so you can use single values as well.
 
 Headless use is straightforward. If using the REST API or GraphQL, the entry will include three Seotamic fields: `seotamic_meta`, `seotamic_social` with the prefilled SEO data.
 
+You can also set the base canonical url in the config file by setting a value for `headless_mode`. The default value is `false`, but setting it to `https://mydomain.com` will change all canonical urls. The images will NOT use this base url, as they are still served from Statamic.
+
 **Headless usage is supported only for the PRO version.**
 
 ## Sitemap (PRO)
