@@ -96,7 +96,7 @@ class SeotamicMeta extends SeotamicType
      */
     protected function getCanonical(): string
     {
-        if (get_class($this->field->parent()) === "Statamic\Entries\Collection") {
+        if ($this->field->parent() instanceof \Statamic\Entries\Collection) {
             return "";
         }
 

@@ -18,13 +18,13 @@ class SeotamicSocial extends SeotamicType
         // We make sure all the keys are present in the data
         $data = array_replace_recursive($this->defaultSocialData(), $data);
 
-        if (get_class($this->field->parent()) === "Statamic\Entries\Entry") {
+        if ($this->field->parent() instanceof \Statamic\Entries\Entry) {
             $meta = $this->field->parent()->value('seotamic_meta');
         }
 
         // If the parent is a collection, we use defaults/empty values
         // This happens if it's a new entry
-        if (get_class($this->field->parent()) === "Statamic\Entries\Collection") {
+        if ($this->field->parent() instanceof \Statamic\Entries\Collection) {
             $meta = $this->defaultMetaData();
         }
 
@@ -66,13 +66,13 @@ class SeotamicSocial extends SeotamicType
      */
     public function preload(): array
     {
-        if (get_class($this->field->parent()) === "Statamic\Entries\Entry") {
+        if ($this->field->parent() instanceof \Statamic\Entries\Entry) {
             $meta = $this->field->parent()->value('seotamic_meta');
         }
 
         // If the parent is a collection, we use defaults/empty values
         // This happens if it's a new entry
-        if (get_class($this->field->parent()) === "Statamic\Entries\Collection") {
+        if ($this->field->parent() instanceof \Statamic\Entries\Collection) {
             $meta = $this->defaultMetaData();
         }
 
@@ -167,7 +167,7 @@ class SeotamicSocial extends SeotamicType
      */
     protected function getImage($compress = false): string
     {
-        if (get_class($this->field->parent()) === "Statamic\Entries\Entry") {
+        if ($this->field->parent() instanceof \Statamic\Entries\Entry) {
             $blueprint = $this->field->parent()->blueprint();
 
             // check if image field is overriden in the config
