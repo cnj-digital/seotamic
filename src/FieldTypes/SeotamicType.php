@@ -39,7 +39,7 @@ abstract class SeotamicType extends Fieldtype
      */
     protected function getTitle(): string
     {
-        if (get_class($this->field->parent()) === "Statamic\Entries\Collection") {
+        if ($this->field->parent() instanceof \Statamic\Entries\Collection) {
             return "";
         }
 
@@ -53,7 +53,7 @@ abstract class SeotamicType extends Fieldtype
      */
     protected function getPermalink(): string
     {
-        if (get_class($this->field->parent()) === "Statamic\Entries\Collection") {
+        if ($this->field->parent() instanceof \Statamic\Entries\Collection) {
             return "";
         }
 
