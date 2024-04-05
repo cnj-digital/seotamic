@@ -88,7 +88,7 @@ class SitemapController extends Controller
     {
         // if seotamic headless mode is set, use that domain, otherwise use the entry absoluteUrl
         if (config('seotamic.headless_mode')) {
-            return config('seotamic.headless_mode') . $entry->uri();
+            return config('seotamic.headless_mode') . $entry->url();
         }
 
         return $entry->absoluteUrl();
