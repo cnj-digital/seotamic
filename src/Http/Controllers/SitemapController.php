@@ -26,7 +26,7 @@ class SitemapController extends Controller
                     return self::shouldBeIndexed($entry);
                 })
                 ->map(function (Entry $entry) {
-                    return $this->sitemapEntry($entry);
+                    return self::sitemapEntry($entry);
                 });
 
             return view('seotamic::sitemap', [
@@ -66,7 +66,7 @@ class SitemapController extends Controller
             'seotamic_sitemap_entry' . $entry->id(),
             function () use ($entry) {
                 return [
-                    'loc' => $entry->absoluteUrl(),
+                    'loc' => self::entryAbsoluteUrl($entry),
                     'lastmod' => $entry->lastModified()->toAtomString(),
                     'alternates' => $entry->sites()
                         ->map(fn ($site) => $entry->in($site))
@@ -76,11 +76,21 @@ class SitemapController extends Controller
                         ->map(function (Entry $entry) {
                             return array(
                                 'lang' => $entry->locale,
-                                'href' => $entry->absoluteUrl()
+                                'href' => self::entryAbsoluteUrl($entry)
                             );
                         })
                 ];
             }
         );
+    }
+
+    private static function entryAbsoluteUrl(Entry $entry)
+    {
+        // if seotamic headless mode is set, use that domain, otherwise use the entry absoluteUrl
+        if (config('seotamic.headless_mode')) {
+            return config('seotamic.headless_mode') . $entry->uri();
+        }
+
+        return $entry->absoluteUrl();
     }
 }
