@@ -26,21 +26,7 @@ class SitemapController extends Controller
                     return self::shouldBeIndexed($entry);
                 })
                 ->map(function (Entry $entry) {
-                    return [
-                        'loc' => $entry->absoluteUrl(),
-                        'lastmod' => $entry->lastModified()->toAtomString(),
-                        'alternates' => $entry->sites()
-                            ->map(fn ($site) => $entry->in($site))
-                            ->filter(function (?Entry $entry) {
-                                return $entry && self::shouldBeIndexed($entry);
-                            })
-                            ->map(function (Entry $entry) {
-                                return array(
-                                    'lang' => $entry->locale,
-                                    'href' => $entry->absoluteUrl()
-                                );
-                            })
-                    ];
+                    return $this->sitemapEntry($entry);
                 });
 
             return view('seotamic::sitemap', [
@@ -52,20 +38,49 @@ class SitemapController extends Controller
         return response($content)->header('Content-Type', 'text/xml');
     }
 
-    private static function shouldBeIndexed(Entry $entry): bool
+    private static function shouldBeIndexed(Entry $entry)
     {
-        if (is_null($entry->uri())) {
-            return false;
-        }
+        return Cache::rememberForever(
+            'seotamic_sitemap_should_be_indexed' . $entry->id(),
+            function () use ($entry) {
+                if (is_null($entry->uri())) {
+                    return false;
+                }
 
-        if ($entry->status() !== 'published') {
-            return false;
-        }
+                if ($entry->status() !== 'published') {
+                    return false;
+                }
 
-        if (!empty($entry->seotamic_meta['robots'])) {
-            return false;
-        }
+                if (!empty($entry->seotamic_meta['robots'])) {
+                    return false;
+                }
 
-        return true;
+                return true;
+            }
+        );
+    }
+
+    private static function sitemapEntry(Entry $entry)
+    {
+        return Cache::rememberForever(
+            'seotamic_sitemap_entry' . $entry->id(),
+            function () use ($entry) {
+                return [
+                    'loc' => $entry->absoluteUrl(),
+                    'lastmod' => $entry->lastModified()->toAtomString(),
+                    'alternates' => $entry->sites()
+                        ->map(fn ($site) => $entry->in($site))
+                        ->filter(function (?Entry $entry) {
+                            return $entry && self::shouldBeIndexed($entry);
+                        })
+                        ->map(function (Entry $entry) {
+                            return array(
+                                'lang' => $entry->locale,
+                                'href' => $entry->absoluteUrl()
+                            );
+                        })
+                ];
+            }
+        );
     }
 }
