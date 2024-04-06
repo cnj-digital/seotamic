@@ -54,7 +54,13 @@ class MigrateCommand extends Command
         });
 
         $blueprintsWithSeotamicFields = $blueprints->filter(function ($blueprint) {
-            return $blueprint->hasSection('SEO') || $blueprint->hasSection('Social');
+            if (method_exists($blueprint, 'hasSection')) {
+                return $blueprint->hasSection('SEO') || $blueprint->hasSection('Social');
+            }
+
+            if (method_exists($blueprint, 'hasTab')) {
+                return $blueprint->hasTab('SEO') || $blueprint->hasTab('Social');
+            }
         });
 
         $skippedBlueprints = [];
