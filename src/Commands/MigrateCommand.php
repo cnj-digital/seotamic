@@ -71,8 +71,17 @@ class MigrateCommand extends Command
 
             if ($this->confirm('Do you want to remove the SEOtamic fields from this blueprint?', true)) {
                 $this->info('Removing SEOtamic fields from blueprint: ' . $blueprint->handle());
-                $blueprint->removeSection('SEO');
-                $blueprint->removeSection('Social');
+
+                if (method_exists($blueprint, 'removeSection')) {
+                    $blueprint->removeSection('SEO');
+                    $blueprint->removeSection('Social');
+                }
+
+                if (method_exists($blueprint, 'removeTab')) {
+                    $blueprint->removeTab('SEO');
+                    $blueprint->removeTab('Social');
+                }
+
                 $blueprint->save();
             } else {
                 $this->info('Skipping blueprint: ' . $blueprint->handle());
