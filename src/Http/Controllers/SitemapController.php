@@ -60,7 +60,7 @@ class SitemapController extends Controller
         );
     }
 
-    private static function sitemapEntry(Entry $entry)
+    public static function sitemapEntry(Entry $entry)
     {
         return Cache::rememberForever(
             'seotamic_sitemap_entry' . $entry->id(),
@@ -70,15 +70,15 @@ class SitemapController extends Controller
                     'lastmod' => $entry->lastModified()->toAtomString(),
                     'alternates' => $entry->sites()
                         ->map(fn ($site) => $entry->in($site))
-                        ->filter(function (?Entry $entry) {
-                            return $entry && self::shouldBeIndexed($entry);
+                        ->filter(function (?Entry $page) use ($entry) {
+                            return $page && self::shouldBeIndexed($page) && $page->id() !== $entry->id();
                         })
                         ->map(function (Entry $entry) {
                             return array(
                                 'lang' => $entry->locale,
                                 'href' => self::entryAbsoluteUrl($entry)
                             );
-                        })
+                        })->values()
                 ];
             }
         );

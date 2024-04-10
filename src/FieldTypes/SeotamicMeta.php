@@ -2,6 +2,9 @@
 
 namespace Cnj\Seotamic\FieldTypes;
 
+use Cnj\Seotamic\Http\Controllers\SitemapController;
+use Illuminate\Support\Collection;
+
 class SeotamicMeta extends SeotamicType
 {
     public function preProcess(mixed $data): array
@@ -66,7 +69,8 @@ class SeotamicMeta extends SeotamicType
             'title' => $this->getTitle(),
             'description' => $value['description']['value'] ?? '',
             'canonical' => $this->getCanonical(),
-            'robots' => $robots_none ? 'nofollow,noindex' : ''
+            'robots' => $robots_none ? 'nofollow,noindex' : '',
+            'related' => $this->getRelatedPages(),
         ];
 
         if (isset($value['title']) && isset($value['title']['value'])) {
@@ -131,5 +135,27 @@ class SeotamicMeta extends SeotamicType
         }
 
         return $url ?? "";
+    }
+
+    /**
+     * Returns an array of related/alternate pages
+     *
+     * This pages are linked but available in different languages/options
+     *
+     * @return array
+     */
+    protected function getRelatedPages(): ?Collection
+    {
+        if ($this->field->parent() instanceof \Statamic\Entries\Collection) {
+            return null;
+        }
+
+        $sitemapEntry = SitemapController::sitemapEntry($this->field->parent());
+
+        if (!$sitemapEntry && !isset($sitemapEntry['alternates'])) {
+            return null;
+        }
+
+        return $sitemapEntry['alternates'];
     }
 }

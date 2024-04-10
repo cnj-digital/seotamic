@@ -24,6 +24,10 @@ Generates the whole array of SEO settings:
 ...
 ```
 
+# Version 4.1 changes
+
+Seotamic v4.1 is a minor update that adds related meta tags. The related meta tags are used to link to other pages that are related to the current page in a multisite scenario. They are available as tags and can be used in the Antlers or Blade templates. In the PRO query mode, the related meta tags are also available in the REST API and GraphQL.
+
 # Version 4 changes
 
 Statamic v4 compatibility. Some internal functions were changed due to how blueprints work in Statamic v4. This release breaks compatibility with Statamic v3. Upgrade to Statamic v4 before upgrading to this version. Upgrade path from SEOtamic v2 is still the same.
@@ -93,6 +97,7 @@ If you need more control you can manually get each part of the output by using:
 {{ seotamic:meta:description }}
 {{ seotamic:meta:canonical }}
 {{ seotamic:meta:robots }}
+{{ seotamic:meta:related }}
 ```
 
 This will return strings, so you need to wrap them in the appropriate tags, ie:
