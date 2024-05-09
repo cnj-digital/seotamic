@@ -37,6 +37,11 @@ class SeotamicMetaType extends GraphQLType
                 'description' => 'Robots meta tag value',
                 'resolve' => $this->resolver()
             ],
+            'related' => [
+                'type' => GraphQL::string(),
+                'description' => 'Related pages',
+                'resolve' => $this->resolver()
+            ],
         ];
     }
 
