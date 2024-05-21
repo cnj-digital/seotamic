@@ -66,7 +66,7 @@ class Subscriber
         return [
             'seotamic_meta_section' =>  [
                 'type' => 'section',
-                'localizable' => true,
+                'localizable' => false,
                 'listable' => 'hidden',
                 'display' => __('seotamic::seo.section_meta_title'),
                 'instructions' => __('seotamic::seo.section_meta_instructions'),
@@ -87,6 +87,7 @@ class Subscriber
             ],
             'seotamic_robots_none' =>  [
                 'type' => 'toggle',
+                'localizable' => true,
                 'display' => __('seotamic::seo.robots_title'),
                 'instructions' => __('seotamic::seo.robots_instructions'),
                 'default' => false,

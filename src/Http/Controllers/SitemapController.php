@@ -73,12 +73,12 @@ class SitemapController extends Controller
                         ->filter(function (?Entry $page) use ($entry) {
                             return $page && self::shouldBeIndexed($page) && $page->id() !== $entry->id();
                         })
-                        ->map(function (Entry $entry) {
-                            return array(
-                                'lang' => $entry->locale,
+                        ->map(
+                            fn (Entry $entry) => [
+                                'lang' => $entry->site()->locale,
                                 'href' => self::entryAbsoluteUrl($entry)
-                            );
-                        })->values()
+                            ]
+                        )->values()
                 ];
             }
         );
