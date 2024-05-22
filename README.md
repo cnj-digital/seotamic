@@ -2,7 +2,7 @@
 
 # Seotamic - Statamic SEO Addon
 
-Statamic v4.0+ only. For Statamic v3 Support use the 3.0.\* releases. Automatically adds a SEO tab to all your collection entries where you can fine tune SEO for every entry. Works perfectly with Antlers, Blade and in headless mode (PRO edition) with the Statamic REST API or GraphQL integration out of the box.
+Statamic v5 only. For Statamic v4 use the 4.\* releases and for Statamic v3 use the 3.\* releases. Automatically adds a SEO tab to all your collection entries where you can fine tune SEO for every entry. Works perfectly with Antlers, Blade and in headless mode (PRO edition) with the Statamic REST API or GraphQL integration out of the box.
 
 ## Quick Antlers usage sample
 
@@ -23,6 +23,10 @@ Generates the whole array of SEO settings:
 <meta property="og:image" content="https://mysite.com/img/og.jpg" />
 ...
 ```
+
+# Version 5 changes
+
+Seotamic v5.\* is compatible with Statamic v5.0+.
 
 # Version 4.1 changes
 
@@ -188,7 +192,7 @@ inject:
 
 This package was built by [CNJ Digital](https://www.cnj.si/).
 
-# Version 3 and 4 License
+# Version 3, 4 and 5 License
 
 Version 3 and 4 are a commercial addon for Statamic. It is open source but not free to use. You can purchase a license at [Statamic Marketplace](https://statamic.com/marketplace/addons/seotamic).
 
