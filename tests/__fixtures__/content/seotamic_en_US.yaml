@@ -1,0 +1,15 @@
+section_title: null
+title_prepend: null
+title_append: '- Something'
+search_preview: null
+social_site_name: 'Demo Site'
+section_social: null
+social_title: 'General social title'
+social_description: null
+social_image: null
+social_image_compress: true
+social_preview: null
+open_graph_display: true
+twitter_display: true
+preview_domain: demo.com
+robots_none: false
