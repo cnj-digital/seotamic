@@ -1,0 +1,12 @@
+en:
+  name: English
+  url: /
+  locale: en_US
+sl:
+  name: Slovenian
+  url: /sl/
+  locale: sl_SI
+it:
+  name: Italian
+  url: /it/
+  locale: it_IT
