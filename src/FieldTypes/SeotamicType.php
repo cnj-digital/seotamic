@@ -43,6 +43,11 @@ abstract class SeotamicType extends Fieldtype
             return "";
         }
 
+        // In some instances the parent is an empty Entry…
+        if ($this->field->parent() instanceof \Statamic\Entries\Entry && $this->field->parent()->value('title') === null) {
+            return "";
+        }
+
         return $this->field->parent()->value('title');
     }
 
@@ -54,6 +59,11 @@ abstract class SeotamicType extends Fieldtype
     protected function getPermalink(): string
     {
         if ($this->field->parent() instanceof \Statamic\Entries\Collection) {
+            return "";
+        }
+
+        // In some instances the parent is an empty Entry…
+        if ($this->field->parent() instanceof \Statamic\Entries\Entry && $this->field->parent()->value('title') === null) {
             return "";
         }
 
