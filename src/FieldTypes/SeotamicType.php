@@ -43,7 +43,7 @@ abstract class SeotamicType extends Fieldtype
             return "";
         }
 
-        // In some instances the parent is an empty Entry…
+        // If the collection has a computed property, the above check fails
         if ($this->field->parent() instanceof \Statamic\Entries\Entry && $this->field->parent()->value('title') === null) {
             return "";
         }
@@ -62,7 +62,7 @@ abstract class SeotamicType extends Fieldtype
             return "";
         }
 
-        // In some instances the parent is an empty Entry…
+        // If the collection has a computed property, the above check fails
         if ($this->field->parent() instanceof \Statamic\Entries\Entry && $this->field->parent()->value('title') === null) {
             return "";
         }
