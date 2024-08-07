@@ -1,0 +1,9 @@
+title: Protected
+sites:
+  - en
+revisions: false
+route: 'protected_collection/{parent_uri}/{slug}'
+structure:
+  root: false
+inject: 
+  protect: logged_in

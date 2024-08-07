@@ -43,6 +43,11 @@ class SitemapController extends Controller
         return Cache::rememberForever(
             'seotamic_sitemap_should_be_indexed' . $entry->id(),
             function () use ($entry) {
+                
+                if(!empty($entry->protect)){
+                    return false;
+                }
+
                 if (is_null($entry->uri())) {
                     return false;
                 }
