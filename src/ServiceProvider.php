@@ -36,6 +36,15 @@ class ServiceProvider extends AddonServiceProvider
         \Cnj\Seotamic\Tags\SeotamicTags::class,
     ];
 
+    protected $vite = [
+        'input' => [
+            'resources/js/cp.js',
+            'resources/css/cp.css',
+        ],
+        'publicDirectory' => 'resources/dist',
+        'hotFile' => __DIR__ . '/../resources/dist/hot',
+    ];
+
     protected $scripts = [
         __DIR__ . '/../resources/dist/js/cp.js',
     ];
@@ -72,8 +81,8 @@ class ServiceProvider extends AddonServiceProvider
             GraphQL::addType(SeotamicMetaType::class);
             GraphQL::addType(SeotamicSocialType::class);
 
-            GraphQL::addField(EntryInterface::NAME, 'seotamic_meta', fn () => (new SeotamicMetaField())->toArray());
-            GraphQL::addField(EntryInterface::NAME, 'seotamic_social', fn () => (new SeotamicSocialField())->toArray());
+            GraphQL::addField(EntryInterface::NAME, 'seotamic_meta', fn() => (new SeotamicMetaField())->toArray());
+            GraphQL::addField(EntryInterface::NAME, 'seotamic_social', fn() => (new SeotamicSocialField())->toArray());
         }
     }
 

@@ -1,7 +1,7 @@
-import SeotamicSearchPreview from "./components/SeotamicSearchPreview";
-import SeotamicSocialPreview from "./components/SeotamicSocialPreview";
-import SeotamicMetaFieldtype from "./components/SeotamicMetaFieldtype";
-import SeotamicSocialFieldtype from "./components/SeotamicSocialFieldtype";
+import SeotamicSearchPreview from "./components/SeotamicSearchPreview.vue";
+import SeotamicSocialPreview from "./components/SeotamicSocialPreview.vue";
+import SeotamicMetaFieldtype from "./components/SeotamicMetaFieldtype.vue";
+import SeotamicSocialFieldtype from "./components/SeotamicSocialFieldtype.vue";
 
 Statamic.booting(() => {
   Statamic.component(
