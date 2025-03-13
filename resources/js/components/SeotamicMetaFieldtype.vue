@@ -85,10 +85,10 @@
 </template>
 
 <script>
-import Fieldtype from "./Fieldtype.vue";
 import Heading from "./seotamic/Heading.vue";
 import ButtonGroup from "./seotamic/ButtonGroup.vue";
 import SearchPreview from "./seotamic/SearchPreview.vue";
+import { debounce } from "../helpers/debounce";
 
 export default {
   components: {
@@ -164,6 +164,25 @@ export default {
         this.value.description.value = "";
       }
     },
+  },
+
+  created() {
+    // Create debounced methods
+    this.updateTitleDebounced = debounce(function (value) {
+      this.value.title.value = value;
+
+      if (this.value.title.type === "custom") {
+        this.value.title.custom_value = value;
+      }
+    }, 50);
+
+    this.updateDescriptionDebounced = debounce(function (value) {
+      this.value.description.value = value;
+
+      if (this.value.description.type === "custom") {
+        this.value.description.custom_value = value;
+      }
+    }, 50);
   },
 
   methods: {

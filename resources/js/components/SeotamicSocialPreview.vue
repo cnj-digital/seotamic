@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import Fieldtype from "./Fieldtype.vue";
 import SocialPreview from "./seotamic/SocialPreview.vue";
 
 export default {

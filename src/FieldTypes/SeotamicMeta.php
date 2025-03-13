@@ -4,6 +4,7 @@ namespace Cnj\Seotamic\FieldTypes;
 
 use Cnj\Seotamic\Http\Controllers\SitemapController;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 
 class SeotamicMeta extends SeotamicType
 {
