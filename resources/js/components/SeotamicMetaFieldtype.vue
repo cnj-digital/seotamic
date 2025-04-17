@@ -145,6 +145,10 @@ export default {
 
   watch: {
     "value.title.type": function (newVal) {
+      if (!this.value || !this.value.title) {
+        return;
+      }
+
       if (newVal === "title") {
         this.value.title.custom_value = this.value.title.value;
         this.value.title.value = this.meta.title;
@@ -154,6 +158,10 @@ export default {
     },
 
     "value.description.type": function (newVal, oldVal) {
+      if (!this.value || !this.value.description) {
+        return;
+      }
+
       if (oldVal === "custom") {
         this.value.description.custom_value = this.value.description.value;
       }
@@ -168,7 +176,11 @@ export default {
 
   created() {
     // Create debounced methods
-    this.updateTitleDebounced = debounce(function (value) {
+    this.updateTitleDebounced = debounce((value) => {
+      if (!this.value || !this.value.title) {
+        return;
+      }
+
       this.value.title.value = value;
 
       if (this.value.title.type === "custom") {
@@ -176,7 +188,11 @@ export default {
       }
     }, 50);
 
-    this.updateDescriptionDebounced = debounce(function (value) {
+    this.updateDescriptionDebounced = debounce((value) => {
+      if (!this.value || !this.value.description) {
+        return;
+      }
+
       this.value.description.value = value;
 
       if (this.value.description.type === "custom") {
