@@ -151,6 +151,8 @@ export default {
       if (this.value.title.type === "custom") {
         this.value.title.custom_value = value;
       }
+
+      this.update(this.value);
     }, 50);
 
     this.updateDescriptionDebounced = debounce((value) => {
@@ -163,6 +165,8 @@ export default {
       if (this.value.description.type === "custom") {
         this.value.description.custom_value = value;
       }
+
+      this.update(this.value);
     }, 50);
   },
 };
