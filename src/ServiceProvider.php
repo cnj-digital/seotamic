@@ -45,14 +45,6 @@ class ServiceProvider extends AddonServiceProvider
         'hotFile' => __DIR__ . '/../resources/dist/hot',
     ];
 
-    protected $scripts = [
-        __DIR__ . '/../resources/dist/js/cp.js',
-    ];
-
-    protected $stylesheets = [
-        __DIR__ . '/../resources/dist/css/cp.css',
-    ];
-
     public function bootAddon()
     {
         $this->loadViewsFrom(__DIR__ . '/../resources/views/', 'seotamic');
