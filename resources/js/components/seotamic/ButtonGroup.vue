@@ -1,33 +1,28 @@
 <template>
-  <div class="button-group-fieldtype-wrapper inline-mode">
-    <div class="btn-group">
-      <button
-        class="btn !seotamic-py-1 seotamic-text-sm seotamic-h-auto !seotamic-px-3"
-        v-for="(option, $index) in options"
-        :key="$index"
-        ref="button"
-        :name="option.label"
-        :value="option.value"
-        :class="{ active: value === option.value }"
-        @click="$emit('input', option.value)"
-        v-text="option.label || option.value"
-      />
-    </div>
-  </div>
+  <ToggleGroup v-model="modelValue" variant="ghost" :size="size">
+    <ToggleItem
+      v-for="(option, $index) in options"
+      :key="$index"
+      :label="option.label || option.value"
+      :value="option.value"
+    />
+  </ToggleGroup>
 </template>
 
-<script>
-export default {
-  props: {
-    value: {
-      type: String,
-      required: true,
-    },
+<script setup>
+  import { ToggleGroup, ToggleItem } from '@statamic/cms/ui'
+
+  const props = defineProps({
     options: {
       type: Array,
       required: true,
       default: () => [],
     },
-  },
-};
+    size: {
+      type: String,
+      default: 'sm',
+    },
+  })
+
+  const modelValue = defineModel({ type: String, required: true })
 </script>

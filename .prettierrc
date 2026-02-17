@@ -1,1 +1,7 @@
-{}
+{
+  "arrowParens": "avoid",
+  "bracketSameLine": false,
+  "semi": false,
+  "singleQuote": true,
+  "vueIndentScriptAndStyle": true
+}

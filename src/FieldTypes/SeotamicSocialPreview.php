@@ -1,6 +1,6 @@
 <?php
 
-namespace Cnj\Seotamic\FieldTypes;
+namespace Cnj\Seotamic\Fieldtypes;
 
 use Statamic\Facades\Asset;
 
@@ -15,10 +15,6 @@ class SeotamicSocialPreview extends SeotamicType
             'seotamic' => $globals,
             'image' => $this->getImageUrl($globals['social_image']),
             'config' => config('seotamic'),
-            't' => [
-                'demo_title' => __('seotamic::general.meta_field_demo_title'),
-                'default_description' => __('seotamic::general.meta_field_default_description'),
-            ]
         ];
     }
 

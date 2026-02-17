@@ -1,173 +1,174 @@
 <template>
   <div v-if="value">
-    <div>
-      <Heading :title="meta.t.title_title">
-        {{ meta.t.title_instructions }}
-      </Heading>
+    <Field
+      id="og_title"
+      :label="__('seotamic::social.social_field_title_title')"
+      :instructions="__('seotamic::social.social_field_title_instructions')"
+      instructions-below
+    >
+      <template #actions>
+        <ButtonGroup :options="titleOptions" v-model="titleType" />
+      </template>
 
-      <ButtonGroup :options="titleOptions" v-model="value.title.type" />
-
-      <div class="seotamic-mt-2">
-        <text-input
-          ref="title"
-          :value="value.title.value"
-          type="text"
-          :isReadOnly="value.title.type !== 'custom'"
-          :limit="meta.config.social_title_length"
-          name="og_title"
-          id="og_title"
-          @input="updateTitleDebounced"
-        />
-      </div>
-    </div>
-
-    <div class="seotamic-mt-8">
-      <Heading :title="meta.t.description_title">
-        {{ meta.t.description_instructions }}
-      </Heading>
-
-      <ButtonGroup
-        :options="descriptionOptions"
-        v-model="value.description.type"
+      <Input
+        name="og_title"
+        id="og_title"
+        :read-only="titleType !== 'custom'"
+        :limit="meta.config.social_title_length"
+        :model-value="value.title.value"
+        @update:modelValue="updateTitleDebounced"
       />
+    </Field>
 
-      <div class="seotamic-mt-2">
-        <text-input
-          ref="description"
-          :value="value.description.value"
-          type="text"
-          :isReadOnly="value.description.type !== 'custom'"
-          :limit="meta.config.social_description_length"
-          name="description"
-          id="description"
-          @input="updateDescriptionDebounced"
-        />
-      </div>
-    </div>
+    <Field
+      class="mt-4"
+      id="description"
+      :label="__('seotamic::social.social_field_description_title')"
+      :instructions="
+        __('seotamic::social.social_field_description_instructions')
+      "
+      instructions-below
+    >
+      <template #actions>
+        <ButtonGroup :options="descriptionOptions" v-model="descriptionType" />
+      </template>
+
+      <Input
+        id="description"
+        name="description"
+        type="text"
+        :model-value="value.description.value"
+        :read-only="descriptionType !== 'custom'"
+        :limit="meta.config.social_description_length"
+        @update:modelValue="updateDescriptionDebounced"
+      />
+    </Field>
 
     <SocialPreview
-      class="seotamic-mt-8"
-      :preview-title="meta.t.preview_title"
+      class="mt-8"
+      :preview-title="__('seotamic::social.social_field_preview_title')"
       :permalink="meta.permalink"
       :domain="meta.seotamic.preview_domain"
       :title="value.title.value"
       :image="meta.social_image"
       :description="value.description.value"
     />
-
-    <div class="seotamic-mt-8 seotamic-h-px seotamic-bg-gray-300"></div>
   </div>
 </template>
 
-<script>
-import Heading from "./seotamic/Heading.vue";
-import ButtonGroup from "./seotamic/ButtonGroup.vue";
-import SocialPreview from "./seotamic/SocialPreview.vue";
-import { debounce } from "../helpers/debounce";
+<script setup>
+  import { Fieldtype } from '@statamic/cms'
+  import { Field, Input, Switch, Textarea } from '@statamic/cms/ui'
+  import { computed, ref, watch } from 'vue'
+  import ButtonGroup from './seotamic/ButtonGroup.vue'
+  import SocialPreview from './seotamic/SocialPreview.vue'
+  import debounce from '../helpers/debounce'
 
-export default {
-  components: {
-    ButtonGroup,
-    Heading,
-    SocialPreview,
-  },
+  const emit = defineEmits(Fieldtype.emits)
+  const props = defineProps(Fieldtype.props)
+  const { expose, update } = Fieldtype.use(emit, props)
 
-  mixins: [Fieldtype],
+  defineExpose(expose)
 
-  data() {
-    return {
-      titleOptions: [
-        { label: this.meta.t.label_title, value: "title" },
-        { label: this.meta.t.label_general, value: "general" },
-        { label: this.meta.t.label_custom, value: "custom" },
-      ],
+  const titleType = ref('title')
+  const descriptionType = ref('meta')
 
-      descriptionOptions: [
-        { label: this.meta.t.label_meta, value: "meta" },
-        { label: this.meta.t.label_general, value: "general" },
-        { label: this.meta.t.label_custom, value: "custom" },
-      ],
-    };
-  },
+  watch(titleType, (value, old) => {
+    const title = { ...props.value?.title }
 
-  watch: {
-    "value.title.type": function (newVal, oldVal) {
-      if (!this.value || !this.value.title) {
-        return;
-      }
+    if (old == 'custom') {
+      title.custom_value = title.value
+    }
 
-      if (oldVal === "custom") {
-        this.value.title.custom_value = this.value.title.value;
-      }
-
-      // Title is "Automatic"
-      if (newVal === "title") {
-        // If the meta title is empty, use the entry title
-        if (this.meta.meta.title.type === "custom") {
-          this.value.title.value = this.meta.meta.title.value;
-        } else {
-          this.value.title.value = this.meta.title;
-        }
-      } else if (newVal === "general") {
-        this.value.title.value = this.meta.seotamic.social_title;
+    if (value == 'title') {
+      if (props.meta.meta.title.type == 'custom') {
+        title.value = props.meta.meta.title.value
       } else {
-        this.value.title.value = this.value.title.custom_value;
+        title.value = props.meta.title
       }
-    },
+    } else if (value == 'general') {
+      title.value = props.meta.seotamic.social_title
+    } else {
+      title.value = title.custom_value
+    }
 
-    "value.description.type": function (newVal, oldVal) {
-      if (!this.value || !this.value.description) {
-        return;
-      }
+    update({ ...props.value, title })
+  })
 
-      if (oldVal === "custom") {
-        this.value.description.custom_value = this.value.description.value;
-      }
+  watch(descriptionType, (value, old) => {
+    const description = { ...props.value?.description }
 
-      // Meta is "Automatic"
-      if (newVal === "meta") {
-        // If the meta title is empty, use the entry title
-        if (this.meta.meta.description.type === "custom") {
-          this.value.description.value = this.meta.meta.description.value;
-        } else {
-          this.value.description.value = this.meta.seotamic.social_description;
-        }
-      } else if (newVal === "general") {
-        this.value.description.value = this.meta.seotamic.social_description;
+    if (old == 'custom') {
+      description.custom_value = description.value
+    }
+
+    // Meta is "Automatic"
+    if (value == 'meta') {
+      if (props.meta.meta.description.type == 'custom') {
+        description.value = props.meta.meta.description.value
       } else {
-        this.value.description.value = this.value.description.custom_value;
+        description.value = props.meta.seotamic.social_description
       }
+    } else if (value == 'general') {
+      description.value = props.meta.seotamic.social_description
+    } else {
+      description.value = description.custom_value
+    }
+
+    update({ ...props.value, description })
+  })
+
+  const titleOptions = [
+    {
+      label: __('seotamic::social.social_field_label_title'),
+      value: 'title',
     },
-  },
+    {
+      label: __('seotamic::social.social_field_label_general'),
+      value: 'general',
+    },
+    {
+      label: __('seotamic::social.social_field_label_custom'),
+      value: 'custom',
+    },
+  ]
 
-  created() {
-    this.updateTitleDebounced = debounce((value) => {
-      if (!this.value || !this.value.title) {
-        return;
-      }
+  const descriptionOptions = [
+    {
+      label: __('seotamic::social.social_field_label_meta'),
+      value: 'meta',
+    },
+    {
+      label: __('seotamic::social.social_field_label_general'),
+      value: 'general',
+    },
+    {
+      label: __('seotamic::social.social_field_label_custom'),
+      value: 'custom',
+    },
+  ]
 
-      this.value.title.value = value;
+  const updateTitleDebounced = debounce(value => {
+    if (!props.value?.title) return
 
-      if (this.value.title.type === "custom") {
-        this.value.title.custom_value = value;
-      }
+    const title = { ...props.value.title, value }
 
-      this.update(this.value);
-    }, 50);
+    if (title.type == 'custom') {
+      title.custom_value = value
+    }
 
-    this.updateDescriptionDebounced = debounce((value) => {
-      if (!this.value || !this.value.description) {
-        return;
-      }
+    update({ ...props.value, title })
+  }, 50)
 
-      this.value.description.value = value;
+  const updateDescriptionDebounced = debounce(value => {
+    if (!props.value?.description) return
 
-      if (this.value.description.type === "custom") {
-        this.value.description.custom_value = value;
-      }
+    const description = { ...props.value.description, value }
 
-      this.update(this.value);
-    }, 50);
-  },
-};
+    if (description.type == 'custom') {
+      description.custom_value = value
+    }
+
+    update({ ...props.value, description })
+  }, 50)
 </script>

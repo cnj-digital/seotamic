@@ -1,3 +1,2 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import '@statamic/cms/tailwind.css';
+@source '../js';

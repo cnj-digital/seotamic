@@ -1,6 +1,6 @@
 <?php
 
-namespace Cnj\Seotamic\FieldTypes;
+namespace Cnj\Seotamic\Fieldtypes;
 
 class SeotamicSearchPreview extends SeotamicType
 {
@@ -9,10 +9,6 @@ class SeotamicSearchPreview extends SeotamicType
         return [
             'seotamic' => $this->getSeotamicGlobals(),
             'config' => config('seotamic'),
-            't' => [
-                'demo_title' => __('seotamic::general.title_preview_placeholder_title'),
-                'default_description' => __('seotamic::general.title_preview_placeholder_description'),
-            ]
         ];
     }
 }
