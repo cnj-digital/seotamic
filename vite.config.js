@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 import laravel from "laravel-vite-plugin";
-import vue from "@vitejs/plugin-vue2";
-import inject from "@rollup/plugin-inject";
+import statamic from '@statamic/cms/vite-plugin';
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   plugins: [
@@ -9,15 +9,7 @@ export default defineConfig({
       input: ["resources/js/cp.js", "resources/css/cp.css"],
       publicDirectory: "resources/dist",
     }),
-    vue(),
-    inject({
-      Vue: "vue",
-      include: "resources/js/**",
-    }),
+    statamic(),
+    tailwindcss()
   ],
-  resolve: {
-    alias: {
-      vue: "vue/dist/vue.esm.js",
-    },
-  },
 });

@@ -21,15 +21,15 @@ class ServiceProvider extends AddonServiceProvider
     protected $commands = [MigrateCommand::class];
 
     protected $routes = [
-        'cp' => __DIR__ . '/routes/cp.php',
-        'web' => __DIR__ . '/routes/web.php',
+        'cp' => __DIR__ . '/../routes/cp.php',
+        'web' => __DIR__ . '/../routes/web.php',
     ];
 
     protected $fieldtypes = [
-        FieldTypes\SeotamicMeta::class,
-        FieldTypes\SeotamicSocial::class,
-        FieldTypes\SeotamicSearchPreview::class,
-        FieldTypes\SeotamicSocialPreview::class,
+        Fieldtypes\SeotamicMeta::class,
+        Fieldtypes\SeotamicSocial::class,
+        Fieldtypes\SeotamicSearchPreview::class,
+        Fieldtypes\SeotamicSocialPreview::class,
     ];
 
     protected $tags = [
@@ -55,7 +55,7 @@ class ServiceProvider extends AddonServiceProvider
                 ->section('Tools')
                 ->route('cnj.seotamic.index')
                 ->can('view seotamic tool')
-                ->icon('seo-search-graph');
+                ->icon('search-magnifying-glass');
         });
 
         $this->publishes([

@@ -75,7 +75,7 @@ class Subscriber
                 'type' => 'seotamic_meta',
                 'localizable' => true,
                 'listable' => 'hidden',
-                'display' => __('seotamic::seo.meta_title'),
+                'display' => ''
             ],
             'seotamic_canonical' =>  [
                 'display' => __('seotamic::seo.canonical_title'),
@@ -115,7 +115,7 @@ class Subscriber
                 'type' => 'seotamic_social',
                 'localizable' => true,
                 'listable' => 'hidden',
-                'display' => __('seotamic::social.social_title'),
+                'display' => '',
             ],
             'seotamic_image' =>  [
                 'container' => config('seotamic.container'),

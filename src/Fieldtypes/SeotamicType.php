@@ -1,8 +1,8 @@
 <?php
 
-namespace Cnj\Seotamic\FieldTypes;
+namespace Cnj\Seotamic\Fieldtypes;
 
-use Statamic\Extend\Addon;
+use Statamic\Addons\Addon;
 use Statamic\Facades\Addon as AddonFacade;
 use Statamic\Entries\Entry;
 use Cnj\Seotamic\File\File;
@@ -11,8 +11,6 @@ use Illuminate\Support\Facades\URL;
 
 abstract class SeotamicType extends Fieldtype
 {
-    protected $categories = [];
-    protected $selectableInForms = false;
     protected File $file;
     protected Addon $addon;
 
@@ -23,16 +21,6 @@ abstract class SeotamicType extends Fieldtype
     }
 
     /**
-     * Set the Type config field values, to be set from the CP
-     *
-     * @return array
-     */
-    protected function configFieldItems(): array
-    {
-        return [];
-    }
-
-    /**
      * Get the title of the Entry
      *
      * @return string
@@ -40,15 +28,10 @@ abstract class SeotamicType extends Fieldtype
     protected function getTitle(): string
     {
         if ($this->field->parent() instanceof \Statamic\Entries\Collection) {
-            return "";
+            return '';
         }
 
-        // If the collection has a computed property, the above check fails
-        if ($this->field->parent() instanceof \Statamic\Entries\Entry && $this->field->parent()->value('title') === null) {
-            return "";
-        }
-
-        return $this->field->parent()->value('title');
+        return $this->field->parent()->value('title') ?? '';
     }
 
     /**
@@ -58,16 +41,13 @@ abstract class SeotamicType extends Fieldtype
      */
     protected function getPermalink(): string
     {
-        if ($this->field->parent() instanceof \Statamic\Entries\Collection) {
-            return "";
+        $parent = $this->field()->parent();
+
+        if (!$parent instanceof \Statamic\Contracts\Entries\Entry || !$parent->id()) {
+            return '';
         }
 
-        // If the collection has a computed property, the above check fails
-        if ($this->field->parent() instanceof \Statamic\Entries\Entry && $this->field->parent()->value('title') === null) {
-            return "";
-        }
-
-        return URL::to("/") . Entry::find($this->field->parent()->id)->url();
+        return $parent->absoluteUrl();
     }
 
     /**

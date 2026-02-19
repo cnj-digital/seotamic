@@ -1,222 +1,172 @@
 <template>
   <div v-if="value">
-    <div>
-      <Heading :title="meta.t.title_title">
-        {{ meta.t.title_instructions }}
-      </Heading>
+    <Field
+      class="mt-4"
+      id="meta_title"
+      :label="__('seotamic::seo.meta_title_title')"
+      :instructions="__('seotamic::seo.meta_title_instructions')"
+      instructions-below
+    >
+      <template #actions>
+        <ButtonGroup :options="titleOptions" v-model="titleType" />
+      </template>
 
-      <ButtonGroup :options="titleOptions" v-model="value.title.type" />
-
-      <div class="seotamic-mt-2">
-        <text-input
-          ref="title"
-          :value="value.title.value"
-          type="text"
-          :isReadOnly="value.title.type !== 'custom'"
-          :limit="meta.config.meta_title_length"
-          name="meta_title"
-          id="meta_title"
-          @input="updateTitleDebounced"
-        />
-      </div>
-
-      <div class="seotamic-mt-2">
-        <div class="toggle-fieldtype-wrapper">
-          <toggle-input
-            :value="value.title.prepend"
-            @input="updatePrepend"
-            :read-only="!prependExists"
-          />
-          <label class="inline-label">
-            {{ meta.t.prepend_label }}
-          </label>
-        </div>
-      </div>
-
-      <div>
-        <div class="toggle-fieldtype-wrapper">
-          <toggle-input
-            :value="value.title.append"
-            @input="updateAppend"
-            :read-only="!appendExists"
-          />
-          <label class="inline-label">
-            {{ meta.t.append_label }}
-          </label>
-        </div>
-      </div>
-    </div>
-
-    <div class="seotamic-mt-8">
-      <Heading :title="meta.t.description_title">
-        {{ meta.t.description_instructions }}
-      </Heading>
-
-      <ButtonGroup
-        :options="descriptionOptions"
-        v-model="value.description.type"
+      <Input
+        type="text"
+        id="meta_title"
+        name="meta_title"
+        :model-value="value.title.value"
+        :read-only="titleType !== 'custom'"
+        :limit="meta.config.meta_title_length"
+        @update:model-value="updateTitleDebounced"
       />
+    </Field>
 
-      <div class="seotamic-mt-2">
-        <textarea-input
-          ref="description"
-          :value="value.description.value"
-          type="text"
-          :isReadOnly="value.description.type !== 'custom'"
-          :limit="meta.config.meta_description_length"
-          name="meta_description"
-          id="meta_description"
-          @input="updateDescriptionDebounced"
-        />
-      </div>
-    </div>
+    <Field class="mt-4 px-0" :label="__('seotamic::seo.meta_prepend_label')">
+      <Switch
+        :model-value="value.title.prepend"
+        :read-only="!prependable"
+        @update:model-value="
+          update({ ...value, title: { ...value.title, prepend: $event } })
+        "
+      />
+    </Field>
 
-    <SearchPreview
-      class="seotamic-mt-8"
-      :preview-title="meta.t.preview_title"
-      :permalink="meta.permalink"
-      :domain="meta.seotamic.preview_domain"
-      :title="previewTitle"
-      :description="previewDescription"
-    />
-
-    <div class="seotamic-mt-8 seotamic-h-px seotamic-bg-gray-300"></div>
+    <Field class="mt-4 px-0" :label="__('seotamic::seo.meta_append_label')">
+      <Switch
+        :model-value="value.title.append"
+        :read-only="!appendable"
+        @update:model-value="
+          update({ ...value, title: { ...value.title, append: $event } })
+        "
+      />
+    </Field>
   </div>
+
+  <div v-if="value" class="mt-4">
+    <Field
+      class="mt-2"
+      :label="__('seotamic::seo.meta_description_title')"
+      :instructions="__('seotamic::seo.meta_description_instructions')"
+      instructions-below
+    >
+      <template #actions>
+        <ButtonGroup :options="descriptionOptions" v-model="descriptionType" />
+      </template>
+      <Textarea
+        id="meta_description"
+        name="meta_description"
+        :model-value="value.description.value"
+        :read-only="descriptionType !== 'custom'"
+        :limit="meta.config.meta_description_length"
+        @update:model-value="updateDescriptionDebounced"
+      />
+    </Field>
+  </div>
+
+  <SearchPreview
+    class="mt-8"
+    :preview-title="__('seotamic::seo.meta_preview_title')"
+    :permalink="meta.permalink"
+    :domain="meta.seotamic.preview_domain"
+    :title="previewTitle"
+    :description="previewDescription"
+  />
 </template>
 
-<script>
-import Heading from "./seotamic/Heading.vue";
-import ButtonGroup from "./seotamic/ButtonGroup.vue";
-import SearchPreview from "./seotamic/SearchPreview.vue";
-import { debounce } from "../helpers/debounce";
+<script setup>
+  import { Fieldtype } from '@statamic/cms'
+  import { Field, Input, Switch, Textarea } from '@statamic/cms/ui'
+  import { computed, ref, watch } from 'vue'
+  import ButtonGroup from './seotamic/ButtonGroup.vue'
+  import SearchPreview from './seotamic/SearchPreview.vue'
+  import debounce from '../helpers/debounce'
 
-export default {
-  components: {
-    ButtonGroup,
-    Heading,
-    SearchPreview,
-  },
-  mixins: [Fieldtype],
-  data() {
-    return {
-      description: this.meta.t.default_description,
+  const emit = defineEmits(Fieldtype.emits)
+  const props = defineProps(Fieldtype.props)
+  const { expose, update } = Fieldtype.use(emit, props)
 
-      titleOptions: [
-        { label: this.meta.t.label_title, value: "title" },
-        { label: this.meta.t.label_custom, value: "custom" },
-      ],
+  defineExpose(expose)
 
-      descriptionOptions: [
-        { label: this.meta.t.label_empty, value: "empty" },
-        { label: this.meta.t.label_custom, value: "custom" },
-      ],
-    };
-  },
+  const titleType = ref('title')
+  const descriptionType = ref('empty')
 
-  computed: {
-    prependExists() {
-      return this.meta.seotamic.title_prepend !== null;
-    },
+  const appendable = computed(() => props.meta.seotamic?.title_append != null)
+  const prependable = computed(() => props.meta.seotamic?.title_prepend != null)
 
-    appendExists() {
-      return this.meta.seotamic.title_append !== null;
-    },
+  const previewTitle = computed(() => {
+    const append =
+      appendable &&
+      !!props.value?.title?.append &&
+      !!props.meta.seotamic?.title_append
+        ? ` ${props.meta.seotamic.title_append}`
+        : ''
 
-    previewTitle() {
-      const prepend =
-        this.prependExists && this.value.title.prepend
-          ? this.meta.seotamic.title_prepend + " "
-          : "";
-      const append =
-        this.appendExists && this.value.title.append
-          ? " " + this.meta.seotamic.title_append
-          : "";
+    const prepend =
+      prependable &&
+      !!props.value?.title?.prepend &&
+      !!props.meta.seotamic?.title_prepend
+        ? `${props.meta.seotamic?.title_prepend} `
+        : ''
 
-      return `${prepend}${this.value.title.value}${append}`;
-    },
+    return `${prepend}${props.value.title.value}${append}`.trim()
+  })
 
-    previewDescription() {
-      return this.value.description.value === "" ||
-        !this.value.description.value
-        ? this.description
-        : this.value.description.value;
-    },
-  },
+  const previewDescription = computed(() => {
+    return !!props.value.description.value
+      ? props.value.description.value
+      : __('seotamic::seo.meta_default_description')
+  })
 
-  watch: {
-    "value.title.type": function (newVal) {
-      if (!this.value || !this.value.title) {
-        return;
-      }
+  watch(titleType, value => {
+    const title = { ...props.value?.title }
 
-      if (newVal === "title") {
-        this.value.title.custom_value = this.value.title.value;
-        this.value.title.value = this.meta.title;
-      } else {
-        this.value.title.value = this.value.title.custom_value;
-      }
-    },
+    if (value == 'title') {
+      title.custom_value = title.value
+      title.value = props.meta.title
+    } else {
+      title.value = title.custom_value
+    }
 
-    "value.description.type": function (newVal, oldVal) {
-      if (!this.value || !this.value.description) {
-        return;
-      }
+    update({ ...props.value, title })
+  })
 
-      if (oldVal === "custom") {
-        this.value.description.custom_value = this.value.description.value;
-      }
+  watch(descriptionType, value => {
+    const description = { ...props.value?.description }
 
-      if (newVal === "custom") {
-        this.value.description.value = this.value.description.custom_value;
-      } else {
-        this.value.description.value = "";
-      }
-    },
-  },
+    if (value == 'custom') {
+      description.value = description.custom_value
+    } else {
+      description.custom_value = description.value
+      description.value = ''
+    }
 
-  created() {
-    // Create debounced methods
-    this.updateTitleDebounced = debounce((value) => {
-      if (!this.value || !this.value.title) {
-        return;
-      }
+    update({ ...props.value, description })
+  })
 
-      this.value.title.value = value;
+  const titleOptions = [
+    { label: __('seotamic::seo.meta_label_title'), value: 'title' },
+    { label: __('seotamic::seo.meta_label_custom'), value: 'custom' },
+  ]
 
-      if (this.value.title.type === "custom") {
-        this.value.title.custom_value = value;
-      }
+  const descriptionOptions = [
+    { label: __('seotamic::seo.meta_label_empty'), value: 'empty' },
+    { label: __('seotamic::seo.meta_label_custom'), value: 'custom' },
+  ]
 
-      this.update(this.value);
-    }, 50);
+  const updateTitleDebounced = debounce(value => {
+    if (!props.value?.title) return
 
-    this.updateDescriptionDebounced = debounce((value) => {
-      if (!this.value || !this.value.description) {
-        return;
-      }
+    const title = { ...props.value.title, value }
 
-      this.value.description.value = value;
+    update({ ...props.value, title })
+  }, 50)
 
-      if (this.value.description.type === "custom") {
-        this.value.description.custom_value = value;
-      }
+  const updateDescriptionDebounced = debounce(value => {
+    if (!props.value?.description) return
 
-      this.update(this.value);
-    }, 50);
-  },
+    const description = { ...props.value.description, value }
 
-  methods: {
-    updatePrepend(value) {
-      this.value.title.prepend = value;
-
-      this.update(this.value);
-    },
-
-    updateAppend(value) {
-      this.value.title.append = value;
-
-      this.update(this.value);
-    },
-  },
-};
+    update({ ...props.value, description })
+  }, 50)
 </script>
