@@ -22,12 +22,12 @@
 
   const previewTitle = computed(() => {
     const append =
-      appendable && !!props.meta.seotamic?.title_append
+      appendable.value && !!props.meta.seotamic?.title_append
         ? ` ${props.meta.seotamic.title_append}`
         : ''
 
     const prepend =
-      prependable && !!props.meta.seotamic?.title_prepend
+      prependable.value && !!props.meta.seotamic?.title_prepend
         ? `${props.meta.seotamic?.title_prepend} `
         : ''
 
