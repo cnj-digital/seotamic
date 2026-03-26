@@ -19,7 +19,7 @@ class SeotamicSocial extends SeotamicType
         $data = array_replace_recursive($this->defaultSocialData(), $data);
 
         if ($this->field->parent() instanceof \Statamic\Entries\Entry) {
-            $meta = $this->field->parent()->value('seotamic_meta');
+            $meta = $this->field->parent()->data()->get('seotamic_meta');
         }
 
         // If the parent is a collection, we use defaults/empty values
@@ -67,7 +67,7 @@ class SeotamicSocial extends SeotamicType
     public function preload(): array
     {
         if ($this->field->parent() instanceof \Statamic\Entries\Entry) {
-            $meta = $this->field->parent()->value('seotamic_meta');
+            $meta = $this->field->parent()->data()->get('seotamic_meta');
         }
 
         // If the parent is a collection, we use defaults/empty values
