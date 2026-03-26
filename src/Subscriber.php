@@ -42,7 +42,14 @@ class Subscriber
         $ignoreBlueprints = config('seotamic.ignore_blueprints', []);
 
         // Do not add fields to blueprints that are in the ignore list
-        if (in_array($this->blueprint->handle(), $ignoreBlueprints)) {
+        // Check both blueprint handle and collection handle for convenience
+        $namespace = $this->blueprint->namespace();
+        $collectionHandle = Str::startsWith($namespace, 'collections.')
+            ? Str::after($namespace, 'collections.')
+            : null;
+
+        if (in_array($this->blueprint->handle(), $ignoreBlueprints)
+            || ($collectionHandle && in_array($collectionHandle, $ignoreBlueprints))) {
             return;
         }
 
@@ -75,7 +82,7 @@ class Subscriber
                 'type' => 'seotamic_meta',
                 'localizable' => true,
                 'listable' => 'hidden',
-                'display' => __('seotamic::seo.meta_title'),
+                'display' => ''
             ],
             'seotamic_canonical' =>  [
                 'display' => __('seotamic::seo.canonical_title'),
@@ -115,7 +122,7 @@ class Subscriber
                 'type' => 'seotamic_social',
                 'localizable' => true,
                 'listable' => 'hidden',
-                'display' => __('seotamic::social.social_title'),
+                'display' => '',
             ],
             'seotamic_image' =>  [
                 'container' => config('seotamic.container'),

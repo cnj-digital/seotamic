@@ -1,13 +1,8 @@
 <template>
-  <div class="">
-    <div
-      v-if="previewTitle"
-      class="seotamic-text-xs seotamic-uppercase seotamic-font-bold seotamic-tracking-wider"
-    >
-      {{ previewTitle }}
-    </div>
+  <div>
+    <Label class="capitalize" :text="previewTitle" />
 
-    <div v-if="permalink" class="seotamic-mt-2">
+    <div v-if="permalink">
       <a
         :href="`https://developers.facebook.com/tools/debug/?q=` + permalink"
         class="text-sm underline text-blue hover:text-blue-dark"
@@ -18,34 +13,25 @@
       </a>
     </div>
 
-    <div
-      class="seotamic-mt-2 seotamic-bg-[#f2f3f5] seotamic-border seotamic-border-[#dadde1] seotamic-shadow-sm seotamic-flex seotamic-flex-col seotamic-max-w-[500px] seotamic-rounded-[3px]"
-    >
-      <div
-        class="seotamic-h-[261px] seotamic-w-full seotamic-bg-blue-300 relative"
-      >
+    <div class="mt-2 border shadow-xs flex flex-col max-w-125 rounded-lg">
+      <div class="h-65.25 w-full relative">
         <img
           v-if="image"
           :src="image"
           class="absolute object-cover w-full h-full"
         />
       </div>
-      <div class="seotamic-py-2.5 seotamic-px-3">
-        <div
-          class="seotamic-text-xs seotamic-text-[#606770] seotamic-leading-none seotamic-uppercase"
-        >
+      <div class="py-2.5 px-3">
+        <div class="text-xs leading-none uppercase">
           {{ domain }}
         </div>
         <div
           ref="title"
-          class="seotamic-text-[#1d2129] seotamic-font-semibold seotamic-text-base seotamic-leading-[20px] seotamic-line-clamp-2 seotamic-mt-[5px]"
+          class="font-semibold text-base leading-5 line-clamp-2 mt-1.25"
         >
           {{ title }}
         </div>
-        <div
-          v-show="showDescription"
-          class="seotamic-text-sm seotamic-leading-[18px] seotamic-text-[#606770] seotamic-truncate seotamic-mt-[3px]"
-        >
+        <div v-show="showDescription" class="text-sm truncate mt-0.75">
           {{ description }}
         </div>
       </div>
@@ -53,59 +39,52 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: {
+<script setup>
+  import { Label } from '@statamic/cms/ui'
+  import { nextTick, ref, useTemplateRef, watch } from 'vue'
+
+  const props = defineProps({
     previewTitle: {
       type: String,
       required: false,
-      default: "",
+      default: '',
     },
     permalink: {
       type: String,
       required: false,
-      default: "",
+      default: '',
     },
     domain: {
       type: String,
       required: true,
-      default: "",
+      default: '',
     },
     image: {
       type: String,
       required: true,
-      default: "",
+      default: '',
     },
     title: {
       type: String,
       required: true,
-      default: "",
+      default: '',
     },
     description: {
       type: String,
       required: true,
-      default: "",
+      default: '',
     },
-  },
+  })
 
-  data() {
-    return {
-      showDescription: true,
-    };
-  },
+  const showDescription = ref(true)
+  const titleRef = useTemplateRef('title')
 
-  // watch title changes
-  watch: {
-    title() {
-      this.$nextTick(() => {
-        // if $refs.title is in 2 lines, hide the descritpion
-        if (this.$refs.title.clientHeight >= 40) {
-          this.showDescription = false;
-        } else {
-          this.showDescription = true;
-        }
-      });
+  watch(
+    () => props.title,
+    () => {
+      nextTick(() => {
+        showDescription.value = titleRef.clientHeight < 40
+      })
     },
-  },
-};
+  )
 </script>

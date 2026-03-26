@@ -16,9 +16,9 @@ return [
     'entry_social_section' => 'Social',
     'entry_social_instructions' => 'Social',
 
-    'social_field_title_title' => '',
+    'social_field_title_title' => 'Title',
     'social_field_title_instructions' => 'The title should be between 50 and 60 characters and not have any branding.',
-    'social_field_description_title' => 'Social description',
+    'social_field_description_title' => 'Description',
     'social_field_description_instructions' => 'Shown below the title. It is used to describe the content of the page. If Meta description is not empty, it can be reused here. Usually the Meta description is longer.',
     'social_field_label_title' => 'Auto',
     'social_field_label_general' => 'General',

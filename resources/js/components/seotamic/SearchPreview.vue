@@ -1,13 +1,8 @@
 <template>
   <div>
-    <div
-      v-if="previewTitle"
-      class="seotamic-text-xs seotamic-uppercase seotamic-font-bold seotamic-tracking-wider"
-    >
-      {{ previewTitle }}
-    </div>
+    <Label class="capitalize" :text="previewTitle" />
 
-    <div v-if="permalink" class="seotamic-mt-2">
+    <div v-if="permalink">
       <a
         :href="`https://pagespeed.web.dev/report?url=` + permalink"
         class="text-sm underline text-blue hover:text-blue-dark"
@@ -18,78 +13,73 @@
       </a>
     </div>
 
-    <div
-      class="seotamic-mt-2 seotamic-bg-white seotamic-border seotamic-shadow-sm seotamic-p-3 seotamic-flex seotamic-flex-col seotamic-max-w-[600px] seotamic-rounded-[3px]"
-    >
-      <div class="seotamic-text-sm seotamic-text-[#202124] seotamic-mb-0.5">
+    <div class="mt-2 border shadow-xs rounded-lg p-3 flex flex-col max-w-150">
+      <div class="text-sm text-[#202124] dark:text-gray-300 mb-0.5">
         {{ url }}
       </div>
       <div
-        class="seotamic-text-[#1a0dab] seotamic-text-xl seotamic-leading-[26px] seotamic-truncate seotamic-mt-[5px]"
+        class="text-[#1a0dab] dark:text-gray-300 text-xl leading-6.5 truncate mt-1.25"
       >
         {{ title }}
       </div>
-      <div class="seotamic-text-sm seotamic-text-[#4d5156]">
+      <div class="text-sm text-[#4d5156] dark:text-gray-300">
         {{ truncate(description) }}
       </div>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  props: {
+<script setup>
+  import { Label } from '@statamic/cms/ui'
+  import { computed } from 'vue'
+
+  const props = defineProps({
     previewTitle: {
       type: String,
       required: true,
-      default: "",
+      default: '',
     },
     permalink: {
       type: String,
       required: false,
-      default: "",
+      default: '',
     },
     domain: {
       type: String,
       required: true,
-      default: "",
+      default: '',
     },
     title: {
       type: String,
       required: true,
-      default: "",
+      default: '',
     },
     description: {
       type: String,
       required: true,
-      default: "",
+      default: '',
     },
-  },
+  })
 
-  methods: {
-    truncate(str, num = 160) {
-      if (!str) return str;
+  const url = computed(() => {
+    if (
+      props.domain &&
+      (props.domain.startsWith('https://') ||
+        props.domain.startsWith('http://'))
+    ) {
+      return props.domain
+    }
 
-      if (str.length <= num) {
-        return str;
-      }
+    return 'https://' + props.domain
+  })
 
-      return str.slice(0, num) + " …";
-    },
-  },
+  function truncate(str, num = 160) {
+    if (!str) return str
 
-  computed: {
-    url() {
-      if (
-        this.domain &&
-        (this.domain.startsWith("https://") ||
-          this.domain.startsWith("http://"))
-      ) {
-        return this.domain;
-      }
+    if (str.length <= num) {
+      return str
+    }
 
-      return "https://" + this.domain;
-    },
-  },
-};
+    return str.slice(0, num) + ' …'
+  }
 </script>

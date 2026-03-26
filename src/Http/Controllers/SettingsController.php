@@ -5,6 +5,7 @@ namespace Cnj\Seotamic\Http\Controllers;
 use Cnj\Seotamic\File\File;
 use Statamic\Facades\Site;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 use Statamic\Facades\Blueprint;
 use Statamic\Http\Controllers\CP\CpController;
 
@@ -35,10 +36,10 @@ class SettingsController extends CpController
 
         $fields = $fields->preProcess();
 
-        return view('seotamic::cp.settings', [
+        return Inertia::render('seotamic::settings/Show', [
             'blueprint' => $blueprint->toPublishArray(),
-            'values'    => $fields->values(),
-            'meta'      => $fields->meta(),
+            'initialValues' => $fields->values(),
+            'initialMeta' => $fields->meta(),
         ]);
     }
 
@@ -161,7 +162,7 @@ class SettingsController extends CpController
                     ],
                 ]
             ],
-            'Settings' => [
+            'settings' => [
                 'display' => __('seotamic::general.settings_title'),
                 'fields' => [
                     'preview_domain' => [

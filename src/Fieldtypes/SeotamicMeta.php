@@ -1,10 +1,9 @@
 <?php
 
-namespace Cnj\Seotamic\FieldTypes;
+namespace Cnj\Seotamic\Fieldtypes;
 
 use Cnj\Seotamic\Http\Controllers\SitemapController;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
 
 class SeotamicMeta extends SeotamicType
 {
@@ -31,20 +30,7 @@ class SeotamicMeta extends SeotamicType
             'permalink' => $this->getPermalink(),
             'title' => $this->getTitle(),
             'seotamic' => $this->getSeotamicGlobals(),
-            'config' => config('seotamic'),
-            't' => [
-                'title_title' => __('seotamic::seo.meta_title_title'),
-                'title_instructions' => __('seotamic::seo.meta_title_instructions'),
-                'prepend_label' => __('seotamic::seo.meta_prepend_label'),
-                'append_label' => __('seotamic::seo.meta_append_label'),
-                'description_title' => __('seotamic::seo.meta_description_title'),
-                'description_instructions' => __('seotamic::seo.meta_description_instructions'),
-                'default_description' => __('seotamic::seo.meta_default_description'),
-                'label_title' => __('seotamic::seo.meta_label_title'),
-                'label_custom' => __('seotamic::seo.meta_label_custom'),
-                'label_empty' => __('seotamic::seo.meta_label_empty'),
-                'preview_title' => __('seotamic::seo.meta_preview_title'),
-            ]
+            'config' => config('seotamic')
         ];
     }
 

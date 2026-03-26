@@ -1,6 +1,6 @@
 <?php
 
-namespace Cnj\Seotamic\FieldTypes;
+namespace Cnj\Seotamic\Fieldtypes;
 
 use Statamic\Facades\Asset;
 use Statamic\Facades\Image;
@@ -82,18 +82,7 @@ class SeotamicSocial extends SeotamicType
             'meta' => $meta,
             'seotamic' => $this->getSeotamicGlobals(),
             'social_image' => $this->getImage(),
-            'config' => config('seotamic'),
-            't' => [
-                'title_title' => __('seotamic::social.social_field_title_title'),
-                'title_instructions' => __('seotamic::social.social_field_title_instructions'),
-                'description_title' => __('seotamic::social.social_field_description_title'),
-                'description_instructions' => __('seotamic::social.social_field_description_instructions'),
-                'label_title' => __('seotamic::social.social_field_label_title'),
-                'label_custom' => __('seotamic::social.social_field_label_custom'),
-                'label_general' => __('seotamic::social.social_field_label_general'),
-                'label_meta' => __('seotamic::social.social_field_label_meta'),
-                'preview_title' => __('seotamic::social.social_field_preview_title'),
-            ]
+            'config' => config('seotamic')
         ];
     }
 

@@ -2,15 +2,15 @@
   "private": true,
   "scripts": {
     "dev": "vite",
-    "build": "vite build"
+    "build": "vite build",
+    "format": "prettier 'resources/**/*.{css,js,json,css,ts,tsx,vue}' --write"
   },
   "devDependencies": {
-    "@rollup/plugin-inject": "^5.0.5",
-    "@vitejs/plugin-vue2": "^2.2.0",
-    "autoprefixer": "^10.4.19",
+    "@statamic/cms": "file:./vendor/statamic/cms/resources/dist-package",
+    "@tailwindcss/vite": "^4.1.18",
     "laravel-vite-plugin": "^1.2.0",
-    "postcss": "^8.4.23",
-    "tailwindcss": "^3.3.2",
+    "prettier": "^3.8.1",
+    "tailwindcss": "^4.1.18",
     "vite": "^6.4.1"
   }
 }

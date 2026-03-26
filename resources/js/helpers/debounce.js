@@ -8,24 +8,24 @@
  * @returns {Function} - The debounced function
  */
 export function debounce(func, wait, immediate = false) {
-  let timeout;
+  let timeout
 
   return function () {
-    const context = this;
-    const args = arguments;
+    const context = this
+    const args = arguments
 
     const later = function () {
-      timeout = null;
-      if (!immediate) func.apply(context, args);
-    };
+      timeout = null
+      if (!immediate) func.apply(context, args)
+    }
 
-    const callNow = immediate && !timeout;
+    const callNow = immediate && !timeout
 
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
+    clearTimeout(timeout)
+    timeout = setTimeout(later, wait)
 
-    if (callNow) func.apply(context, args);
-  };
+    if (callNow) func.apply(context, args)
+  }
 }
 
-export default debounce;
+export default debounce
