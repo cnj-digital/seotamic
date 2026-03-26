@@ -42,7 +42,14 @@ class Subscriber
         $ignoreBlueprints = config('seotamic.ignore_blueprints', []);
 
         // Do not add fields to blueprints that are in the ignore list
-        if (in_array($this->blueprint->handle(), $ignoreBlueprints)) {
+        // Check both blueprint handle and collection handle for convenience
+        $namespace = $this->blueprint->namespace();
+        $collectionHandle = Str::startsWith($namespace, 'collections.')
+            ? Str::after($namespace, 'collections.')
+            : null;
+
+        if (in_array($this->blueprint->handle(), $ignoreBlueprints)
+            || ($collectionHandle && in_array($collectionHandle, $ignoreBlueprints))) {
             return;
         }
 
