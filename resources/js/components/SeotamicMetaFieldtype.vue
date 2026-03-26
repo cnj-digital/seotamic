@@ -88,8 +88,8 @@
 
   defineExpose(expose)
 
-  const titleType = ref('title')
-  const descriptionType = ref('empty')
+  const titleType = ref(props.value?.title?.type ?? 'title')
+  const descriptionType = ref(props.value?.description?.type ?? 'empty')
 
   const appendable = computed(() => props.meta.seotamic?.title_append != null)
   const prependable = computed(() => props.meta.seotamic?.title_prepend != null)
@@ -119,7 +119,7 @@
   })
 
   watch(titleType, value => {
-    const title = { ...props.value?.title }
+    const title = { ...props.value?.title, type: value }
 
     if (value == 'title') {
       title.custom_value = title.value
@@ -131,13 +131,16 @@
     update({ ...props.value, title })
   })
 
-  watch(descriptionType, value => {
-    const description = { ...props.value?.description }
+  watch(descriptionType, (value, old) => {
+    const description = { ...props.value?.description, type: value }
+
+    if (old == 'custom') {
+      description.custom_value = description.value
+    }
 
     if (value == 'custom') {
       description.value = description.custom_value
     } else {
-      description.custom_value = description.value
       description.value = ''
     }
 
