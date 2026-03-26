@@ -47,7 +47,7 @@ abstract class SeotamicType extends Fieldtype
             return '';
         }
 
-        return $parent->absoluteUrl();
+        return $parent->absoluteUrl() ?? '';
     }
 
     /**
