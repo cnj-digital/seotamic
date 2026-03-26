@@ -70,11 +70,11 @@
 
   defineExpose(expose)
 
-  const titleType = ref('title')
-  const descriptionType = ref('meta')
+  const titleType = ref(props.value?.title?.type ?? 'title')
+  const descriptionType = ref(props.value?.description?.type ?? 'meta')
 
   watch(titleType, (value, old) => {
-    const title = { ...props.value?.title }
+    const title = { ...props.value?.title, type: value }
 
     if (old == 'custom') {
       title.custom_value = title.value
@@ -96,7 +96,7 @@
   })
 
   watch(descriptionType, (value, old) => {
-    const description = { ...props.value?.description }
+    const description = { ...props.value?.description, type: value }
 
     if (old == 'custom') {
       description.custom_value = description.value
