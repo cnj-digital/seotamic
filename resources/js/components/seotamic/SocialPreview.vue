@@ -83,7 +83,8 @@
     () => props.title,
     () => {
       nextTick(() => {
-        showDescription.value = titleRef.clientHeight < 40
+        const titleEl = titleRef.value
+        showDescription.value = !titleEl || titleEl.clientHeight < 40
       })
     },
   )
