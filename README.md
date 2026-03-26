@@ -2,7 +2,7 @@
 
 # Seotamic - Statamic SEO Addon
 
-Statamic v5 only. For Statamic v4 use the 4.\* releases and for Statamic v3 use the 3.\* releases. Automatically adds a SEO tab to all your collection entries where you can fine tune SEO for every entry. Works perfectly with Antlers, Blade and in headless mode (PRO edition) with the Statamic REST API or GraphQL integration out of the box.
+Statamic v6+ only. For Statamic v5 use the 5.\* releases, for Statamic v4 use the 4.\* releases and for Statamic v3 use the 3.\* releases. Automatically adds a SEO tab to all your collection entries where you can fine tune SEO for every entry. Works perfectly with Antlers, Blade and in headless mode (PRO edition) with the Statamic REST API or GraphQL integration out of the box.
 
 ## Quick Antlers usage sample
 
@@ -23,6 +23,10 @@ Generates the whole array of SEO settings:
 <meta property="og:image" content="https://mysite.com/img/og.jpg" />
 ...
 ```
+
+# Version 6 changes
+
+Seotamic v6.\* is compatible with Statamic v6.0+. The addon was fully rewritten to work with Statamic v6's Vue 3 and Inertia.js stack. No migration is needed — your existing configuration should work as-is.
 
 # Version 5 changes
 
@@ -60,7 +64,7 @@ Include the package with composer:
 composer require cnj/seotamic
 ```
 
-The package requires Laravel 9+ and PHP 8.1+. It will auto register.
+The latest version requires Statamic v6+ and will auto register.
 
 The SEO & Social section tab will appear on all collection entries automatically.
 
@@ -192,9 +196,9 @@ inject:
 
 This package was built by [CNJ Digital](https://www.cnj.si/).
 
-# Version 3, 4 and 5 License
+# Version 3, 4, 5 and 6 License
 
-Version 3 and 4 are a commercial addon for Statamic. It is open source but not free to use. You can purchase a license at [Statamic Marketplace](https://statamic.com/marketplace/addons/seotamic).
+Version 3, 4, 5 and 6 are a commercial addon for Statamic. It is open source but not free to use. You can purchase a license at [Statamic Marketplace](https://statamic.com/marketplace/addons/seotamic).
 
 # Version 2 and 1 License
 
