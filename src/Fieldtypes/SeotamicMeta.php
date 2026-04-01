@@ -91,7 +91,7 @@ class SeotamicMeta extends SeotamicType
             return "";
         }
 
-        $uri = $this->field->parent()->url;
+        $uri = $this->field->parent()->uri();
         $config = config('seotamic');
         $base_url = env('APP_URL');
 
