@@ -23,7 +23,7 @@ return [
     // be linked to the CMS domain.
     //
     // Defautl value: false
-    'headless_mode' => false,
+    'headless_mode' => env('SEOTAMIC_HEADLESS_URL', false),
 
     // Default recommended field lengths.
     // They are just guidelines and can be ignored on the frontend
