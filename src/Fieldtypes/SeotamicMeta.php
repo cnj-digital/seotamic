@@ -49,6 +49,10 @@ class SeotamicMeta extends SeotamicType
         // We make sure all the keys are present in the data
         $value = array_replace_recursive($this->defaultMetaData(), $value);
 
+        if (!($this->field->parent() instanceof \Statamic\Entries\Collection)) {
+            $this->file->setLocale($this->field->parent()->site()->locale());
+        }
+
         $seotamic = $this->getSeotamicGlobals();
         $robots_none = $seotamic['robots_none'] ? true : ($this->field->parent()->value('seotamic_robots_none') ?? false);
 

@@ -106,9 +106,15 @@ class SeotamicSocial extends SeotamicType
         // We make sure all the keys are present in the data
         $value = array_replace_recursive($this->defaultSocialData(), $value);
 
+        if (!($this->field->parent() instanceof \Statamic\Entries\Collection)) {
+            $this->file->setLocale($this->field->parent()->site()->locale());
+            $meta = $this->field->parent()->data()->get('seotamic_meta');
+        } else {
+            $meta = null;
+        }
+
         $title = $this->getTitle();
         $seotamic = $this->getSeotamicGlobals();
-        $meta = $this->field->parent()->data()->get('seotamic_meta');
         $compress  = array_key_exists('social_image_compress', $seotamic) ? $seotamic['social_image_compress'] : true;
         $social_image = $this->getImage($compress);
 
