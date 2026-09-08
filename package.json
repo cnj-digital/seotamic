@@ -12,6 +12,6 @@
     "laravel-vite-plugin": "^1.2.0",
     "prettier": "^3.8.1",
     "tailwindcss": "^4.1.18",
-    "vite": "^6.4.1"
+    "vite": "^6.4.3"
   }
 }
