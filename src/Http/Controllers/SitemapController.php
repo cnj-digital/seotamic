@@ -79,10 +79,15 @@ class SitemapController extends Controller
                             return $page && self::shouldBeIndexed($page) && $page->id() !== $entry->id();
                         })
                         ->map(
-                            fn (Entry $entry) => [
-                                'lang' => $entry->site()->locale,
-                                'href' => self::entryAbsoluteUrl($entry)
-                            ]
+                            function (Entry $entry) {
+                                $site = $entry->site();
+                                $lang = isset($site->rawConfig()['lang']) ? $site->lang() : $site->locale();
+
+                                return [
+                                    'lang' => str_replace('_', '-', $lang),
+                                    'href' => self::entryAbsoluteUrl($entry)
+                                ];
+                            }
                         )->values()
                 ];
             }
