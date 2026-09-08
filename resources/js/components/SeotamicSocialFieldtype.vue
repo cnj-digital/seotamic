@@ -59,7 +59,7 @@
 <script setup>
   import { Fieldtype } from '@statamic/cms'
   import { Field, Input, Switch, Textarea } from '@statamic/cms/ui'
-  import { computed, ref, watch } from 'vue'
+  import { computed } from 'vue'
   import ButtonGroup from './seotamic/ButtonGroup.vue'
   import SocialPreview from './seotamic/SocialPreview.vue'
   import debounce from '../helpers/debounce'
@@ -70,52 +70,61 @@
 
   defineExpose(expose)
 
-  const titleType = ref(props.value?.title?.type ?? 'title')
-  const descriptionType = ref(props.value?.description?.type ?? 'meta')
+  const titleType = computed({
+    get: () => props.value?.title?.type ?? 'title',
+    set: value => {
+      if (value === titleType.value) return
 
-  watch(titleType, (value, old) => {
-    const title = { ...props.value?.title, type: value }
+      const old = props.value?.title?.type
+      const title = { ...props.value?.title, type: value }
 
-    if (old == 'custom') {
-      title.custom_value = title.value
-    }
-
-    if (value == 'title') {
-      if (props.meta.meta.title.type == 'custom') {
-        title.value = props.meta.meta.title.value
-      } else {
-        title.value = props.meta.title
+      if (old == 'custom') {
+        title.custom_value = title.value
       }
-    } else if (value == 'general') {
-      title.value = props.meta.seotamic.social_title
-    } else {
-      title.value = title.custom_value
-    }
 
-    update({ ...props.value, title })
+      if (value == 'title') {
+        if (props.meta.meta.title.type == 'custom') {
+          title.value = props.meta.meta.title.value
+        } else {
+          title.value = props.meta.title
+        }
+      } else if (value == 'general') {
+        title.value = props.meta.seotamic.social_title
+      } else {
+        title.value = title.custom_value
+      }
+
+      update({ ...props.value, title })
+    },
   })
 
-  watch(descriptionType, (value, old) => {
-    const description = { ...props.value?.description, type: value }
+  const descriptionType = computed({
+    get: () => props.value?.description?.type ?? 'meta',
+    set: value => {
+      if (value === descriptionType.value) return
 
-    if (old == 'custom') {
-      description.custom_value = description.value
-    }
+      const old = props.value?.description?.type
+      const description = { ...props.value?.description, type: value }
 
-    // Meta is "Automatic"
-    if (value == 'meta') {
-      if (props.meta.meta.description.type == 'custom') {
-        description.value = props.meta.meta.description.value
-      } else {
-        description.value = props.meta.seotamic.social_description
+      if (old == 'custom') {
+        description.custom_value = description.value
       }
-    } else if (value == 'general') {
-      description.value = props.meta.seotamic.social_description
-    } else {
-      description.value = description.custom_value
-    }
 
-    update({ ...props.value, description })
+      // Meta is "Automatic"
+      if (value == 'meta') {
+        if (props.meta.meta.description.type == 'custom') {
+          description.value = props.meta.meta.description.value
+        } else {
+          description.value = props.meta.seotamic.social_description
+        }
+      } else if (value == 'general') {
+        description.value = props.meta.seotamic.social_description
+      } else {
+        description.value = description.custom_value
+      }
+
+      update({ ...props.value, description })
+    },
   })
 
   const titleOptions = [
