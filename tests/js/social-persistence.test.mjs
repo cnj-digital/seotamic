@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict'
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync, readdirSync } from 'node:fs'
 import vm from 'node:vm'
 import { test } from 'node:test'
 import * as Vue from 'vue'
@@ -7,11 +7,20 @@ import * as Vue from 'vue'
 // Exercise the distributed bundle: PHP tests and source-only tests miss stale builds.
 const components = {}
 // Use Statamic's actual update functions so inheritance checks follow the CP path.
-const fieldtypeSource = readFileSync(new URL('../../vendor/statamic/cms/resources/js/components/fieldtypes/fieldtype.js', import.meta.url), 'utf8')
-const updateSource = fieldtypeSource.match(/const update = \(value\) => \{[\s\S]*?\n    \};/)[0]
+function statamicSource(path, bundlePrefix) {
+  const source = new URL(`../../vendor/statamic/cms/resources/js/${path}`, import.meta.url)
+  if (existsSync(source)) return readFileSync(source, 'utf8')
+  // Recent Composer releases ship readable development bundles instead of Vue source.
+  const directory = new URL('../../vendor/statamic/cms/resources/dist-dev/build/assets/', import.meta.url)
+  return readdirSync(directory)
+    .filter(name => name.startsWith(bundlePrefix) && name.endsWith('.js'))
+    .map(name => readFileSync(new URL(name, directory), 'utf8')).join('\n')
+}
+const fieldtypeSource = statamicSource('components/fieldtypes/fieldtype.js', 'index-')
+const updateSource = fieldtypeSource.match(/const update = \(value\) => \{[\s\S]*?\n\s*\};/)[0]
 const makeUpdate = vm.runInNewContext(`(emit) => { ${updateSource}; return update }`)
-const publishSource = readFileSync(new URL('../../vendor/statamic/cms/resources/js/components/ui/Publish/Field.vue', import.meta.url), 'utf8')
-const valueUpdatedSource = publishSource.match(/function valueUpdated\(value\) \{[\s\S]*?\n\}/)[0]
+const publishSource = statamicSource('components/ui/Publish/Field.vue', 'ui-')
+const valueUpdatedSource = publishSource.match(/function valueUpdated\(value\) \{[\s\S]*?\n\s*\}/)[0]
 
 const manifest = JSON.parse(readFileSync(new URL('../../resources/dist/build/manifest.json', import.meta.url)))
 const bundle = readFileSync(new URL(`../../resources/dist/build/${manifest['resources/js/cp.js'].file}`, import.meta.url), 'utf8')
