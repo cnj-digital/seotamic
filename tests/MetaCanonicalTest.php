@@ -15,21 +15,12 @@ class MetaCanonicalTest extends TestCase
 
     protected function tearDown(): void
     {
-        putenv('APP_URL');
         $this->cleanupFixtureGlobals();
 
         parent::tearDown();
     }
 
-    protected function getEnvironmentSetUp($app)
-    {
-        parent::getEnvironmentSetUp($app);
-
-        // getCanonical() uses env('APP_URL') directly
-        putenv('APP_URL=http://localhost');
-    }
-
-    public function test_canonical_uses_app_url_and_entry_uri(): void
+    public function test_canonical_uses_request_url_and_entry_uri(): void
     {
         $entry = Entry::find('home');
 

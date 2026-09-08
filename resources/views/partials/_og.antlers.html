@@ -1,8 +1,8 @@
 {{ if social:open_graph }}
     <meta property="og:type" content="website">
 
-    {{ if canonical }}
-        <meta property="og:url" content="{{ canonical }}">
+    {{ if meta:canonical }}
+        <meta property="og:url" content="{{ meta:canonical }}">
     {{ /if }}
 
     {{ if social:site_name }}

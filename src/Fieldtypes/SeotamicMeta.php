@@ -97,7 +97,7 @@ class SeotamicMeta extends SeotamicType
 
         $uri = $this->field->parent()->uri();
         $config = config('seotamic');
-        $base_url = env('APP_URL');
+        $base_url = url('/');
 
         if (isset($config['headless_mode']) && $config['headless_mode'] !== false) {
             $base_url = $config['headless_mode'];

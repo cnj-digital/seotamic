@@ -192,6 +192,31 @@ inject:
   view_model: App\ViewModels\OgImage
 ```
 
+## Static site generation
+
+SEOtamic works with Statamic's static site generator. Set `base_url` in
+`config/statamic/ssg.php` to the public URL of your static site. Canonical and
+social URL tags use that URL during generation, unless a custom canonical or
+`headless_mode` URL overrides it.
+
+With SSG's default Glide configuration, compressed social images are generated
+into the static output automatically. If you disable social image compression,
+add your original asset directory to the SSG `copy` configuration, alongside
+any directories you already copy:
+
+```php
+'copy' => [
+    public_path('build') => 'build',
+    public_path('assets') => 'assets',
+],
+```
+
+Replace `assets` with your asset container's actual directory. If your originals
+are hosted externally, keep their public URLs instead. Custom Glide disks need
+the [SSG's custom Glide configuration](https://github.com/statamic/ssg#glide-images).
+
+Generate the site with `php please ssg:generate`.
+
 # Credits
 
 This package was built by [CNJ Digital](https://www.cnj.si/).
