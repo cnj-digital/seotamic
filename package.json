@@ -3,6 +3,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "test": "node --test tests/js/*.test.mjs",
     "format": "prettier 'resources/**/*.{css,js,json,css,ts,tsx,vue}' --write"
   },
   "devDependencies": {
