@@ -77,7 +77,7 @@
 <script setup>
   import { Fieldtype } from '@statamic/cms'
   import { Field, Input, Switch, Textarea } from '@statamic/cms/ui'
-  import { computed, ref, watch } from 'vue'
+  import { computed } from 'vue'
   import ButtonGroup from './seotamic/ButtonGroup.vue'
   import SearchPreview from './seotamic/SearchPreview.vue'
   import debounce from '../helpers/debounce'
@@ -87,9 +87,6 @@
   const { expose, update } = Fieldtype.use(emit, props)
 
   defineExpose(expose)
-
-  const titleType = ref(props.value?.title?.type ?? 'title')
-  const descriptionType = ref(props.value?.description?.type ?? 'empty')
 
   const appendable = computed(() => props.meta.seotamic?.title_append != null)
   const prependable = computed(() => props.meta.seotamic?.title_prepend != null)
@@ -118,33 +115,44 @@
       : __('seotamic::seo.meta_default_description')
   })
 
-  watch(titleType, value => {
-    const title = { ...props.value?.title, type: value }
+  const titleType = computed({
+    get: () => props.value?.title?.type ?? 'title',
+    set: value => {
+      if (value === titleType.value) return
 
-    if (value == 'title') {
-      title.custom_value = title.value
-      title.value = props.meta.title
-    } else {
-      title.value = title.custom_value
-    }
+      const title = { ...props.value?.title, type: value }
 
-    update({ ...props.value, title })
+      if (value == 'title') {
+        title.custom_value = title.value
+        title.value = props.meta.title
+      } else {
+        title.value = title.custom_value
+      }
+
+      update({ ...props.value, title })
+    },
   })
 
-  watch(descriptionType, (value, old) => {
-    const description = { ...props.value?.description, type: value }
+  const descriptionType = computed({
+    get: () => props.value?.description?.type ?? 'empty',
+    set: value => {
+      if (value === descriptionType.value) return
 
-    if (old == 'custom') {
-      description.custom_value = description.value
-    }
+      const old = props.value?.description?.type
+      const description = { ...props.value?.description, type: value }
 
-    if (value == 'custom') {
-      description.value = description.custom_value
-    } else {
-      description.value = ''
-    }
+      if (old == 'custom') {
+        description.custom_value = description.value
+      }
 
-    update({ ...props.value, description })
+      if (value == 'custom') {
+        description.value = description.custom_value
+      } else {
+        description.value = ''
+      }
+
+      update({ ...props.value, description })
+    },
   })
 
   const titleOptions = [
